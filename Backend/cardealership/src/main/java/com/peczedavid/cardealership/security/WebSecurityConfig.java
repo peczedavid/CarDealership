@@ -21,8 +21,8 @@ import com.peczedavid.cardealership.security.services.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		 securedEnabled = true,
-		 jsr250Enabled = true,
+		// securedEnabled = true,
+		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
