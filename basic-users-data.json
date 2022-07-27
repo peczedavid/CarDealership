@@ -1,0 +1,18 @@
+{
+    "username": "admin",
+    "email": "admin@dealership.com",
+    "password": "123456",
+    "role": ["user", "mod", "admin"]
+}
+{
+    "username": "testuser-1",
+    "email": "testuser-1@dealership.com",
+    "password": "secret123",
+    "role": ["user"]
+}
+{
+    "username": "testuser-1",
+    "email": "testuser-2@dealership.com",
+    "password": "secret123",
+    "role": ["user"]
+}

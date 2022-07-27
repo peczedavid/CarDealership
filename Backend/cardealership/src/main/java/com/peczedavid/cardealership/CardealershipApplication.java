@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.cardealership;
+package com.peczedavid.cardealership;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
