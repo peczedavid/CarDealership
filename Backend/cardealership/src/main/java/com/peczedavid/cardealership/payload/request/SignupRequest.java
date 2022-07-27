@@ -17,6 +17,8 @@ public class SignupRequest {
 
     private Set<String> role;
 
+    private Set<String> region;
+
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
@@ -53,4 +55,11 @@ public class SignupRequest {
         this.role = role;
     }
 
+    public Set<String> getRegion() {
+        return this.region;
+    }
+
+    public void setRegion(Set<String> region) {
+        this.region = region;
+    }
 }

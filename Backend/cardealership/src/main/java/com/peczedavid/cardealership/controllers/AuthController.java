@@ -22,13 +22,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.peczedavid.cardealership.models.ERegion;
 import com.peczedavid.cardealership.models.ERole;
+import com.peczedavid.cardealership.models.Region;
 import com.peczedavid.cardealership.models.Role;
 import com.peczedavid.cardealership.models.User;
 import com.peczedavid.cardealership.payload.request.LoginRequest;
 import com.peczedavid.cardealership.payload.request.SignupRequest;
 import com.peczedavid.cardealership.payload.response.MessageResponse;
 import com.peczedavid.cardealership.payload.response.UserInfoResponse;
+import com.peczedavid.cardealership.repositories.RegionRepository;
 import com.peczedavid.cardealership.repositories.RoleRepository;
 import com.peczedavid.cardealership.repositories.UserRepository;
 import com.peczedavid.cardealership.security.jwt.JwtUtils;
@@ -44,6 +47,8 @@ public class AuthController {
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired
+	RegionRepository regionRepository;
 	@Autowired
 	PasswordEncoder encoder;
 	@Autowired
@@ -79,6 +84,31 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(),
 				signUpRequest.getEmail(),
 				encoder.encode(signUpRequest.getPassword()));
+
+		Set<String> strRegions = signUpRequest.getRegion();
+		Set<Region> regions = new HashSet<>();
+		if (strRegions == null) {
+
+		} else {
+			strRegions.forEach(region -> {
+				switch (region) {
+					case "germany":
+						Region germanRegion = regionRepository.findByName(ERegion.GERMANY)
+								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+						regions.add(germanRegion);
+						break;
+					case "japan":
+						Region japanRegion = regionRepository.findByName(ERegion.JAPAN)
+								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+						regions.add(japanRegion);
+						break;
+					default:
+						break;
+				}
+			});
+		}
+		user.setRegions(regions);
+
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
 		if (strRoles == null) {
