@@ -11,8 +11,13 @@
     "role": ["user"]
 }
 {
-    "username": "testuser-1",
+    "username": "testuser-2",
     "email": "testuser-2@dealership.com",
     "password": "secret123",
     "role": ["user"]
+}
+
+{
+    "username": "admin",
+    "password": "123456"
 }
