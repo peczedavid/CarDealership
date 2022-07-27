@@ -5,6 +5,12 @@
     "role": ["user", "mod", "admin"]
 }
 {
+    "username": "moderator",
+    "email": "moderator@dealership.com",
+    "password": "123456",
+    "role": ["user", "mod"]
+}
+{
     "username": "testuser-1",
     "email": "testuser-1@dealership.com",
     "password": "secret123",
