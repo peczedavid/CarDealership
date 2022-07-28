@@ -1,5 +1,8 @@
 package com.peczedavid.cardealership.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,7 +23,13 @@ public class Car {
 	@Size(max = 40)
 	private String model;
 
-	public Car(String brand, String model) {
+    @ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "car_regions", 
+			   joinColumns = @JoinColumn(name = "car_id"), 
+			   inverseJoinColumns = @JoinColumn(name = "region_id"))
+	private Set<Region> regions = new HashSet<>();
+
+    public Car(String brand, String model) {
         this.brand = brand;
         this.model = model;
     }
@@ -53,5 +62,12 @@ public class Car {
         this.model = model;
     }
 
+    public Set<Region> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(Set<Region> regions) {
+        this.regions = regions;
+    }
     
 }
