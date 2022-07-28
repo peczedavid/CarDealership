@@ -102,6 +102,11 @@ public class AuthController {
 								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
 						regions.add(japanRegion);
 						break;
+					case "america":
+						Region americaRegion = regionRepository.findByName(ERegion.America)
+								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+						regions.add(americaRegion);
+						break;
 					default:
 						break;
 				}

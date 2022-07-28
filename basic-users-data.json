@@ -1,26 +1,9 @@
 {
     "username": "admin",
     "email": "admin@dealership.com",
-    "password": "123456",
-    "role": ["user", "mod", "admin"]
-}
-{
-    "username": "moderator",
-    "email": "moderator@dealership.com",
-    "password": "123456",
-    "role": ["user", "mod"]
-}
-{
-    "username": "testuser-1",
-    "email": "testuser-1@dealership.com",
-    "password": "secret123",
-    "role": ["user"]
-}
-{
-    "username": "testuser-2",
-    "email": "testuser-2@dealership.com",
-    "password": "secret123",
-    "role": ["user"]
+    "password": "admin",
+    "role": ["user", "admin"],
+    "region": ["america"]
 }
 
 {
@@ -32,6 +15,9 @@
 }
 
 {
-    "username": "admin",
-    "password": "123456"
+    "username": "german-user-1",
+    "email": "german-user-1@dealership.com",
+    "password": "secret123",
+    "role": ["user"],
+    "region": ["germany"]
 }
