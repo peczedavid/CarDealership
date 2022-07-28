@@ -9,6 +9,6 @@ import com.peczedavid.cardealership.models.ERegion;
 import com.peczedavid.cardealership.models.Region;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, Long> {
+public interface RegionRepository extends JpaRepository<Region, Integer> {
 	Optional<Region> findByName(ERegion name);
 }

@@ -23,6 +23,13 @@
     "role": ["user"]
 }
 
+{
+    "username": "japan-user-1",
+    "email": "japan-user-1@dealership.com",
+    "password": "secret123",
+    "role": ["user"],
+    "region": ["japan"]
+}
 
 {
     "username": "admin",

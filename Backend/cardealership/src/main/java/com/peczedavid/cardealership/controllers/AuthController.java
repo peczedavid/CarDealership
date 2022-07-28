@@ -93,12 +93,12 @@ public class AuthController {
 			strRegions.forEach(region -> {
 				switch (region) {
 					case "germany":
-						Region germanRegion = regionRepository.findByName(ERegion.GERMANY)
+						Region germanRegion = regionRepository.findByName(ERegion.Germany)
 								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
 						regions.add(germanRegion);
 						break;
 					case "japan":
-						Region japanRegion = regionRepository.findByName(ERegion.JAPAN)
+						Region japanRegion = regionRepository.findByName(ERegion.Japan)
 								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
 						regions.add(japanRegion);
 						break;
@@ -122,11 +122,6 @@ public class AuthController {
 						Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 						roles.add(adminRole);
-						break;
-					case "mod":
-						Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(modRole);
 						break;
 					default:
 						Role userRole = roleRepository.findByName(ERole.ROLE_USER)

@@ -1,6 +1,8 @@
 package com.peczedavid.cardealership.models;
 
 public enum ERegion {
-    GERMANY,
-    JAPAN
+    Germany,
+    Japan,
+    Middle_East,
+    America
 }

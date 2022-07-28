@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.peczedavid.cardealership.repositories.CarRepository;
+import com.peczedavid.cardealership.repositories.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -15,7 +15,12 @@ import com.peczedavid.cardealership.repositories.CarRepository;
 public class TestController {
 
 	@Autowired
-	private CarRepository carRepository;
+	private UserRepository userRepository;
+
+	@GetMapping("/testuser")
+	public String testUser() {
+		return userRepository.findByUsername("testuser-1").get().getEmail();
+	}
 
 	@GetMapping("/all")
 	public String allAccess() {
@@ -26,11 +31,6 @@ public class TestController {
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public String userAccess() {
 		return "User Content.";
-	}
-
-	@GetMapping("/audi")
-	public String getAudi() {
-		return carRepository.findByBrand("Audi").get().getType();
 	}
 
 	@GetMapping("/mod")

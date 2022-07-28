@@ -18,11 +18,11 @@ public class Car {
 
     @NotBlank
 	@Size(max = 40)
-	private String type;
+	private String model;
 
-	public Car(String brand, String type) {
+	public Car(String brand, String model) {
         this.brand = brand;
-        this.type = type;
+        this.model = model;
     }
 
     public Car() {
@@ -45,12 +45,12 @@ public class Car {
         this.brand = brand;
     }
 
-    public String getType() {
-        return type;
+    public String getModel() {
+        return model;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     
