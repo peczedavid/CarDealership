@@ -2,6 +2,9 @@
   <div class="hello">
     <h1>Hello Vue</h1>
     <p>{{ contentString }}</p>
+    <p>{{ car.brand }}</p>
+    <p>{{ car.model }}</p>
+    <p>{{ car.region }}</p>
   </div>
 </template>
 
@@ -15,7 +18,12 @@ export default {
   },
   data() {
     return {
-      contentString: "no content"
+      contentString: "no content",
+      car: {
+        brand: "default name",
+        model: "default model",
+        region: "default region"
+      }
     };
   },
   methods: {
@@ -28,10 +36,23 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getCarTest() {
+      TestService.signInAdmin();
+
+      TestService.getCarById()
+       .then(response => {
+          this.contentString = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
   mounted() {
     this.getContentString();
+    this.getCarTest();
   }
 };
 </script>
