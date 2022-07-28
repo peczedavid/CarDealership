@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class CarController {
     }
 
     @DeleteMapping("/deleteById/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCarById(@PathVariable int id) {
         Car car = carRepository.findById((long)id).orElse(null);
         if(car != null) {
@@ -60,6 +62,7 @@ public class CarController {
     }
 
     @PutMapping("/updateById/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateCar(@RequestBody CarRequest carRequest, @PathVariable int id) {
         Car car = carRepository.findById((long) id).orElse(null);
         if (car != null) {
@@ -108,6 +111,7 @@ public class CarController {
     }
 
     @PostMapping("/new")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newCar(@RequestBody CarRequest carRequest) {
         Car car = new Car(carRequest.getBrand(), carRequest.getModel());
         Set<String> strRegions = carRequest.getRegion();
