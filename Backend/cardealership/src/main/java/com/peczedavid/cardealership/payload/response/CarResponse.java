@@ -1,8 +1,11 @@
 package com.peczedavid.cardealership.payload.response;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.peczedavid.cardealership.models.Car;
 
 public class CarResponse {
     private Long id;

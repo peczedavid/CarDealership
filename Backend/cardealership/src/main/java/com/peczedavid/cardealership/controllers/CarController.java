@@ -39,6 +39,15 @@ public class CarController {
         return "cars";
     }
 
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<?> getCarsByBrand(@PathVariable int id) {
+        Car car = carRepository.findById((long)id).orElse(null);
+        if(car != null) {
+            return ResponseEntity.ok(car);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PutMapping("/updateById/{id}")
     public ResponseEntity<?> updateCar(@RequestBody CarRequest carRequest, @PathVariable int id) {
         Car car = carRepository.findById((long) id).orElse(null);
