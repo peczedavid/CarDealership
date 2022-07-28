@@ -4,7 +4,7 @@ class TestService {
     return http.get("/test/all");
   }
   getCarById() {
-    return http.get("/cars/getById/4");
+    return http.get("/cars/getById/1");
   }
   async signInAdmin() {
     let payload = {
@@ -15,6 +15,10 @@ class TestService {
 
     let data = res.data;
     console.log(data);
+  }
+
+  getAdminContent() {
+    return http.get("test/admin");
   }
 }
 export default new TestService();

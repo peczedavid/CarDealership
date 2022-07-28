@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>Hello Vue</h1>
     <p>{{ contentString }}</p>
+    <p>{{ adminContentString }}</p>
     <p>{{ car.brand }}</p>
     <p>{{ car.model }}</p>
     <p>{{ car.region }}</p>
@@ -19,6 +20,7 @@ export default {
   data() {
     return {
       contentString: "no content",
+      adminContentString: "no admin content",
       car: {
         brand: "default name",
         model: "default model",
@@ -37,8 +39,8 @@ export default {
           console.log(e);
         });
     },
-    getCarTest() {
-      TestService.signInAdmin();
+    async getCarTest() {
+      await TestService.signInAdmin();
 
       TestService.getCarById()
        .then(response => {
@@ -48,11 +50,16 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getAdminContent() {
+      TestService.getAdminContent();
     }
   },
   mounted() {
     this.getContentString();
     this.getCarTest();
+
+    this.getAdminContent();
   }
 };
 </script>
