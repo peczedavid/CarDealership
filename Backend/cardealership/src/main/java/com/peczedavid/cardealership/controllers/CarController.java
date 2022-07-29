@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.models.Car;
@@ -52,17 +54,28 @@ public class CarController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?> getCars() {
-        List<Car> cars = carService.getCars();
-        if(cars.size() > 0)
-            return ResponseEntity.ok().body(cars);
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getCarsByBrandParameter(@RequestParam(name = "brand", required = false) String brand) {
+        if (brand == null) {
+            List<Car> cars = carService.getCars();
+            if (cars.size() > 0) return ResponseEntity.ok().body(cars);
+            else return ResponseEntity.notFound().build();
+        }
+        else {
+            List<Car> cars = carService.getCarsByBrand(brand);
+            if (cars.size() > 0) return ResponseEntity.ok().body(cars);
+            else return ResponseEntity.notFound().build();
+        }
     }
+
+    // @GetMapping("/get")
+    // public ResponseEntity<?> getCars() {
+
+    // }
 
     @GetMapping("/getByBrand/{brand}")
     public ResponseEntity<?> getCarsByBrand(@PathVariable String brand) {
         List<Car> cars = carService.getCarsByBrand(brand);
-        if(cars.size() > 0)
+        if (cars.size() > 0)
             return ResponseEntity.ok().body(cars);
         return ResponseEntity.notFound().build();
     }
@@ -118,9 +131,9 @@ public class CarController {
         return ResponseEntity.badRequest()
                 .body(new MessageResponse(
                         new StringBuilder()
-                            .append("Car not found with id: ")
-                            .append(id)
-                            .toString()));
+                                .append("Car not found with id: ")
+                                .append(id)
+                                .toString()));
     }
 
     @PostMapping("/new")
