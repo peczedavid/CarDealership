@@ -1,6 +1,7 @@
 package com.peczedavid.cardealership.controllers;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.peczedavid.cardealership.payload.response.CarResponse;
 import com.peczedavid.cardealership.payload.response.MessageResponse;
 import com.peczedavid.cardealership.repositories.CarRepository;
 import com.peczedavid.cardealership.repositories.RegionRepository;
+import com.peczedavid.cardealership.services.CarService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -34,27 +36,40 @@ public class CarController {
     private CarRepository carRepository;
 
     @Autowired
-    private RegionRepository regionRepository;
+    private CarService carService;
 
-    @GetMapping("/")
-    public String allAccess() {
-        return "cars";
-    }
+    @Autowired
+    private RegionRepository regionRepository;
 
     @DeleteMapping("/deleteById/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCarById(@PathVariable int id) {
-        Car car = carRepository.findById((long) id).orElse(null);
+        Car car = carService.deleteById((long) id);
         if (car != null) {
-            carRepository.delete(car);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(car);
         }
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<?> getCars() {
+        List<Car> cars = carService.getCars();
+        if(cars.size() > 0)
+            return ResponseEntity.ok().body(cars);
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getByBrand/{brand}")
+    public ResponseEntity<?> getCarsByBrand(@PathVariable String brand) {
+        List<Car> cars = carService.getCarsByBrand(brand);
+        if(cars.size() > 0)
+            return ResponseEntity.ok().body(cars);
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/getById/{id}")
-    public ResponseEntity<?> getCarByBrand(@PathVariable int id) {
-        Car car = carRepository.findById((long) id).orElse(null);
+    public ResponseEntity<?> getCarById(@PathVariable int id) {
+        Car car = carService.getCarById(id);
         if (car != null) {
             return ResponseEntity.ok(car);
         }
@@ -101,12 +116,11 @@ public class CarController {
                     new CarResponse(car.getId(), car.getBrand(), car.getModel(), strRegions));
         }
         return ResponseEntity.badRequest()
-                .body(
-                        new MessageResponse(
-                                new StringBuilder()
-                                        .append("Car not found with id: ")
-                                        .append(id)
-                                        .toString()));
+                .body(new MessageResponse(
+                        new StringBuilder()
+                            .append("Car not found with id: ")
+                            .append(id)
+                            .toString()));
     }
 
     @PostMapping("/new")

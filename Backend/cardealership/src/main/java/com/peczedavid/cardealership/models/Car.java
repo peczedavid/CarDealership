@@ -23,7 +23,9 @@ public class Car {
 	@Size(max = 40)
 	private String model;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    //TODO: now set to eager so it can be deleted,
+    //      maybe set to lazy and do workaround in CarService::deleteById
+    @ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "car_regions", 
 			   joinColumns = @JoinColumn(name = "car_id"), 
 			   inverseJoinColumns = @JoinColumn(name = "region_id"))
