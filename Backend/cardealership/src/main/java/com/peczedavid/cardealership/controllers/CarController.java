@@ -44,8 +44,8 @@ public class CarController {
     @DeleteMapping("/deleteById/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCarById(@PathVariable int id) {
-        Car car = carRepository.findById((long)id).orElse(null);
-        if(car != null) {
+        Car car = carRepository.findById((long) id).orElse(null);
+        if (car != null) {
             carRepository.delete(car);
             return ResponseEntity.ok().build();
         }
@@ -54,8 +54,8 @@ public class CarController {
 
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getCarByBrand(@PathVariable int id) {
-        Car car = carRepository.findById((long)id).orElse(null);
-        if(car != null) {
+        Car car = carRepository.findById((long) id).orElse(null);
+        if (car != null) {
             return ResponseEntity.ok(car);
         }
         return ResponseEntity.notFound().build();
@@ -98,16 +98,15 @@ public class CarController {
             car.setRegions(regions);
             carRepository.save(car);
             return ResponseEntity.ok().body(
-                new CarResponse(car.getId(), car.getBrand(), car.getModel(), strRegions)
-            );
+                    new CarResponse(car.getId(), car.getBrand(), car.getModel(), strRegions));
         }
         return ResponseEntity.badRequest()
-        .body(
-            new MessageResponse(
-                new StringBuilder()
-                .append("Car not found with id: ")
-                .append(id)
-                .toString()));
+                .body(
+                        new MessageResponse(
+                                new StringBuilder()
+                                        .append("Car not found with id: ")
+                                        .append(id)
+                                        .toString()));
     }
 
     @PostMapping("/new")

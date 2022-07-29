@@ -22,27 +22,19 @@ export default {
       contentString: "no content",
       adminContentString: "no admin content",
       car: {
-        brand: "default name",
+        brand: "default brand",
         model: "default model",
         region: "default region"
       }
     };
   },
   methods: {
-    getContentString() {
-      TestService.getPublicContent()
-        .then(response => {
-          this.contentString = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
     getCarTest() {
       TestService.getCarById()
        .then(response => {
-          this.contentString = response.data;
+         this.car.brand = response.data.brand;
+         this.car.model = response.data.model;
+         this.car.region = response.data.regions[0].name;
           console.log(response.data);
         })
         .catch(e => {
@@ -50,16 +42,16 @@ export default {
         });
     },
     async signInAdmin() {
-      await TestService.signInAdmin();
+      this.contentString = await TestService.signInAdmin();
     },
     async getAdminContent() {
-      await TestService.getAdminContent();
+      this.adminContentString = await TestService.getAdminContent();
     }
   },
   async mounted() {
     await this.signInAdmin();
     //this.getContentString();
-    //this.getCarTest();
+    this.getCarTest();
 
     await this.getAdminContent();
   }
