@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: Dealership API
+  version: 1.0.0
+paths:
+  /api/cars/getByBrand/{brand}:
+    get:
+      parameters:
+      - in: path
+        name: brand
+        schema:
+          type: string
+        required: true
+        description: Name of the wanted brand.
+      responses:
+        '200':
+          description: List of cars from the given brand.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 4
+                    brand:
+                      type: string
+                      example: Volkswagen
+                    model:
+                      type: string
+                      example: Golf 6
+                    regions:
+                      type: array
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Germany
+                
+
+  /api/cars/get:
+    get:
+      responses:
+        '200':
+          description: List of all the cars in the database.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 4
+                    brand:
+                      type: string
+                      example: Volkswagen
+                    model:
+                      type: string
+                      example: Golf 6
+                    regions:
+                      type: array
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Germany
+        '404':
+          description: No cars found in the database.
+
+  /api/cars/new:
+    post:
+      requestBody:
+        description: Car data in JSON.
+        content:
+          application/json:
+            schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 3
+                    brand:
+                      type: string
+                      example: Tesla
+                    model:
+                      type: string
+                      example: X
+                    regions:
+                      type: array
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: America
+              
+      responses:
+        201:
+          description: Successfully added to the database.
+      
