@@ -39,9 +39,7 @@ export default {
           console.log(e);
         });
     },
-    async getCarTest() {
-      await TestService.signInAdmin();
-
+    getCarTest() {
       TestService.getCarById()
        .then(response => {
           this.contentString = response.data;
@@ -51,15 +49,19 @@ export default {
           console.log(e);
         });
     },
-    getAdminContent() {
-      TestService.getAdminContent();
+    async signInAdmin() {
+      await TestService.signInAdmin();
+    },
+    async getAdminContent() {
+      await TestService.getAdminContent();
     }
   },
-  mounted() {
-    this.getContentString();
-    this.getCarTest();
+  async mounted() {
+    await this.signInAdmin();
+    //this.getContentString();
+    //this.getCarTest();
 
-    this.getAdminContent();
+    await this.getAdminContent();
   }
 };
 </script>

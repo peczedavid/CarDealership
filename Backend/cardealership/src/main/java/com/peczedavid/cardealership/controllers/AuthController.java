@@ -37,7 +37,7 @@ import com.peczedavid.cardealership.repositories.UserRepository;
 import com.peczedavid.cardealership.security.jwt.JwtUtils;
 import com.peczedavid.cardealership.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:8081"}, maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
