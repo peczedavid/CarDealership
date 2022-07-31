@@ -2,48 +2,69 @@ openapi: 3.0.0
 info:
   title: Dealership API
   version: 1.0.0
+tags:
+  - name: users
+  - name: cars
 paths:
-  /api/cars/getByBrand/{brand}:
-    get:
-      parameters:
-      - in: path
-        name: brand
-        schema:
-          type: string
-        required: true
-        description: Name of the wanted brand.
+  /api/auth/signup:
+    post:
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUp'
+
       responses:
-        '200':
-          description: List of cars from the given brand.
+        200:
+          description: User registered successfully.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  properties:
-                    id:
-                      type: integer
-                      example: 4
-                    brand:
-                      type: string
-                      example: Volkswagen
-                    model:
-                      type: string
-                      example: Golf 6
-                    regions:
-                      type: array
-                      items:
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          name:
-                            type: string
-                            example: Germany
-                
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User registered successfully!"
 
-  /api/cars/get:
+  /api/auth/signout:
+    post:
+      tags:
+      - users
+      responses:
+        200:
+          description: Sign out of user account.
+          
+
+  /api/auth/signin:
+    post:
+      tags:
+      - users
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignIn'
+
+      responses:
+        200:
+          description: User registered successfully.
+          headers:
+            auth-cookie:
+              description: JWT token.
+              schema:
+                type: string
+        401:
+          description: Bad credentials.
+
+
+  /api/cars:
     get:
+      tags:
+      - cars
       responses:
         '200':
           description: List of all the cars in the database.
@@ -52,31 +73,14 @@ paths:
               schema:
                 type: array
                 items:
-                  properties:
-                    id:
-                      type: integer
-                      example: 4
-                    brand:
-                      type: string
-                      example: Volkswagen
-                    model:
-                      type: string
-                      example: Golf 6
-                    regions:
-                      type: array
-                      items:
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          name:
-                            type: string
-                            example: Germany
+                  $ref: '#/components/schemas/Car'
+                  
         '404':
           description: No cars found in the database.
 
-  /api/cars/new:
-    post:
+    put:
+      tags:
+      - cars
       requestBody:
         description: Car data in JSON.
         content:
@@ -84,28 +88,141 @@ paths:
             schema:
                 type: array
                 items:
-                  properties:
-                    id:
-                      type: integer
-                      example: 3
-                    brand:
-                      type: string
-                      example: Tesla
-                    model:
-                      type: string
-                      example: X
-                    regions:
-                      type: array
-                      items:
-                        properties:
-                          id:
-                            type: integer
-                            example: 2
-                          name:
-                            type: string
-                            example: America
+                  $ref: '#/components/schemas/Car'
+
+      responses:
+        200:
+          description: Successfully updated car data.
+        404:
+          description: Car not found.
+
+    post:
+      tags: 
+      - cars
+      requestBody:
+        description: Car data in JSON.
+        content:
+          application/json:
+            schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarNoId'
               
       responses:
         201:
           description: Successfully added to the database.
-      
+    
+  /api/cars/{id}:
+    delete:
+      tags:
+      - cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Deleted the car.
+        404:
+          description: Car not found.
+          
+components:
+  schemas:
+  
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+  
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    
+    UserSignIn:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    
+    UserSignUp:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    
+    
+    CarNoId:
+      type: object
+      properties:
+        brand:
+          type: string
+        model:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+    
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+        brand:
+          type: string
+        model:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+  
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: auth-cookie
+        
