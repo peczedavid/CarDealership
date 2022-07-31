@@ -85,7 +85,7 @@ public class AuthController {
 				signUpRequest.getEmail(),
 				encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRegions = signUpRequest.getRegion();
+		Set<String> strRegions = signUpRequest.getRegions();
 		Set<Region> regions = new HashSet<>();
 		if (strRegions == null) {
 
@@ -114,7 +114,7 @@ public class AuthController {
 		}
 		user.setRegions(regions);
 
-		Set<String> strRoles = signUpRequest.getRole();
+		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
