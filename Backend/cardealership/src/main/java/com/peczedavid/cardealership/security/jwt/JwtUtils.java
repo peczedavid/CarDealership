@@ -71,6 +71,7 @@ public class JwtUtils {
     return false;
   }
 
+  // TODO: store admin role in token
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
         .setSubject(username)

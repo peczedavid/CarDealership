@@ -3,6 +3,8 @@ package com.peczedavid.cardealership.controllers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,23 +55,39 @@ public class CarController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<?> getCarsByBrandParameter(@RequestParam(name = "brand", required = false) String brand) {
-        if (brand == null) {
-            List<Car> cars = carService.getCars();
-            if (cars.size() > 0) return ResponseEntity.ok().body(cars);
-            else return ResponseEntity.notFound().build();
+    @GetMapping()
+    public ResponseEntity<?> getCars(
+            @RequestParam(name = "brand", required = false) String brand,
+            @RequestParam(name = "model", required = false) String model,
+            @RequestParam(name = "region", required = false) String region) {
+
+        List<Car> cars = carService.getCars();
+        if(brand != null) {
+            cars = cars.stream().filter(car -> car.getBrand().contains(brand)).collect(Collectors.toList());
         }
-        else {
-            List<Car> cars = carService.getCarsByBrand(brand);
-            if (cars.size() > 0) return ResponseEntity.ok().body(cars);
-            else return ResponseEntity.notFound().build();
+        if(model != null) {
+            cars = cars.stream().filter(car -> car.getModel().contains(model)).collect(Collectors.toList());
         }
+        if(region != null) {
+            // TODO:
+        }
+
+        return ResponseEntity.ok().body(cars);
     }
 
     // @GetMapping("/get")
-    // public ResponseEntity<?> getCars() {
-
+    // public ResponseEntity<?> getCarsByBrandParameter(
+    // @RequestParam(name = "brand", required = false) String brand) {
+    // if (brand == null) {
+    // List<Car> cars = carService.getCars();
+    // if (cars.size() > 0) return ResponseEntity.ok().body(cars);
+    // else return ResponseEntity.notFound().build();
+    // }
+    // else {
+    // List<Car> cars = carService.getCarsByBrand(brand);
+    // if (cars.size() > 0) return ResponseEntity.ok().body(cars);
+    // else return ResponseEntity.notFound().build();
+    // }
     // }
 
     @GetMapping("/getByBrand/{brand}")

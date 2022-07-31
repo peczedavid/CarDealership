@@ -7,12 +7,14 @@ public class UserInfoResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
+	private List<String> regions;
 
-	public UserInfoResponse(Long id, String username, String email, List<String> roles) {
+	public UserInfoResponse(Long id, String username, String email, List<String> roles, List<String> regions) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.regions = regions;
 	}
 
 	public Long getId() {
@@ -42,4 +44,17 @@ public class UserInfoResponse {
 	public List<String> getRoles() {
 		return roles;
 	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public List<String> getRegions() {
+		return regions;
+	}
+
+	public void setRegions(List<String> regions) {
+		this.regions = regions;
+	}
+
 }
