@@ -57,4 +57,8 @@ public class CarService {
         }
         return null;
     }
+
+    public void deleteAll() {
+        carRepository.deleteAll();
+    }
 }

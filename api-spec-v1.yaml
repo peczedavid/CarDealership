@@ -6,6 +6,7 @@ tags:
   - name: users
   - name: cars
 paths:
+  # --- User section ---
   /api/auth/signup:
     post:
       tags:
@@ -27,7 +28,7 @@ paths:
                   message:
                     type: string
                     example: "User registered successfully!"
-
+  
   /api/auth/signout:
     post:
       tags:
@@ -60,7 +61,23 @@ paths:
         401:
           description: Bad credentials.
 
-
+  /api/auth/{id}:
+    delete:
+      tags:
+      - users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: User deleted.
+        404:
+          description: User not found.
+  
+  # --- Car section ---
   /api/cars:
     get:
       tags:
@@ -95,7 +112,7 @@ paths:
           description: Successfully updated car data.
         404:
           description: Car not found.
-
+  
     post:
       tags: 
       - cars
@@ -113,6 +130,28 @@ paths:
           description: Successfully added to the database.
     
   /api/cars/{id}:
+    get:
+      tags:
+      - cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Car with given id.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+        '404':
+          description: No car found with given id.
+          
     delete:
       tags:
       - cars

@@ -6,6 +6,7 @@
     <p>{{ car.brand }}</p>
     <p>{{ car.model }}</p>
     <p>{{ car.region }}</p>
+    <p>{{ car.stock }}</p>
   </div>
 </template>
 
@@ -24,7 +25,8 @@ export default {
       car: {
         brand: "default brand",
         model: "default model",
-        region: "default region"
+        region: "default region",
+        stock: -1
       }
     };
   },
@@ -35,6 +37,7 @@ export default {
          this.car.brand = response.data.brand;
          this.car.model = response.data.model;
          this.car.region = response.data.regions[0].name;
+         this.car.stock = response.data.stock;
           console.log(response.data);
         })
         .catch(e => {
