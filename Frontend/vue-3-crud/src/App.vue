@@ -1,14 +1,12 @@
 <template>
-  <HelloWorld/>
+  <h1>Hello world</h1>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+
   }
 }
 </script>
