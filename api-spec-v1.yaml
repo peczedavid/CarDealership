@@ -91,27 +91,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Car'
-                  
-        '404':
-          description: No cars found in the database.
-
-    put:
-      tags:
-      - cars
-      requestBody:
-        description: Car data in JSON.
-        content:
-          application/json:
-            schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Car'
-
-      responses:
-        200:
-          description: Successfully updated car data.
-        404:
-          description: Car not found.
   
     post:
       tags: 
@@ -123,7 +102,7 @@ paths:
             schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CarNoId'
+                  $ref: '#/components/schemas/CarData'
               
       responses:
         201:
@@ -151,7 +130,30 @@ paths:
                   
         '404':
           description: No car found with given id.
-          
+    
+    put:
+      tags:
+      - cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Car data in JSON.
+        content:
+          application/json:
+            schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarData'
+      responses:
+        200:
+          description: Successfully updated car data.
+        404:
+          description: Car not found.
+    
     delete:
       tags:
       - cars
@@ -231,9 +233,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Role'
-    
-    
-    CarNoId:
+
+    CarData:
       type: object
       properties:
         brand:
@@ -243,8 +244,10 @@ components:
         regions:
           type: array
           items:
-            $ref: '#/components/schemas/Region'
-    
+            type: string
+        stock:
+          type: integer
+            
     Car:
       type: object
       properties:
@@ -258,6 +261,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+        stock:
+          type: integer
   
   securitySchemes:
     cookieAuth:

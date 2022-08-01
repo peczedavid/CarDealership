@@ -33,6 +33,14 @@ public class Car {
     @NotNull
     private Integer stock;
 
+    public Car(Car other) {
+        this.id = other.getId();
+        this.brand = other.getBrand();
+        this.model = other.getModel();
+        this.regions = other.getRegions();
+        this.stock = other.getStock();
+    }
+
     public Car(String brand, String model) {
         this.brand = brand;
         this.model = model;

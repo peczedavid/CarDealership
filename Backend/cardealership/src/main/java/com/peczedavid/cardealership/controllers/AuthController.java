@@ -17,7 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +39,7 @@ import com.peczedavid.cardealership.repositories.UserRepository;
 import com.peczedavid.cardealership.security.jwt.JwtUtils;
 import com.peczedavid.cardealership.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = {"http://localhost:8081"}, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -92,7 +94,7 @@ public class AuthController {
 		} else {
 			strRegions.forEach(regionStr -> {
 				Region region = regionRepository.findByName(ERegion.fromString(regionStr))
-					.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+						.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
 				regions.add(region);
 			});
 		}
@@ -129,5 +131,17 @@ public class AuthController {
 		ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
 		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
 				.body(new MessageResponse("You've been signed out!"));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable int id) {
+		ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+		User user = userRepository.findById((long) id).orElse(null);
+		if (user != null) {
+			userRepository.delete(user);
+			return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+					.body("User deleted!");
+		}
+		return ResponseEntity.notFound().build();
 	}
 }

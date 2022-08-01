@@ -1,5 +1,6 @@
 package com.peczedavid.cardealership.payload.request;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -23,7 +24,7 @@ public class CarRequest {
     @Size(max = 50)
 	private String model;
 
-	private Set<String> region;
+	private List<String> regions;
 
     private Integer stock;
 }
