@@ -90,26 +90,10 @@ public class AuthController {
 		if (strRegions == null) {
 
 		} else {
-			strRegions.forEach(region -> {
-				switch (region) {
-					case "germany":
-						Region germanRegion = regionRepository.findByName(ERegion.Germany)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(germanRegion);
-						break;
-					case "japan":
-						Region japanRegion = regionRepository.findByName(ERegion.Japan)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(japanRegion);
-						break;
-					case "america":
-						Region americaRegion = regionRepository.findByName(ERegion.America)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(americaRegion);
-						break;
-					default:
-						break;
-				}
+			strRegions.forEach(regionStr -> {
+				Region region = regionRepository.findByName(ERegion.fromString(regionStr))
+					.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+				regions.add(region);
 			});
 		}
 		user.setRegions(regions);
