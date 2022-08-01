@@ -89,8 +89,8 @@ public class CarService {
     public Car deleteById(int _id) {
         Long id = (long)_id;
         Car dbCar = carRepository.findById(id).orElse(null);
-        Car tmpCar = new Car(dbCar);
         if (dbCar != null) {
+            Car tmpCar = new Car(dbCar);
             carRepository.deleteById(id);
             return tmpCar;
         }
