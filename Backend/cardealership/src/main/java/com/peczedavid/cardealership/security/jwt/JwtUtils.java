@@ -23,6 +23,7 @@ public class JwtUtils {
   private int jwtExpirationMs;
   @Value("${peczedavid.app.jwtCookieName}")
   private String jwtCookie;
+
   public String getJwtFromCookies(HttpServletRequest request) {
     Cookie cookie = WebUtils.getCookie(request, jwtCookie);
     if (cookie != null) {
@@ -31,18 +32,27 @@ public class JwtUtils {
       return null;
     }
   }
+
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
+        .path("/api").maxAge(24 * 60 * 60)
+        .httpOnly(true)    // because not showing up in chrome(otherwise=true)
+        //.sameSite("None")   // because not showing up in chrome
+        //.secure(true)       // because not showing up in chrome
+        .build();
     return cookie;
   }
+
   public ResponseCookie getCleanJwtCookie() {
     ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
     return cookie;
   }
+
   public String getUserNameFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
+
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -60,7 +70,8 @@ public class JwtUtils {
     }
     return false;
   }
-  
+
+  // TODO: store admin role in token
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
         .setSubject(username)

@@ -1,0 +1,164 @@
+Roles:
+	"user" - "ROLE_USER"
+	"admin" - "ROLE_ADMIN"
+
+Regions:
+	"america"
+	"middle-east"
+	"germany"
+	"japan"
+
+
+Accounts:
+Admin:
+{
+	"username": "admin",
+	"email": "admin@dealership.com",
+	"password": "admin",
+	"role": ["user", "admin"],
+	"region": ["america"]
+}
+Japanese:
+{
+	"username": "japan-user-1",
+	"email": "japan-user-1@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["japan"]
+}
+{
+	"username": "japan-user-2",
+	"email": "japan-user-2@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["japan"]
+
+}
+{
+	"username": "japan-user-3",
+	"email": "japan-user-3@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["japan"]
+}
+German:
+{
+	"username": "german-user-1",
+	"email": "german-user-1@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["germany"]
+}
+{
+	"username": "german-user-2",
+	"email": "german-user-2@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["germany"]
+}
+American:
+{
+	"username": "american-user-1",
+	"email": "american-user-1@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["america"]
+}
+{
+	"username": "american-user-2",
+	"email": "american-user-2@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["america"]
+}
+{
+	"username": "american-user-3",
+	"email": "american-user-3@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["america"]
+}
+Middle-Eastern:
+{
+	"username": "middle-eastern-user-1",
+	"email": "middle-eastern-user-1@dealership.com",
+	"password": "secret123",
+	"role": ["user"],
+	"region": ["middle-east"]
+}
+
+Cars:
+American:
+{
+	"brand": "Tesla",
+	"model": "S",
+	"region": ["america"]
+}
+{
+	"brand": "Tesla",
+	"model": "3",
+	"region": ["america"]
+}
+{
+	"brand": "Tesla",
+	"model": "X",
+	"region": ["america"]
+}
+{
+	"brand": "Ford",
+	"model": "Focus RS",
+	"region": ["america"]
+}
+{
+	"brand": "Ford",
+	"model": "Mustang Shelby GT500",
+	"region": ["america"]
+}
+German:
+{
+	"brand": "Volkswagen",
+	"model": "Golf 4",
+	"region": ["germany"]
+}
+{
+	"brand": "Volkswagen",
+	"model": "Golf 5",
+	"region": ["germany"]
+}
+{
+	"brand": "Volkswagen",
+	"model": "Golf 6",
+	"region": ["germany"]
+}
+{
+	"brand": "Audi",
+	"model": "R8",
+	"region": ["germany"]
+}
+{
+	"brand": "Audi",
+	"model": "A4",
+	"region": ["germany"]
+}
+Japanese:
+{
+	"brand": "Toyota",
+	"model": "Yaris GR",
+	"region": ["japan"]
+}
+{
+	"brand": "Toyota",
+	"model": "GR Supra 5",
+	"region": ["japan"]
+}
+Middle-Eastern:
+{
+	"brand": "Lamborghini",
+	"model": "Aventador LP700-4",
+	"region": ["middle-east"]
+}
+{
+	"brand": "Lamborghini",
+	"model": "Huracan LP610-4",
+	"region": ["middle-east"]
+}

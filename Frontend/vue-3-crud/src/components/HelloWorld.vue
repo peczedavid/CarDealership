@@ -2,6 +2,11 @@
   <div class="hello">
     <h1>Hello Vue</h1>
     <p>{{ contentString }}</p>
+    <p>{{ adminContentString }}</p>
+    <p>{{ car.brand }}</p>
+    <p>{{ car.model }}</p>
+    <p>{{ car.region }}</p>
+    <p>{{ car.stock }}</p>
   </div>
 </template>
 
@@ -15,23 +20,43 @@ export default {
   },
   data() {
     return {
-      contentString: "no content"
+      contentString: "no content",
+      adminContentString: "no admin content",
+      car: {
+        brand: "default brand",
+        model: "default model",
+        region: "default region",
+        stock: -1
+      }
     };
   },
   methods: {
-    getContentString() {
-      TestService.getPublicContent()
-        .then(response => {
-          this.contentString = response.data;
+    getCarTest() {
+      TestService.getCarById()
+       .then(response => {
+         this.car.brand = response.data.brand;
+         this.car.model = response.data.model;
+         this.car.region = response.data.regions[0].name;
+         this.car.stock = response.data.stock;
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
+    },
+    async signInAdmin() {
+      this.contentString = await TestService.signInAdmin();
+    },
+    async getAdminContent() {
+      this.adminContentString = await TestService.getAdminContent();
     }
   },
-  mounted() {
-    this.getContentString();
+  async mounted() {
+    await this.signInAdmin();
+    //this.getContentString();
+    this.getCarTest();
+
+    await this.getAdminContent();
   }
 };
 </script>
