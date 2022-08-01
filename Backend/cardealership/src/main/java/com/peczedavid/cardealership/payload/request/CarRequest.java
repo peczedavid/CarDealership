@@ -1,12 +1,21 @@
 package com.peczedavid.cardealership.payload.request;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class CarRequest {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CarRequest {
     @NotBlank
     @Size(max = 50)
 	private String brand;
@@ -15,29 +24,7 @@ public class CarRequest {
     @Size(max = 50)
 	private String model;
 
-	private Set<String> region;
+	private List<String> regions;
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Set<String> getRegion() {
-        return region;
-    }
-
-    public void setRegion(Set<String> region) {
-        this.region = region;
-    }
+    private Integer stock;
 }

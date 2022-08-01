@@ -1,19 +1,24 @@
 package com.peczedavid.cardealership.payload.response;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.peczedavid.cardealership.models.Car;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class CarResponse {
     private Long id;
     private String brand;
     private String model;
     private List<String> regions;
+    private Integer stock;
 
-    public CarResponse(Long id, String brand, String model, Set<String> regions) {
+    public CarResponse(Long id, String brand, String model, Set<String> regions, Integer stock) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -21,37 +26,6 @@ public class CarResponse {
         for(String s : regions)
             strRegions.add(s);
         this.regions = strRegions;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public List<String> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(List<String> regions) {
-        this.regions = regions;
+        this.stock = stock;
     }
 }

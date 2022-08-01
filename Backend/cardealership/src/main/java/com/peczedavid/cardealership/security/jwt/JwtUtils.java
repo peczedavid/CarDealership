@@ -38,8 +38,8 @@ public class JwtUtils {
     ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
         .path("/api").maxAge(24 * 60 * 60)
         .httpOnly(true)    // because not showing up in chrome(otherwise=true)
-        .sameSite("None")   // because not showing up in chrome
-        .secure(true)       // because not showing up in chrome
+        //.sameSite("None")   // because not showing up in chrome
+        //.secure(true)       // because not showing up in chrome
         .build();
     return cookie;
   }
@@ -71,6 +71,7 @@ public class JwtUtils {
     return false;
   }
 
+  // TODO: store admin role in token
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
         .setSubject(username)

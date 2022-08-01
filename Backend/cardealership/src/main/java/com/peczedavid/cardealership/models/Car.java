@@ -5,29 +5,41 @@ import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "cars")
 public class Car {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@NotBlank
-	@Size(max = 40)
-	private String brand;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
-	@Size(max = 40)
-	private String model;
+    @Size(max = 40)
+    private String brand;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "car_regions", 
-			   joinColumns = @JoinColumn(name = "car_id"), 
-			   inverseJoinColumns = @JoinColumn(name = "region_id"))
-	private Set<Region> regions = new HashSet<>();
+    @NotBlank
+    @Size(max = 40)
+    private String model;
+
+    // TODO: now set to eager so it can be deleted,
+    // maybe set to lazy and do workaround in CarService::deleteById
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "car_regions", joinColumns = @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "region_id"))
+    private Set<Region> regions = new HashSet<>();
+
+    @NotNull
+    private Integer stock;
+
+    public Car(Car other) {
+        this.id = other.getId();
+        this.brand = other.getBrand();
+        this.model = other.getModel();
+        this.regions = other.getRegions();
+        this.stock = other.getStock();
+    }
 
     public Car(String brand, String model) {
         this.brand = brand;
@@ -35,8 +47,16 @@ public class Car {
     }
 
     public Car() {
-        
-	}
+
+    }
+
+    public boolean isInRegion(String regionStr) {
+        for (Region region : regions) {
+            if (region.getName() == ERegion.fromString(regionStr))
+                return true;
+        }
+        return false;
+    }
 
     public Long getId() {
         return id;
@@ -69,5 +89,13 @@ public class Car {
     public void setRegions(Set<Region> regions) {
         this.regions = regions;
     }
-    
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
 }

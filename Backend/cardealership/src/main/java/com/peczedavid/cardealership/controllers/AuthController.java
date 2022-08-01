@@ -17,7 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +39,7 @@ import com.peczedavid.cardealership.repositories.UserRepository;
 import com.peczedavid.cardealership.security.jwt.JwtUtils;
 import com.peczedavid.cardealership.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = {"http://localhost:8081"}, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -85,36 +87,20 @@ public class AuthController {
 				signUpRequest.getEmail(),
 				encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRegions = signUpRequest.getRegion();
+		Set<String> strRegions = signUpRequest.getRegions();
 		Set<Region> regions = new HashSet<>();
 		if (strRegions == null) {
 
 		} else {
-			strRegions.forEach(region -> {
-				switch (region) {
-					case "germany":
-						Region germanRegion = regionRepository.findByName(ERegion.Germany)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(germanRegion);
-						break;
-					case "japan":
-						Region japanRegion = regionRepository.findByName(ERegion.Japan)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(japanRegion);
-						break;
-					case "america":
-						Region americaRegion = regionRepository.findByName(ERegion.America)
-								.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
-						regions.add(americaRegion);
-						break;
-					default:
-						break;
-				}
+			strRegions.forEach(regionStr -> {
+				Region region = regionRepository.findByName(ERegion.fromString(regionStr))
+						.orElseThrow(() -> new RuntimeException("Error: Region is not found."));
+				regions.add(region);
 			});
 		}
 		user.setRegions(regions);
 
-		Set<String> strRoles = signUpRequest.getRole();
+		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -145,5 +131,17 @@ public class AuthController {
 		ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
 		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
 				.body(new MessageResponse("You've been signed out!"));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable int id) {
+		ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+		User user = userRepository.findById((long) id).orElse(null);
+		if (user != null) {
+			userRepository.delete(user);
+			return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+					.body("User deleted!");
+		}
+		return ResponseEntity.notFound().build();
 	}
 }
