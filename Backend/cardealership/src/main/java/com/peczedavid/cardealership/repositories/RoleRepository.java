@@ -9,5 +9,5 @@ import com.peczedavid.cardealership.models.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-	Optional<Role> findByName(ERole name);
+	Optional<Role> findByName(ERole eRole);
 }
