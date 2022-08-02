@@ -1,11 +1,15 @@
 <template>
-  <div class="container">
-    <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
+  <div class="row">
+    <SideBarComponent />
+    <div class="container mx-auto col-lg-6">
+      <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
+    </div>
   </div>
 </template>
 
 <script>
 import CarComponent from "@/components/CarComponent.vue";
+import SideBarComponent from "../components/SideBarComponent.vue";
 
 export default {
   name: "CarsView",
@@ -48,7 +52,7 @@ export default {
       ],
     };
   },
-  components: { CarComponent },
+  components: { CarComponent, SideBarComponent },
 };
 </script>
 

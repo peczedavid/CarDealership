@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Dealership</a>
       <button
