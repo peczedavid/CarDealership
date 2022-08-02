@@ -1,19 +1,20 @@
 <template>
-  <div class="container">
-    <h1>Hello world</h1>
-  </div>
-  
+  <NavBar />
+  <SignUpForm />
 </template>
 
 <script>
-export default {
-  name: 'App',
-  components: {
+import SignUpForm from "./components/SignUpForm.vue";
+import NavBar from "./components/NavBar.vue";
 
-  }
-}
+export default {
+  name: "App",
+  components: {
+    SignUpForm,
+    NavBar,
+  },
+};
 </script>
 
 <style>
-
 </style>
