@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import axios from "@/http-common"
 
 export default {
   data() {
@@ -40,12 +41,9 @@ export default {
   methods: {
     async handleLogin() {
       axios
-        .post("http://localhost:8080/api/auth/signin", this.user, {
-          withCredentials: true,
-        })
+        .post("/auth/signin", this.user)
         .then((result) => {
-          console.log(result.data.username);
-          this.$router.push('/');
+          this.$router.push("/");
         })
         .catch((error) => alert("Wrong username or password!"));
     },
