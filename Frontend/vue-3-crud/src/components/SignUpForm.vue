@@ -1,37 +1,52 @@
 <template>
   <div class="container col-lg-4">
-    <form>
+    <form @submit.prevent="handleRegistration">
       <div class="mb-3">
-        <label for="usernameInput" class="form-label">Username</label>
-        <input
-          class="form-control"
-          id="usernameInput"
-        />
+        <label for="usernameInput" class="form-label">Username:</label>
+        <input v-model="user.username" required class="form-control" id="usernameInput" />
       </div>
       <div class="mb-3">
-        <label for="emailInput" class="form-label">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="emailInput"
-        />
+        <label for="emailInput" class="form-label">Email:</label>
+        <input v-model="user.email" required type="email" class="form-control" id="emailInput" />
       </div>
       <div class="mb-3">
-        <label for="passwordInput" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="passwordInput"
-        />
+        <label for="passwordInput" class="form-label">Password:</label>
+        <input v-model="user.password" required type="password" class="form-control" id="passwordInput" />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="mb-3">
+        <label for="regionSelect" class="me-2">Region:</label>
+        <select required v-model="user.regions[0]" class="" id="regionSelect">
+          <option value="" disabled selected>Select your region</option>
+          <!--TODO: ask from the database the available regions-->
+           <option value="america">America</option>
+           <option value="germany">Germany</option>
+           <option value="japan">Japan</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      user: {
+        username: '',
+        email: '',
+        password: '',
+        regions: ['']
+      }
+    }
+  },
+  methods: {
+    handleRegistration() {
+      console.log("User trying to register:");
+      console.log(this.user);
+    }
+  }
+};
 </script>
 
-<style>
-</style>
+<style></style>

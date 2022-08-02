@@ -21,16 +21,17 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Cars</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
         </ul>
         <ul class="navbar-nav">
-        <li class="nav-item">
-            <button type="button" class="btn btn-outline-light me-2">Log in</button>
+          <li class="nav-item">
+            <button type="button" class="btn btn-outline-light me-2">
+              Log in
+            </button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-outline-light">Register</button>
+            <button type="button" class="btn btn-outline-light">
+              Register
+            </button>
           </li>
         </ul>
       </div>
@@ -39,7 +40,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      user: {
+        username: '', // Blank if not logged in
+        admin: false
+      }
+    }
+  }
+};
 </script>
 
 <style></style>
