@@ -5,4 +5,3 @@ export default axios.create({
     "Content-type": "application/json"
   }
 });
-axios.defaults.withCredentials = true
