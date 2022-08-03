@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    async handleRegistration() {
+    handleRegistration() {
       axios
         .post("/auth/signup", this.user)
         .then((result) => {
