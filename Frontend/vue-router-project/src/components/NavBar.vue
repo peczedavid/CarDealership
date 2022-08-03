@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Dealership</a>
       <button
@@ -16,22 +16,28 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <router-link to="/" class="nav-link active">Home</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Cars</a>
+            <router-link to="/cars" class="nav-link active">Cars</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <button type="button" class="btn btn-outline-light me-2">
-              Log in
-            </button>
+          <li class="navbar-nav">
+            <router-link
+              to="/signin"
+              class="btn btn-outline-light me-2"
+              tag="button"
+              >Log in</router-link
+            >
           </li>
-          <li class="nav-item">
-            <button type="button" class="btn btn-outline-light">
-              Register
-            </button>
+          <li class="navbar-nav">
+            <router-link
+              to="/signup"
+              class="btn btn-outline-light me-2"
+              tag="button"
+              >Register</router-link
+            >
           </li>
         </ul>
       </div>
@@ -44,11 +50,11 @@ export default {
   data() {
     return {
       user: {
-        username: '', // Blank if not logged in
-        admin: false
-      }
-    }
-  }
+        username: "", // Blank if not logged in
+        admin: false,
+      },
+    };
+  },
 };
 </script>
 

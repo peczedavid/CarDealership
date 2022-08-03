@@ -29,7 +29,10 @@
 </template>
 
 <script>
+import axios from "@/http-common"
+
 export default {
+  name: 'SignUpForm',
   data() {
     return {
       user: {
@@ -41,10 +44,14 @@ export default {
     }
   },
   methods: {
-    handleRegistration() {
-      console.log("User trying to register:");
-      console.log(this.user);
-    }
+    async handleRegistration() {
+      axios
+        .post("/auth/signup", this.user)
+        .then((result) => {
+          this.$router.push("/");
+        })
+        .catch((error) => alert(error));
+    },
   }
 };
 </script>

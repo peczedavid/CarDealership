@@ -1,4 +1,4 @@
-# vue-3-crud
+# vue-router-project
 
 ## Project setup
 ```
@@ -13,11 +13,6 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ### Customize configuration
