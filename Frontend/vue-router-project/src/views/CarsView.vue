@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <SideBarComponent />
-    <div class="container mx-auto col-lg-6 col-sm-6">
+    <div class="container col-lg-6 col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
     </div>
   </div>
@@ -10,9 +10,24 @@
 <script>
 import CarComponent from "@/components/CarComponent.vue";
 import SideBarComponent from "../components/SideBarComponent.vue";
+import axios from "@/http-common"
 
 export default {
   name: "CarsView",
+  methods: {
+    async getCars() {
+      axios
+        .get("/cars")
+        .then((result) => {
+          console.log(result);
+          this.cars = result.data;
+        })
+        .catch((error) => alert(error));
+    }
+  },
+  async beforeMount() {
+    this.getCars()
+  },
   data() {
     return {
       cars: [
