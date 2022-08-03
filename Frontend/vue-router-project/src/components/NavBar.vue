@@ -1,16 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Dealership</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <a class="navbar-brand" href="/">Dealership</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -23,21 +16,17 @@
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="navbar-nav">
-            <router-link
-              to="/signin"
-              class="btn btn-outline-light me-2"
-              tag="button"
-              >Log in</router-link
-            >
+          <li v-if="activeUser" class="navbar-nav">
+            <router-link to="/" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
           </li>
-          <li class="navbar-nav">
-            <router-link
-              to="/signup"
-              class="btn btn-outline-light me-2"
-              tag="button"
-              >Register</router-link
-            >
+          <li v-if="activeUser" class="navbar-nav">
+            <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
+          </li>
+          <li v-if="!activeUser" class="navbar-nav">
+            <router-link to="/signin" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
+          </li>
+          <li v-if="!activeUser" class="navbar-nav">
+            <router-link to="/signup" class="btn btn-outline-light me-2" tag="button">Register</router-link>
           </li>
         </ul>
       </div>
@@ -46,16 +35,15 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      user: {
-        username: "", // Blank if not logged in
-        admin: false,
-      },
+      activeUser: null
     };
-  },
+  }
 };
 </script>
 
-<style></style>
+<style>
+</style>
