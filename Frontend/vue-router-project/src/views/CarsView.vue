@@ -1,8 +1,9 @@
 <template>
   <div class="row">
-    <SideBarComponent/>
-    <div class="container col-sm-6">
+    <SideBarComponent @carsChanged="this.cars = $event"/>
+    <div class="container col-lg-6 col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
+      <h1 v-if="this.cars.length == 0">No cars found</h1>
     </div>
   </div>
 </template>
