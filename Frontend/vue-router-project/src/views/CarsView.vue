@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <SideBarComponent @carsChanged="this.cars = $event"/>
-    <div class="container col-lg-6 col-sm-6">
+    <SideBarComponent/>
+    <div class="container col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
     </div>
   </div>
