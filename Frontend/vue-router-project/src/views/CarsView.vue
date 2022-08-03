@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <SideBarComponent />
+    <SideBarComponent @carsChanged="this.cars = $event"/>
     <div class="container col-lg-6 col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
     </div>
@@ -9,62 +9,27 @@
 
 <script>
 import CarComponent from "@/components/CarComponent.vue";
-import SideBarComponent from "../components/SideBarComponent.vue";
+import SideBarComponent from "@/components/SideBarComponent.vue";
 import axios from "@/http-common"
 
 export default {
   name: "CarsView",
   methods: {
-    async getCars() {
+    getCars() {
       axios
         .get("/cars")
         .then((result) => {
-          console.log(result);
           this.cars = result.data;
         })
         .catch((error) => alert(error));
     }
   },
-  async beforeMount() {
+  beforeMount() {
     this.getCars()
   },
   data() {
     return {
-      cars: [
-        {
-          id: 1,
-          brand: "Telsa",
-          model: "Model S",
-          regions: [
-            {
-              id: 1,
-              name: "America",
-            },
-          ],
-        },
-        {
-          id: 5,
-          brand: "Volkswagen",
-          model: "Golf 4",
-          regions: [
-            {
-              id: 2,
-              name: "Germany",
-            },
-          ],
-        },
-        {
-          id: 3,
-          brand: "Ford",
-          model: "Focus RS",
-          regions: [
-            {
-              id: 1,
-              name: "America",
-            },
-          ],
-        },
-      ],
+      cars: []
     };
   },
   components: { CarComponent, SideBarComponent },

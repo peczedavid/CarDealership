@@ -62,6 +62,7 @@ export default {
           // }
           // const userDataString = JSON.stringify(userData);
           // this.setCookie("activeUser", userDataString, 1);
+          //Vue.forceUpdate();
           this.$router.push("/");
         })
         .catch((error) => alert(error));

@@ -20,7 +20,7 @@
             <router-link to="/" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
           </li>
           <li v-if="activeUser" class="navbar-nav">
-            <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
+            <router-link @click="signOut" to="#" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
           </li>
           <li v-if="!activeUser" class="navbar-nav">
             <router-link to="/signin" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
