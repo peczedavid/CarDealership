@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <SideBarComponent />
-    <div class="container mx-auto col-lg-6">
+    <div class="container mx-auto col-lg-6 col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
     </div>
   </div>

@@ -1,84 +1,41 @@
 <template>
-  <!-- <div
-  style=".offcanvas: show"
-    class="offcanvas offcanvas-start"
-    tabindex="-1"
-    id="offcanvas"
-    aria-labelledby="offcanvasLabel"
-  >
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
-      <button
-        type="button"
-        class="btn-close text-reset"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="offcanvas-body">
-      Content for the offcanvas goes here. You can place just about any
-      Bootstrap component or custom elements here.
-    </div>
-  </div> -->
-  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">Collapsible</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-          Home
-        </button>
-        <div class="collapse" id="home-collapse" style="">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Reports</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          Dashboard
-        </button>
-        <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark rounded">Annually</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-          Orders
-        </button>
-        <div class="collapse" id="orders-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New</a></li>
-            <li><a href="#" class="link-dark rounded">Processed</a></li>
-            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded">Returned</a></li>
-          </ul>
-        </div>
-      </li>
+  <div class="felx-shrink-0 p-4 bg-white" style="width: 350px">
+    <ul class="list-unstyled">
+      <h2 class="">Filter</h2>
       <li class="border-top my-3"></li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-          Account
-        </button>
-        <div class="collapse" id="account-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New...</a></li>
-            <li><a href="#" class="link-dark rounded">Profile</a></li>
-            <li><a href="#" class="link-dark rounded">Settings</a></li>
-            <li><a href="#" class="link-dark rounded">Sign out</a></li>
-          </ul>
-        </div>
-      </li>
     </ul>
+    <form>
+      <button class="btn btn-outline-primary mb-2" type="submit">Search</button>
+      <div class="form-group row">
+        <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputBrand">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputModel" class="me-2 col-sm-2 col-form-label">Model:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputModel">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
+        <div class="col-sm-9">
+          <select class="mt-2" id="regionSelect">
+            <option value="" disabled selected>Select your region</option>
+            <!--TODO: ask from the database the available regions-->
+            <option value="america">America</option>
+            <option value="germany">Germany</option>
+            <option value="japan">Japan</option>
+            <option value="">All</option>
+          </select>
+        </div>
+        <!-- <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputRegion" placeholder="America">
+        </div> -->
+      </div>
+    </form>
   </div>
 </template>
 
@@ -86,4 +43,5 @@
 export default {};
 </script>
 
-<style></style>
+<style>
+</style>
