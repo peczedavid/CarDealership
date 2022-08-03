@@ -17,7 +17,7 @@
             </div>
             <ul class="list-group list-group-flush align-items-end">
                 <li class="list-group-item p-3">
-                    <button class="btn btn-primary me-3">Edit</button>
+                    <router-link v-bind:to="'edit/' + carData.id " class="btn btn-primary me-3">Edit</router-link>
                     <button class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal">Delete</button>
                 </li>

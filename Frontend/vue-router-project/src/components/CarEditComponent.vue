@@ -33,14 +33,37 @@
 import axios from "@/http-common"
 
 export default {
+    props: {
+        carEditData: null
+    },
+    created() {
+        if (this.carEditData != null) {
+            console.log("EDITING");
+            // TODO: Set the form values from the given carEditData
+            this.carData.brand = this.carEditData.brand;
+            this.carData.model = this.carEditData.model;
+            this.carData.regions = this.carEditData.regions;
+            this.carData.stock = this.carEditData.stock;
+        }
+    },
     methods: {
         handleSubmit() {
-            axios
-                .post("/cars", this.carData)
-                .then((result) => {
-                    this.$router.push("/cars/" + result.data.id);
-                })
-                .catch((error) => alert(error));
+
+            if (this.carEditData != null) {  // Editing
+                axios
+                    .put("/cars", this.carData)
+                    .then((result) => {
+                        this.$router.push("/cars/" + result.data.id);
+                    })
+                    .catch((error) => alert(error));
+            } else { // Creating new
+                axios
+                    .post("/cars", this.carData)
+                    .then((result) => {
+                        this.$router.push("/cars/" + result.data.id);
+                    })
+                    .catch((error) => alert(error));
+            }
         }
     },
     data() {
