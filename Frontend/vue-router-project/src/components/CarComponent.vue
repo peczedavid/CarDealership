@@ -8,7 +8,8 @@
         <div class="card-body">
           <h5 class="card-title">{{ carData.brand + " " + carData.model }}</h5>
           <p class="card-text">Availabel in: {{ carData.regions[0].name }}</p>
-          <router-link class="btn btn-primary mt-4" v-bind:to="'/cars/' + carData.id">Details</router-link>
+          <p class="card-text">Stock: {{ carData.stock }}</p>
+          <router-link class="btn btn-primary" v-bind:to="'/cars/' + carData.id">Details</router-link>
         </div>
       </div>
     </div>
@@ -29,6 +30,7 @@ export default {
           name: "RegionDef",
         },
       ],
+      stock: -1
     },
   },
 };
