@@ -2,10 +2,9 @@
   <div class="felx-shrink-0 p-4 bg-white" style="width: 350px">
     <ul class="list-unstyled">
       <h2 class="">Filter</h2>
-      <li class="border-top my-3"></li>
+      <li class="border-top border-dark my-3"></li>
     </ul>
     <form @submit.prevent="handleSearch">
-      <button class="btn btn-outline-primary mb-2" type="submit">Search</button>
       <div class="form-group row">
         <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
         <div class="col-sm-9">
@@ -31,7 +30,13 @@
           </select>
         </div>
       </div>
+      <button class="btn btn-primary mb-2" type="submit">Search</button>
     </form>
+    <ul class="list-unstyled mt-5">
+      <h2 class="">Admin actions</h2>
+      <li class="border-top border-dark my-3"></li>
+      <router-link to="/cars/new" class="btn btn-success" tag="button">New car</router-link>
+    </ul>
   </div>
 </template>
 
