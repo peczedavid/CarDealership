@@ -2,8 +2,6 @@ package com.peczedavid.cardealership.models;
 
 import javax.persistence.*;
 
-import lombok.ToString;
-
 @Entity
 @Table(name = "regions")
 public class Region {
