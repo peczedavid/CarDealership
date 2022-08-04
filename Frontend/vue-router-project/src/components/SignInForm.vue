@@ -16,9 +16,7 @@
 
 <script>
 import axios from "@/http-common"
-import Cookies from "universal-cookie"
-const cookies = new Cookies()
-//import { store } from "../data/store"; 
+import { store } from "@/data/store"; 
 
 export default {
   data() {
@@ -30,39 +28,12 @@ export default {
     };
   },
   methods: {
-    getCookie(cname) {
-      var name = cname + '=';
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(';');
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return '';
-    },
-    setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = 'expires=' + d.toUTCString();
-      document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-    },
-    async handleLogin() {
+    handleLogin() {
       axios
         .post("/auth/signin", this.user)
         .then((result) => {
-          // successfull login
-          // const userData = {
-          //   username: result.data.username,
-          //   admin: result.data.roles.includes("ROLE_ADMIN") ? true : false
-          // }
-          // const userDataString = JSON.stringify(userData);
-          // this.setCookie("activeUser", userDataString, 1);
-          //Vue.forceUpdate();
+          // Tell navbar that someone logged in (NavBar.activeUser=result.data)
+          this.emitter.emit("sign-in-form", result.data);
           this.$router.push("/");
         })
         .catch((error) => alert(error));

@@ -46,30 +46,32 @@ public class CarController {
             @RequestParam(name = "region", required = false) String region,
             @RequestParam(name = "stock", required = false) Integer stock) {
         List<Car> cars = carService.getCars(brand, model, region, stock);
+        return ResponseEntity.ok(cars);
+        // Cookie[] cookies = request.getCookies();
+        // if (cookies == null)
+        // return ResponseEntity.badRequest().build(); // Needs to be logged in to
+        // access cars
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null)
-            return ResponseEntity.badRequest().build(); // Needs to be logged in to access cars
+        // String userRegion = null;
+        // for (Cookie cookie : cookies) {
+        // // TODO: get the cookie name from the application.properties file
+        // if (cookie.getName().equals("authCookie")) {
+        // String jwtString = cookie.getValue();
+        // userRegion = jwtUtils.getRegionFromToken(jwtString);
+        // }
+        // }
+        // if (userRegion == null)
+        // return ResponseEntity.badRequest().build(); // Needs to be logged in to
+        // access cars
 
-        String userRegion = null;
-        for (Cookie cookie : cookies) {
-            // TODO: get the cookie name from the application.properties file
-            if (cookie.getName().equals("authCookie")) {
-                String jwtString = cookie.getValue();
-                userRegion = jwtUtils.getRegionFromToken(jwtString);
-            }
-        }
-        if (userRegion == null)
-            return ResponseEntity.badRequest().build(); // Needs to be logged in to access cars
+        // List<Car> filteredCars = new ArrayList<Car>();
+        // for(Car car : cars) {
+        // if(car.isInRegion(userRegion)) {
+        // filteredCars.add(car);
+        // }
+        // }
 
-        List<Car> filteredCars = new ArrayList<Car>();
-        for(Car car : cars) {
-            if(car.isInRegion(userRegion)) {
-                filteredCars.add(car);
-            }
-        }
-        
-        return ResponseEntity.ok().body(filteredCars);
+        // return ResponseEntity.ok().body(filteredCars);
     }
 
     @GetMapping(value = "/{id}")

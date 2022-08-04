@@ -1,6 +1,8 @@
 import { reactive } from "vue";
 
 export const store = reactive({
+    loggedIn: false,
+
     getCookie(cname) {
         var name = cname + '=';
         var decodedCookie = decodeURIComponent(document.cookie);

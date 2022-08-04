@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Dealership</a>
+      <router-link class="navbar-brand" to="/">Dealership</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
             <router-link to="/" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
           </li>
           <li v-if="activeUser" class="navbar-nav">
-            <router-link @click="signOut" to="#" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
+            <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
           </li>
           <li v-if="!activeUser" class="navbar-nav">
             <router-link to="/signin" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
@@ -35,12 +35,35 @@
 </template>
 
 <script>
+import axios from '@/http-common';
+import { store } from "@/data/store";
 
 export default {
   data() {
     return {
       activeUser: null
     };
+  },
+  methods: {
+    signOut() {
+      axios
+      .post("/auth/signout")
+      .then((result) => {
+        this.activeUser = null;
+        // Refresh page so cookie dissappears
+        this.$router.go();
+      });
+    }
+  },
+  watch: {
+    activeUser(newValue, oldValue) {
+      console.log("activeUserChanged");
+    }
+  },
+  mounted() {
+    this.emitter.on("sign-in-form", data => {
+      this.activeUser = data;
+    });
   }
 };
 </script>
