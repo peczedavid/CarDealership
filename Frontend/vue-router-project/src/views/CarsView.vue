@@ -17,6 +17,7 @@ export default {
   name: "CarsView",
   methods: {
     getCars() {
+      // TODO: sort by brand or stock
       axios
         .get("/cars")
         .then((result) => {

@@ -1,4 +1,3 @@
-<!-- TODO: refactor to be able to use when editing existing one -->
 <template>
     <div class="container col-lg-4">
         <form @submit.prevent="handleSubmit">
@@ -24,7 +23,8 @@
                     <option value="japan">Japan</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">New car</button>
+            <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
+            <button v-else type="submit" class="btn btn-primary">Update car</button>
         </form>
     </div>
 </template>
@@ -36,22 +36,21 @@ export default {
     props: {
         carEditData: null
     },
-    created() {
-        if (this.carEditData != null) {
-            console.log("EDITING");
-            // TODO: Set the form values from the given carEditData
-            this.carData.brand = this.carEditData.brand;
-            this.carData.model = this.carEditData.model;
-            this.carData.regions = this.carEditData.regions;
-            this.carData.stock = this.carEditData.stock;
+    watch: {
+        carEditData: function (newVal) {
+            if (newVal !== null) {
+                this.carData.brand = newVal.brand;
+                this.carData.model = newVal.model;
+                this.carData.regions = newVal.regions.map(region => region.name.toLowerCase());
+                this.carData.stock = newVal.stock;
+            }
         }
     },
     methods: {
         handleSubmit() {
-
             if (this.carEditData != null) {  // Editing
                 axios
-                    .put("/cars", this.carData)
+                    .put("/cars/" + this.carEditData.id, this.carData)
                     .then((result) => {
                         this.$router.push("/cars/" + result.data.id);
                     })

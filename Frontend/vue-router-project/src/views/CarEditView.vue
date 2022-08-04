@@ -15,9 +15,13 @@ export default {
             carEditData: null
         }
     },
-    created() {
-        // TODO: Set the carEditData to pass into the carEditComponent
-        
+    beforeCreate() {
+        axios
+            .get("/cars/" + this.$route.params.id)
+            .then((result) => {
+                this.carEditData = result.data;
+            })
+            .catch((error) => console.log(error));
     }
 }
 </script>
