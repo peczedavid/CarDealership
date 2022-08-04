@@ -24,7 +24,7 @@ export default {
           this.cars = result.data;
           console.log(this.cars);
         })
-        .catch((error) => alert(error));
+        .catch((error) => console.log(error));
     }
   },
   beforeMount() {

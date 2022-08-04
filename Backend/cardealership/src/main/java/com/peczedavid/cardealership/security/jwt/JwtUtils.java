@@ -57,6 +57,11 @@ public class JwtUtils {
     return cookie;
   }
 
+  public Long getIdFromJwtToken(String token) {
+    Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+    return Long.parseLong(claims.getBody().getSubject());
+  }
+
   public String getUserNameFromJwtToken(String token) {
     // return
     // Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();

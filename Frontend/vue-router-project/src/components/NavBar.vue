@@ -17,7 +17,7 @@
         </ul>
         <ul class="navbar-nav">
           <li v-if="activeUser" class="navbar-nav">
-            <router-link to="/" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
+            <router-link to="/profile" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
           </li>
           <li v-if="activeUser" class="navbar-nav">
             <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
@@ -36,7 +36,6 @@
 
 <script>
 import axios from '@/http-common';
-import { store } from "@/data/store";
 
 export default {
   data() {
@@ -53,11 +52,6 @@ export default {
         // Refresh page so cookie dissappears
         this.$router.go();
       });
-    }
-  },
-  watch: {
-    activeUser(newValue, oldValue) {
-      console.log("activeUserChanged");
     }
   },
   mounted() {
