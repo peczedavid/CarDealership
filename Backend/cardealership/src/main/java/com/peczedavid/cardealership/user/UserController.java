@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> regiser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<String> regiser(@RequestBody RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername()))
             return new ResponseEntity<String>("Error: Username is already taken.", HttpStatus.BAD_REQUEST);
 
@@ -93,4 +93,11 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        Cookie cookie = jwtUtils.getCleanJwtCookie();
+        response.addCookie(cookie);
+
+        return new ResponseEntity<String>("Successfully logged out.", HttpStatus.OK);
+    }
 }

@@ -43,7 +43,8 @@ public class JwtUtils {
 
   public Cookie getCleanJwtCookie() {
     Cookie cookie = new Cookie(jwtCookie, "");
-    cookie.setPath("/");
+    cookie.setPath("/api");
+    cookie.setHttpOnly(true);
     cookie.setMaxAge(0);
     return cookie;
   }
