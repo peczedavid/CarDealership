@@ -14,7 +14,7 @@ public class RegionService {
     @Autowired
     private RegionRepository regionRepository;
 
-    public List<Region> findAll(String name) {
+    public List<Region> find(String name) {
         List<Region> regions = regionRepository.findAll();
 
         if (name != null)

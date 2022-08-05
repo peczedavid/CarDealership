@@ -37,7 +37,7 @@ public class RegionController {
 
     @GetMapping
     public ResponseEntity<List<RegionResponse>> getRegions(@RequestParam(name = "name", required = false) String name) {
-        List<Region> regions = regionService.findAll(name);
+        List<Region> regions = regionService.find(name);
         List<RegionResponse> regionResponses = regions
                 .stream()
                 .map(region -> new RegionResponse(region.getId(), region.getName()))
@@ -46,7 +46,7 @@ public class RegionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRegin(@RequestBody RegionRequest regionRequest) {
+    public ResponseEntity<?> createRegion(@RequestBody RegionRequest regionRequest) {
         Region region = regionService.create(regionRequest.getName());
         if (region == null)
             return new ResponseEntity<String>("Region already exists with given name!", HttpStatus.BAD_REQUEST);

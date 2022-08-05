@@ -39,9 +39,13 @@ public class Car {
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 
-    public Car(String brand, String model, Region region) {
+    @Column(nullable = false)
+    private Integer stock;
+
+    public Car(String brand, String model, Region region, Integer stock) {
         this.brand = brand;
         this.model = model;
         this.region = region;
+        this.stock = stock;
     }
 }
