@@ -3,8 +3,7 @@ package com.peczedavid.cardealership.models;
 public enum ERegion {
     Germany("Germany"),
     Japan("Japan"),
-    America("America"),
-    Middle_East("Middle-East");
+    America("America");
 
     private String text;
 
@@ -17,7 +16,6 @@ public enum ERegion {
             case "GERMANY": return ERegion.Germany;
             case "JAPAN": return ERegion.Japan;
             case "AMERICA": return ERegion.America;
-            case "MIDDLE-EAST": return ERegion.Middle_East;
             default: return null;
         }
     }

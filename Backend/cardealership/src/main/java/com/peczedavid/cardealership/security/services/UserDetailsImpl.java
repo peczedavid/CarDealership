@@ -3,16 +3,23 @@ package com.peczedavid.cardealership.security.services;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.swing.text.GapContent;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peczedavid.cardealership.models.Region;
 import com.peczedavid.cardealership.models.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -23,41 +30,31 @@ public class UserDetailsImpl implements UserDetails {
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.authorities = authorities;
-	}
+	private Set<Region> regions;
 
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toList());
-		
+
 		// TODO: give region based authority here?
-		
+
+		authorities.addAll(user.getRegions().stream()
+				.map(region -> new SimpleGrantedAuthority(region.getName().toString()))
+				.collect(Collectors.toList()));
+
 		return new UserDetailsImpl(
-				user.getId(), 
-				user.getUsername(), 
+				user.getId(),
+				user.getUsername(),
 				user.getEmail(),
-				user.getPassword(), 
-				authorities);
+				user.getPassword(),
+				authorities,
+				user.getRegions());
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getEmail() {
-		return email;
 	}
 
 	@Override
@@ -99,5 +96,5 @@ public class UserDetailsImpl implements UserDetails {
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
 	}
-    
+
 }

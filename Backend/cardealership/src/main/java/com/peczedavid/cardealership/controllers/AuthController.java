@@ -1,10 +1,13 @@
 package com.peczedavid.cardealership.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -131,6 +135,36 @@ public class AuthController {
 		ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
 		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
 				.body(new MessageResponse("You've been signed out!"));
+	}
+
+	public Long getIdFromServletRequest(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies == null)
+			return null;
+		for (Cookie cookie : cookies) {
+			// TODO: get the cookie name from the application.properties file
+			if (cookie.getName().equals("authCookie")) {
+				String jwtString = cookie.getValue();
+				return jwtUtils.getIdFromJwtToken(jwtString);
+			}
+		}
+		return null;
+	}
+
+	@GetMapping()
+	public ResponseEntity<?> getUser(HttpServletRequest request) {
+		Long id = getIdFromServletRequest(request);
+		if (id == null)
+			return ResponseEntity.badRequest().build();
+		User user = userRepository.findById(id).orElse(null);
+		List<String> roles = new ArrayList<Role>(user.getRoles()).stream()
+				.map(item -> item.getName().toString())
+				.collect(Collectors.toList());
+		List<String> regions = new ArrayList<Region>(user.getRegions()).stream()
+				.map(item -> item.getName().toString())
+				.collect(Collectors.toList());
+		return ResponseEntity
+				.ok(new UserInfoResponse(user.getId(), user.getUsername(), user.getEmail(), roles, regions));
 	}
 
 	@DeleteMapping("/{id}")

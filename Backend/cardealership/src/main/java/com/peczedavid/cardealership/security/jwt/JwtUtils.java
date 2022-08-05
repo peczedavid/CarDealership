@@ -1,6 +1,9 @@
 package com.peczedavid.cardealership.security.jwt;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
+import com.peczedavid.cardealership.models.Region;
 import com.peczedavid.cardealership.security.services.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
@@ -34,23 +38,40 @@ public class JwtUtils {
   }
 
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-    String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+    // String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+    String jwt = generateTokenFromUser(userPrincipal);
     ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
         .path("/api").maxAge(24 * 60 * 60)
-        .httpOnly(true)    // because not showing up in chrome(otherwise=true)
-        //.sameSite("None")   // because not showing up in chrome
-        //.secure(true)       // because not showing up in chrome
+        .httpOnly(true) // because not showing up in chrome(otherwise=true)
+        // .sameSite("None") // because not showing up in chrome
+        // .secure(true) // because not showing up in chrome
         .build();
     return cookie;
   }
 
   public ResponseCookie getCleanJwtCookie() {
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null)
+        .path("/api")
+        .maxAge(0)
+        .build();
     return cookie;
   }
 
+  public Long getIdFromJwtToken(String token) {
+    Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+    return Long.parseLong(claims.getBody().getSubject());
+  }
+
   public String getUserNameFromJwtToken(String token) {
-    return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    // return
+    // Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+    return claims.getBody().get("username", String.class);
+  }
+
+  public String getRegionFromToken(String token) {
+    Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+    return claims.getBody().get("region", String.class);
   }
 
   public boolean validateJwtToken(String authToken) {
@@ -71,13 +92,25 @@ public class JwtUtils {
     return false;
   }
 
-  // TODO: store admin role in token
-  public String generateTokenFromUsername(String username) {
+  // TODO: store admin role in token(to claims?)
+  public String generateTokenFromUser(UserDetailsImpl userDetails) {
     return Jwts.builder()
-        .setSubject(username)
+        .setSubject(userDetails.getId().toString())
+        .claim("username", userDetails.getUsername())
+        .claim("region", new ArrayList<Region>(userDetails.getRegions()).get(0).getName().toString().toLowerCase())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(SignatureAlgorithm.HS512, jwtSecret)
         .compact();
   }
+
+  // // Default generateTokenFromUsername
+  // public String generateTokenFromUsername(String username) {
+  // return Jwts.builder()
+  // .setSubject(username)
+  // .setIssuedAt(new Date())
+  // .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+  // .signWith(SignatureAlgorithm.HS512, jwtSecret)
+  // .compact();
+  // }
 }

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: dealership_baseline
+-- Host: 127.0.0.1    Database: dealership_demo
 -- ------------------------------------------------------
 -- Server version	8.0.30
 
@@ -38,7 +38,7 @@ CREATE TABLE `car_regions` (
 
 LOCK TABLES `car_regions` WRITE;
 /*!40000 ALTER TABLE `car_regions` DISABLE KEYS */;
-INSERT INTO `car_regions` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(11,2),(12,2),(6,4),(7,4),(8,4),(9,4),(10,4);
+INSERT INTO `car_regions` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(11,2),(12,2),(6,4),(7,4),(9,4),(10,4),(23,4);
 /*!40000 ALTER TABLE `car_regions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,8 +53,9 @@ CREATE TABLE `cars` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `brand` varchar(255) DEFAULT NULL,
   `model` varchar(255) DEFAULT NULL,
+  `stock` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +64,7 @@ CREATE TABLE `cars` (
 
 LOCK TABLES `cars` WRITE;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` VALUES (1,'Tesla','S'),(2,'Tesla','3'),(3,'Tesla','X'),(4,'Ford','Focus RS'),(5,'Ford','Mustang Shelby GT500'),(6,'Volkswagen','Golf 4'),(7,'Volkswagen','Golf 5'),(8,'Volkswagen','Golf 6'),(9,'Audi','R8'),(10,'Audi','A4'),(11,'Toyota','Yaris GR'),(12,'Toyota','GR Supra 5');
+INSERT INTO `cars` VALUES (1,'Tesla','Model S',0),(2,'Tesla','Model 3',0),(3,'Tesla','Model X',4),(4,'Ford','Focus RS',0),(5,'Ford','Mustang Shelby GT500',0),(6,'Volkswagen','Golf 4',0),(7,'Volkswagen','Golf 5',0),(9,'Audi','R8',0),(10,'Audi','A4',0),(11,'Toyota','Yaris GR',0),(12,'Toyota','GR Supra 5',0),(23,'Volkswagen','Golf 6',0);
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +185,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`),
   UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-29 11:29:46
+-- Dump completed on 2022-08-01 16:17:36

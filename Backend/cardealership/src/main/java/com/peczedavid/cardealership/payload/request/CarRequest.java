@@ -1,7 +1,6 @@
 package com.peczedavid.cardealership.payload.request;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
