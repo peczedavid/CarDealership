@@ -1,5 +1,6 @@
 package com.peczedavid.cardealership.car;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Car {
     @Column(nullable = false)
     private String model;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 

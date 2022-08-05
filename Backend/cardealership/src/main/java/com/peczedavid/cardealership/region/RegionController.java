@@ -1,7 +1,6 @@
 package com.peczedavid.cardealership.region;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.region.payload.RegionRequest;
-import com.peczedavid.cardealership.region.payload.RegionResponse;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
@@ -36,13 +34,15 @@ public class RegionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RegionResponse>> getRegions(@RequestParam(name = "name", required = false) String name) {
+    public ResponseEntity<List<Region>> getRegions(@RequestParam(name = "name", required = false) String name) {
         List<Region> regions = regionService.find(name);
-        List<RegionResponse> regionResponses = regions
-                .stream()
-                .map(region -> new RegionResponse(region.getId(), region.getName()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(regionResponses);
+        return ResponseEntity.ok(regions);
+    }
+
+    @PostMapping("/multiple")
+    public ResponseEntity<?> createRegions(@RequestBody List<RegionRequest> regionRequests) {
+        List<Region> regions = regionService.create(regionRequests);
+        return new ResponseEntity<List<Region>>(regions, HttpStatus.CREATED);
     }
 
     @PostMapping
@@ -50,8 +50,7 @@ public class RegionController {
         Region region = regionService.create(regionRequest.getName());
         if (region == null)
             return new ResponseEntity<String>("Region already exists with given name!", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<RegionResponse>(new RegionResponse(region.getId(), region.getName()),
-                HttpStatus.CREATED);
+        return new ResponseEntity<Region>(region, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -59,6 +58,6 @@ public class RegionController {
         Region region = regionService.update(id, regionRequest.getName());
         if (region == null)
             return new ResponseEntity<String>("Failed to update region!", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<RegionResponse>(new RegionResponse(region.getId(), region.getName()), HttpStatus.OK);
+        return new ResponseEntity<Region>(region, HttpStatus.OK);
     }
 }
