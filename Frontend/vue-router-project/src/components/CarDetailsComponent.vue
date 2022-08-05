@@ -8,16 +8,16 @@
                 <div class="">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
                     <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.regions[0].name }}</p>
+                    <p class="card-text">Stock: {{ carData.stock }}</p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusantium sit ullam optio.
                         Repudiandae quis doloribus exercitationem nam explicabo, praesentium vel cumque labore nesciunt
                         illum iste odio, laudantium recusandae molestiae omnis placeat molestias quia quam reprehenderit
-                        unde maiores? Quaerat et repudiandae reiciendis totam ipsam necessitatibus consectetur,
-                        laudantium distinctio eius molestias.</p>
+                        unde maiores?</p>
                 </div>
             </div>
             <ul class="list-group list-group-flush align-items-end">
                 <li class="list-group-item p-3">
-                    <router-link v-bind:to="'edit/' + carData.id " class="btn btn-primary me-3">Edit</router-link>
+                    <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">Edit</router-link>
                     <button class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal">Delete</button>
                 </li>
@@ -34,8 +34,10 @@
                         Are you sure want to delete this car from the database?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
-                        <button @click="deleteCar" type="button" class="btn btn-danger" data-bs-dismiss="modal" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            data-dismiss="modal">Close</button>
+                        <button @click="deleteCar" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            data-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </div>
@@ -50,12 +52,12 @@ export default {
     methods: {
         deleteCar() {
             axios.delete("/cars/" + this.carData.id)
-            .then((result) => {
-                this.$router.push("/cars");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((result) => {
+                    this.$router.push("/cars");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     },
     data() {
