@@ -1,5 +1,7 @@
 package com.peczedavid.cardealership.car;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,10 @@ public class CarService {
     
     @Autowired
     private CarRepository carRepository;
+
+    public List<Car> findAll() {
+        return carRepository.findAll();
+    }
 
     public void deleteAll() {
         carRepository.deleteAll();

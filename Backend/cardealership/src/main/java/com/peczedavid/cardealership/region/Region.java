@@ -34,7 +34,7 @@ public class Region {
 
     @Column(unique = true, nullable = false)
     private String name;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region", orphanRemoval = true)
     private List<Car> cars = new ArrayList<>();
 

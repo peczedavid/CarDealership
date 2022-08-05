@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
     Optional<Region> findByName(String name);
+    boolean existsByName(String name);
 }
