@@ -22,8 +22,8 @@ public class UserService {
     }
 
     // TODO: a lot more checking and password encryption
-    public User create(String username, String email, String password, boolean admin, Region region) {
-        User user = new User(username, email, password, admin, region);
+    public User create(String username, String password, boolean admin, Region region) {
+        User user = new User(username, password, admin, region);
         try {
             user = userRepository.save(user);
             return user;

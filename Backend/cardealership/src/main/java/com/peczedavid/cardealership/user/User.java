@@ -33,9 +33,6 @@ public class User {
     private String username;
     
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
@@ -45,9 +42,8 @@ public class User {
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 
-    public User(String username, String email, String password, boolean admin, Region region) {
+    public User(String username, String password, boolean admin, Region region) {
         this.username = username;
-        this.email = email;
         this.password = password;
         this.admin = admin;
         this.region = region;
