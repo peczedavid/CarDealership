@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,12 +12,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peczedavid.cardealership.user.User;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserDetailsImpl implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +31,7 @@ public class UserDetailsImpl implements UserDetails {
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
     private String region;
+	private boolean admin;
 
 	public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -37,7 +40,15 @@ public class UserDetailsImpl implements UserDetails {
 
 		// TODO: give region based authority here?
 
-        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword(), authorities, user.getRegion().getName());
+		return UserDetailsImpl
+			.builder()
+			.id(user.getId())
+			.username(user.getUsername())
+			.password(user.getPassword())
+			.authorities(authorities)
+			.region(user.getRegion().getName())
+			.admin(user.isAdmin())
+			.build();
 	}
 
 	@Override

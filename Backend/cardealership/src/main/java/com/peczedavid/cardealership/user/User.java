@@ -40,7 +40,7 @@ public class User {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean admin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 

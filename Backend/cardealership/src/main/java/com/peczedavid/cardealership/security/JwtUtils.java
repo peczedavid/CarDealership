@@ -1,7 +1,6 @@
 package com.peczedavid.cardealership.security;
 
-import java.time.Duration;
-import java.util.ArrayList;
+
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -34,22 +32,19 @@ public class JwtUtils {
     }
   }
 
-  public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+  public Cookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUser(userPrincipal);
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
-        .path("/api").maxAge(24 * 60 * 60)
-        .httpOnly(true) // because not showing up in chrome(otherwise=true)
-        // .sameSite("None") // because not showing up in chrome
-        // .secure(true) // because not showing up in chrome
-        .build();
+    Cookie cookie = new Cookie(jwtCookie, jwt);
+    cookie.setPath("/api");
+    cookie.setHttpOnly(true);
+    cookie.setMaxAge(24 * 60 * 60);
     return cookie;
   }
 
-  public ResponseCookie getCleanJwtCookie() {
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null)
-        .path("/api")
-        .maxAge(0)
-        .build();
+  public Cookie getCleanJwtCookie() {
+    Cookie cookie = new Cookie(jwtCookie, "");
+    cookie.setPath("/");
+    cookie.setMaxAge(0);
     return cookie;
   }
 
@@ -86,7 +81,7 @@ public class JwtUtils {
     return false;
   }
 
-  // TODO: store admin role in token(to claims?)
+  // TODO: store admin role in token(to claims?) - Don't need to?
   public String generateTokenFromUser(UserDetailsImpl userDetails) {
     return Jwts.builder()
         .setSubject(userDetails.getId().toString())

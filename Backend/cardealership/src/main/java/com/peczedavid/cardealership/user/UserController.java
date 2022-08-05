@@ -1,8 +1,15 @@
 package com.peczedavid.cardealership.user;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.region.Region;
 import com.peczedavid.cardealership.region.RegionRepository;
+import com.peczedavid.cardealership.security.JwtUtils;
+import com.peczedavid.cardealership.security.UserDetailsImpl;
+import com.peczedavid.cardealership.user.payload.LoginRequest;
+import com.peczedavid.cardealership.user.payload.LoginResponse;
 import com.peczedavid.cardealership.user.payload.RegisterRequest;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
@@ -27,6 +38,36 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        Cookie cookie = jwtUtils.generateJwtCookie(userPrincipal);
+        response.addCookie(cookie);
+
+        Region region = regionRepository.findByName(userPrincipal.getRegion()).orElse(null);
+        
+        LoginResponse loginResponse = LoginResponse
+                .builder()
+                .id(userPrincipal.getId())
+                .username(userPrincipal.getUsername())
+                .admin(userPrincipal.isAdmin())
+                .region(region)
+                .build();
+
+        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> regiser(@RequestBody RegisterRequest registerRequest) {
@@ -48,7 +89,8 @@ public class UserController {
 
         userRepository.save(user);
 
-        return new ResponseEntity<String>("Account named: " + user.getUsername() + " successfully created.", HttpStatus.CREATED);
+        return new ResponseEntity<String>("Account named: " + user.getUsername() + " successfully created.",
+                HttpStatus.CREATED);
     }
 
 }

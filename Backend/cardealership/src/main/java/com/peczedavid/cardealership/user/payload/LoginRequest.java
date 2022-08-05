@@ -9,14 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
-
+public class LoginRequest {
+    
     private String username;
-
+    
     private String password;
-
-    private String region;
-
-    private boolean admin;
-
+    
 }

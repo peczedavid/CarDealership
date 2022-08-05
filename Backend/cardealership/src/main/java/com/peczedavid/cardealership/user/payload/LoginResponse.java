@@ -1,6 +1,9 @@
 package com.peczedavid.cardealership.user.payload;
 
+import com.peczedavid.cardealership.region.Region;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,14 +12,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+@Builder
+public class LoginResponse {
+    
+    private Long id;
 
     private String username;
 
-    private String password;
+    private Region region;
 
-    private String region;
-
-    private boolean admin;
-
+    private boolean admin;    
 }
