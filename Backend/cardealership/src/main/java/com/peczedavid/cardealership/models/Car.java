@@ -1,101 +1,43 @@
 package com.peczedavid.cardealership.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "cars")
 public class Car {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
-    @Size(max = 40)
+    @NotNull
     private String brand;
-
-    @NotBlank
-    @Size(max = 40)
+    @NotNull
     private String model;
 
-    // TODO: now set to eager so it can be deleted,
-    // maybe set to lazy and do workaround in CarService::deleteById
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "car_regions", joinColumns = @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "region_id"))
-    private Set<Region> regions = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
+    private Region region;
 
-    @NotNull
-    private Integer stock;
-
-    public Car(Car other) {
-        this.id = other.getId();
-        this.brand = other.getBrand();
-        this.model = other.getModel();
-        this.regions = other.getRegions();
-        this.stock = other.getStock();
-    }
-
-    public Car(String brand, String model) {
+    public Car(String brand, String model, Region region) {
         this.brand = brand;
         this.model = model;
+        this.region = region;
     }
-
-    public Car() {
-
-    }
-
-    public boolean isInRegion(String regionStr) {
-        for (Region region : regions) {
-            if (region.getName() == ERegion.fromString(regionStr))
-                return true;
-        }
-        return false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Set<Region> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(Set<Region> regions) {
-        this.regions = regions;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
 }
