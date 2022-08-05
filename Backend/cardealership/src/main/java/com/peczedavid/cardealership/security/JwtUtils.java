@@ -13,9 +13,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
-import com.peczedavid.cardealership.region.Region;
-import com.peczedavid.cardealership.security.UserDetailsImpl;
-
 import io.jsonwebtoken.*;
 
 @Component
