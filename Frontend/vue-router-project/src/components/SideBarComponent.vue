@@ -21,12 +21,14 @@
         <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
         <div class="col-sm-9">
           <select v-model="region" class="mt-2" id="regionSelect">
-            <option value="" disabled selected>Select region</option>
-            <!--TODO: ask from the database the available regions-->
-            <option value="america">America</option>
-            <option value="germany">Germany</option>
-            <option value="japan">Japan</option>
-            <option value="">All</option>
+            <option value="" disabled selected>Select a region</option>
+              <!--TODO: ask from the database the available regions-->
+              <option value="America">America</option>
+              <option value="United-Kingdom">United-Kingdom</option>
+              <option value="Germany">Germany</option>
+              <option value="Hungary">Hungary</option>
+              <option value="Japan">Japan</option>
+              <option value="">All</option>
           </select>
         </div>
       </div>

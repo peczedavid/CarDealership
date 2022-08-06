@@ -70,14 +70,12 @@ import axios from "@/http-common"
 export default {
     data() {
         return {
-            user: {
-                regions: [""]
-            }
+            user: {}
         }
     },
     beforeCreate() {
         axios
-            .get("/auth")
+            .get("/get")
             .then((result) => this.user = result.data)
             .catch((error) => console.log(error));
     }

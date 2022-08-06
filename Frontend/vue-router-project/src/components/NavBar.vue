@@ -46,7 +46,7 @@ export default {
   methods: {
     signOut() {
       axios
-      .post("/auth/signout")
+      .post("/user/logout")
       .then((result) => {
         this.activeUser = null;
         // Refresh page so cookie dissappears

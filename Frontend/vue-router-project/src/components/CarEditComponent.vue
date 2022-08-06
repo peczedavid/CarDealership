@@ -15,12 +15,14 @@
             </div>
             <div class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>
-                <select required v-model="carData.regions[0]" class="" id="regionSelect">
+                <select required v-model="carData.region.name" class="" id="regionSelect">
                     <option value="" disabled selected>Select a region</option>
                     <!--TODO: ask from the database the available regions-->
-                    <option value="america">America</option>
-                    <option value="germany">Germany</option>
-                    <option value="japan">Japan</option>
+                    <option value="America">America</option>
+                    <option value="United-Kingdom">United-Kingdom</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Japan">Japan</option>
                 </select>
             </div>
             <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
@@ -41,7 +43,7 @@ export default {
             if (newVal !== null) {
                 this.carData.brand = newVal.brand;
                 this.carData.model = newVal.model;
-                this.carData.regions = newVal.regions.map(region => region.name.toLowerCase());
+                this.carData.region = newVal.region;
                 this.carData.stock = newVal.stock;
             }
         }
@@ -70,7 +72,10 @@ export default {
             carData: {
                 brand: "",
                 model: "",
-                regions: [""],
+                region: {
+                    id: 0,
+                    name: ""
+                },
                 stock: 0
             }
         }

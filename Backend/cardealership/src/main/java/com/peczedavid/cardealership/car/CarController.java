@@ -3,7 +3,6 @@ package com.peczedavid.cardealership.car;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,6 +46,13 @@ public class CarController {
             @RequestParam(name = "stock", required = false) Integer stock) {
         List<Car> cars = carService.find(brand, model, region, stock);
         return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCar(@PathVariable Integer id) {
+        Car car = carService.findById(id);
+        if(car == null) return new ResponseEntity<String>("Car not found with given id!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Car>(car, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

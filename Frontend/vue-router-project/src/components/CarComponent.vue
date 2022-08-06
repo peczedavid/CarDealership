@@ -5,9 +5,9 @@
         <img src="https://placehold.jp/200x200.png" class="img-fluid rounded-start" alt="...">
       </div>
       <div class="col-md-8">
-        <div class="card-body">
+        <div class="card-body p-0 ps-3 pt-3">
           <h5 class="card-title">{{ carData.brand + " " + carData.model }}</h5>
-          <p class="card-text">Availabel in: {{ carData.regions[0].name }}</p>
+          <p class="card-text">Availabel in: {{ carData.region.name }}</p>
           <p class="card-text">Stock: {{ carData.stock }}</p>
           <router-link class="btn btn-primary" v-bind:to="'/cars/' + carData.id">Details</router-link>
         </div>
@@ -22,14 +22,12 @@ export default {
   props: {
     carData: {
       id: -1,
-      brand: "BrandDef",
-      model: "ModelDef",
-      regions: [
-        {
-          id: -1,
-          name: "RegionDef",
-        },
-      ],
+      brand: "BrandDefault",
+      model: "ModelDefault",
+      region: {
+        id: -1,
+        name: "RegionDefault"
+      },
       stock: -1
     },
   },

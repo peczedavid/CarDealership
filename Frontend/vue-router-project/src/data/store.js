@@ -2,6 +2,7 @@ import { reactive } from "vue";
 
 export const store = reactive({
     loggedIn: false,
+    isAdmin: false,
 
     getCookie(cname) {
         var name = cname + '=';

@@ -20,6 +20,12 @@ public class CarService {
     @Autowired
     private RegionRepository regionRepository;
 
+    public Car findById(Integer id) {
+        Car car = carRepository.findById((long) id).orElse(null);
+        if(car == null) return null;
+        return car;
+    }
+
     public List<Car> findAll() {
         return carRepository.findAll();
     }

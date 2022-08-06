@@ -6,21 +6,19 @@
         <input v-model="user.username" required class="form-control" id="usernameInput" />
       </div>
       <div class="mb-3">
-        <label for="emailInput" class="form-label">Email:</label>
-        <input v-model="user.email" required type="email" class="form-control" id="emailInput" />
-      </div>
-      <div class="mb-3">
         <label for="passwordInput" class="form-label">Password:</label>
         <input v-model="user.password" required type="password" class="form-control" id="passwordInput" />
       </div>
       <div class="mb-3">
         <label for="regionSelect" class="me-2">Region:</label>
-        <select required v-model="user.regions[0]" class="" id="regionSelect">
+        <select required v-model="user.region" class="" id="regionSelect">
           <option value="" disabled selected>Select your region</option>
           <!--TODO: ask from the database the available regions-->
-           <option value="america">America</option>
-           <option value="germany">Germany</option>
-           <option value="japan">Japan</option>
+            <option value="America">America</option>
+            <option value="United-Kingdom">United-Kingdom</option>
+            <option value="Germany">Germany</option>
+            <option value="Hungary">Hungary</option>
+            <option value="Japan">Japan</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
@@ -37,16 +35,16 @@ export default {
     return {
       user: {
         username: '',
-        email: '',
         password: '',
-        regions: ['']
+        region: '',
+        admin: false
       }
     }
   },
   methods: {
     handleRegistration() {
       axios
-        .post("/auth/signup", this.user)
+        .post("/user/register", this.user)
         .then((result) => {
           this.$router.push("/");
         })

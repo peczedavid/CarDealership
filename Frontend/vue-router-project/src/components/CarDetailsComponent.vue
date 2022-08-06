@@ -7,7 +7,7 @@
                 </div>
                 <div class="">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
-                    <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.regions[0].name }}</p>
+                    <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.region.name }}</p>
                     <p class="card-text">Stock: {{ carData.stock }}</p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusantium sit ullam optio.
                         Repudiandae quis doloribus exercitationem nam explicabo, praesentium vel cumque labore nesciunt
@@ -67,12 +67,11 @@ export default {
                 id: -1,
                 brand: "BrandDef",
                 model: "ModelDef",
-                regions: [
-                    {
+                region:  {
                         id: -1,
                         name: "RegionDef",
                     },
-                ],
+                stock: -1
             }
         }
     },
