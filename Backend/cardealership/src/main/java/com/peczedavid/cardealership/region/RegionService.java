@@ -41,7 +41,7 @@ public class RegionService {
     }
     
     public Region deleteById(Integer _id) {
-        Long id = new Long((long) _id);
+        Long id = Long.valueOf(_id);
         Region region = regionRepository.findById(id).orElse(null);
         if(region == null) return null;
         regionRepository.delete(region);
