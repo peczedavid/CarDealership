@@ -13,12 +13,7 @@
         <label for="regionSelect" class="me-2">Region:</label>
         <select required v-model="user.region" class="" id="regionSelect">
           <option value="" disabled selected>Select your region</option>
-          <!--TODO: ask from the database the available regions-->
-            <option value="America">America</option>
-            <option value="United-Kingdom">United-Kingdom</option>
-            <option value="Germany">Germany</option>
-            <option value="Hungary">Hungary</option>
-            <option value="Japan">Japan</option>
+          <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
@@ -38,8 +33,17 @@ export default {
         password: '',
         region: '',
         admin: false
-      }
+      },
+      regions: []
     }
+  },
+  created() {
+    axios
+      .get("/regions")
+      .then((result) => {
+        this.regions = result.data;
+      })
+      .catch((error) => console.log(error));
   },
   methods: {
     handleRegistration() {

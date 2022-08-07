@@ -1,5 +1,6 @@
 package com.peczedavid.cardealership.user;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class User {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean admin;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 

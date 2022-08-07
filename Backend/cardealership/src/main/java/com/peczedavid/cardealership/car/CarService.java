@@ -26,6 +26,13 @@ public class CarService {
         return car;
     }
 
+    public boolean deletById(Integer id) {
+        if(!carRepository.existsById((long) id))
+            return false;
+        carRepository.deleteById((long) id);
+        return true;
+    }
+
     public List<Car> findAll() {
         return carRepository.findAll();
     }

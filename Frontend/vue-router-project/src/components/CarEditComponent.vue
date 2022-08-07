@@ -15,7 +15,7 @@
             </div>
             <div class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>
-                <select required v-model="carData.region.name" class="" id="regionSelect">
+                <select required v-model="carData.region" class="" id="regionSelect">
                     <option value="" disabled selected>Select a region</option>
                     <!--TODO: ask from the database the available regions-->
                     <option value="America">America</option>
@@ -43,7 +43,7 @@ export default {
             if (newVal !== null) {
                 this.carData.brand = newVal.brand;
                 this.carData.model = newVal.model;
-                this.carData.region = newVal.region;
+                this.carData.region = newVal.region.name;
                 this.carData.stock = newVal.stock;
             }
         }
@@ -72,10 +72,7 @@ export default {
             carData: {
                 brand: "",
                 model: "",
-                region: {
-                    id: 0,
-                    name: ""
-                },
+                region: "",
                 stock: 0
             }
         }

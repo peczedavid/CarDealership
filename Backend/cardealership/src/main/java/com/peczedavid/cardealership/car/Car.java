@@ -36,7 +36,8 @@ public class Car {
     @Column(nullable = false)
     private String model;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // If CascadeType.ALL then can't delete
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false, referencedColumnName = "id")
     private Region region;
 

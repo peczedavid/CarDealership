@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,7 +59,13 @@ public class CarController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCar(@PathVariable Integer id, @RequestBody CarRequest carRequest) {
         Car car = carService.update(id, carRequest);
-        if(car == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(car == null) return new ResponseEntity<String>("Error: Car not found with id: " + id + "!", HttpStatus.NOT_FOUND);
         return new ResponseEntity<Car>(car, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
+        if(carService.deletById(id)) return new ResponseEntity<String>("Deleted car with id: " + id + ".", HttpStatus.NO_CONTENT);
+        else return new ResponseEntity<String>("Error: Car not found with id: " + id + "!", HttpStatus.NOT_FOUND);
     }
 }

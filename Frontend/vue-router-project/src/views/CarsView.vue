@@ -22,7 +22,7 @@ export default {
         .get("/cars")
         .then((result) => {
           this.cars = result.data;
-          console.log(this.cars);
+          //console.log(this.cars);
         })
         .catch((error) => console.log(error));
     }

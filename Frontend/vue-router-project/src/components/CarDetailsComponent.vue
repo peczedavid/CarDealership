@@ -27,7 +27,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal-title"> Modal title</h5>
+                        <h5 class="modal-title" id="modal-title">Delete car</h5>
                         <button class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="class modal-body">
