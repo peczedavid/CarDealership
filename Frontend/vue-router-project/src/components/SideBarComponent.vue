@@ -75,8 +75,6 @@ export default {
   },
   methods: {
     getFilteredCars() {
-      // TODO: CHECK THIS ON BACKEND TOO
-      // A non admin user can only see cars from their region(this is checked in the backend too)
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");

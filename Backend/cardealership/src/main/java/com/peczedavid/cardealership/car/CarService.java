@@ -42,7 +42,6 @@ public class CarService {
     }
 
     public Car update(Integer id, CarRequest carRequest) {
-        // TODO: check if already exists
         Car car = carRepository.findById((long) id).orElse(null);
         if (car == null) return null;
         Region region = regionRepository.findByName(carRequest.getRegion()).orElse(null);

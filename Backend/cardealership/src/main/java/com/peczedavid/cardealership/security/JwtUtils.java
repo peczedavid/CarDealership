@@ -87,7 +87,6 @@ public class JwtUtils {
     return false;
   }
 
-  // TODO: store admin role in token(to claims?) - Don't need to?
   public String generateTokenFromUser(UserDetailsImpl userDetails) {
     return Jwts.builder()
         .setSubject(userDetails.getId().toString())

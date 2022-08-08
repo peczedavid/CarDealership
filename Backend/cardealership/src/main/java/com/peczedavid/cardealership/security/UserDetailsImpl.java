@@ -38,8 +38,6 @@ public class UserDetailsImpl implements UserDetails {
         if(user.isAdmin())
             authorities.add(new SimpleGrantedAuthority("admin"));
 
-		// TODO: give region based authority here?
-
 		return UserDetailsImpl
 			.builder()
 			.id(user.getId())
