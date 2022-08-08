@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "dc46285f-17e6-4e21-a5ca-ac9be87c4054",
+		"name": "Start collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22260557"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/regions/multiple",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"name\": \"America\"\r\n    },\r\n    {\r\n        \"name\": \"United-Kingdom\"\r\n    },\r\n    {\r\n        \"name\": \"Germany\"\r\n    },\r\n    {\r\n        \"name\": \"Hungary\"\r\n    },\r\n    {\r\n        \"name\": \"Japan\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/regions/multiple",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"regions",
+						"multiple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/cars/multiple",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"brand\": \"Volkswagen\",\r\n        \"model\": \"Golf 4\",\r\n        \"region\": \"Hungary\",\r\n        \"stock\": 10\r\n    },\r\n    {\r\n        \"brand\": \"Volkswagen\",\r\n        \"model\": \"Golf 4\",\r\n        \"region\": \"Germany\",\r\n        \"stock\": 3\r\n    },\r\n    {\r\n        \"brand\": \"Volkswagen\",\r\n        \"model\": \"Golf 5\",\r\n        \"region\": \"Hungary\",\r\n        \"stock\": 7\r\n    },\r\n    {\r\n        \"brand\": \"Skoda\",\r\n        \"model\": \"Octavia\",\r\n        \"region\": \"Hungary\",\r\n        \"stock\": 11\r\n    },\r\n    {\r\n        \"brand\": \"Skoda\",\r\n        \"model\": \"Octavia\",\r\n        \"region\": \"Germany\",\r\n        \"stock\": 2\r\n    },\r\n    {\r\n        \"brand\": \"Renault\",\r\n        \"model\": \"Thalia\",\r\n        \"region\": \"Hungary\",\r\n        \"stock\": 4\r\n    },\r\n    {\r\n        \"brand\": \"Renault\",\r\n        \"model\": \"Thalia\",\r\n        \"region\": \"United-Kingdom\",\r\n        \"stock\": 6\r\n    },\r\n    {\r\n\t    \"brand\": \"Audi\",\r\n\t    \"model\": \"R8\",\r\n\t    \"region\": \"United-Kingdom\",\r\n        \"stock\": 9\r\n    },\r\n    {\r\n\t    \"brand\": \"Audi\",\r\n\t    \"model\": \"R8\",\r\n\t    \"region\": \"America\",\r\n        \"stock\": 2\r\n    },\r\n    {\r\n\t    \"brand\": \"Audi\",\r\n\t    \"model\": \"A4\",\r\n\t    \"region\": \"America\",\r\n        \"stock\": 11\r\n    },\r\n    {\r\n\t    \"brand\": \"Audi\",\r\n\t    \"model\": \"A4\",\r\n\t    \"region\": \"United-Kingdom\",\r\n        \"stock\": 11\r\n    },\r\n    {\r\n\t    \"brand\": \"Toyota\",\r\n\t    \"model\": \"Yaris GR\",\r\n\t    \"region\": \"Japan\",\r\n        \"stock\": 1\r\n    },\r\n    {\r\n\t    \"brand\": \"Toyota\",\r\n\t    \"model\": \"GR Supra 5\",\r\n\t    \"region\": \"Japan\",\r\n        \"stock\": 1\r\n    },\r\n    {\r\n\t    \"brand\": \"Toyota\",\r\n\t    \"model\": \"Yaris GR\",\r\n\t    \"region\": \"America\",\r\n        \"stock\": 2\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/cars/multiple",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cars",
+						"multiple"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

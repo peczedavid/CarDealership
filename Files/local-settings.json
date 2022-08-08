@@ -1,0 +1,30 @@
+{
+    "editor.fontSize": 18,
+    "workbench.startupEditor": "none",
+    "xml.server.binary.trustedHashes": [
+        "10f0ec81d033f0b97cfed2e697b590cbb7cac969a95e353e2c78a19f5eb12634"
+    ],
+    "redhat.telemetry.enabled": true,
+    "java.inlayHints.parameterNames.enabled": "all",
+    "editor.inlayHints.enabled": "off",
+    "workbench.iconTheme": "file-icons",
+    "emmet.includeLanguages": {
+        "vue-html": "html",
+        "vue": "html"
+    },
+    "workbench.colorTheme": "Theme (Italic)",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue-html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "extensions.ignoreRecommendations": true,
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java"
+    }
+}

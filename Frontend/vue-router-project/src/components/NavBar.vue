@@ -9,9 +9,6 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/" class="nav-link active">Home</router-link>
-          </li>
-          <li class="nav-item">
             <router-link to="/cars" class="nav-link active">Cars</router-link>
           </li>
         </ul>
@@ -36,6 +33,7 @@
 
 <script>
 import axios from '@/http-common';
+import { store } from '@/data/store';
 
 export default {
   data() {
@@ -46,15 +44,19 @@ export default {
   methods: {
     signOut() {
       axios
-      .post("/auth/signout")
+      .post("/user/logout")
       .then((result) => {
         this.activeUser = null;
+        store.currentUser = null;
         // Refresh page so cookie dissappears
         this.$router.go();
       });
     }
   },
-  mounted() {
+  async mounted() {
+    await store.loadCurrentUser();
+    this.activeUser = store.currentUser;
+    
     this.emitter.on("sign-in-form", data => {
       this.activeUser = data;
     });

@@ -1,6 +1,6 @@
 # CarDealership
 
-![Schema](/database-schema.png)
+![Schema](/Files/database-schema.png)
 
 IntelliSense for CSS class names in HTML
 Theme
