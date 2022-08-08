@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white" style="width: 350px">
+  <div class="p-4 bg-white">
     <ul class="list-unstyled">
       <h2 class="">Filter</h2>
       <li class="border-top border-dark my-3"></li>
@@ -38,7 +38,12 @@
       <div v-if="activeUser.admin">
         <h2>Admin actions</h2>
         <li class="border-top border-dark my-3"></li>
-        <button class="btn btn-warning">Reset database</button>
+        <li>
+          <button class="btn btn-warning mb-3">Reset database</button>
+        </li>
+        <li>
+          <button class="btn btn-danger">Flush database</button>
+        </li>
       </div>
     </ul>
   </div>
