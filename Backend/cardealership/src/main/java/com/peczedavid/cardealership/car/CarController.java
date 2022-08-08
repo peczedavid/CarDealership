@@ -2,6 +2,8 @@ package com.peczedavid.cardealership.car;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.car.payload.CarRequest;
+import com.peczedavid.cardealership.security.JwtUtils;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
@@ -25,6 +28,16 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    private boolean checkUnauthorized(HttpServletRequest request, Car car) {
+        String jwtCookie = jwtUtils.getJwtFromCookies(request);
+        Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+        String region = jwtUtils.getRegionFromToken(jwtCookie);
+        return (!car.getRegion().getName().equals(region) && !admin);
+    }
 
     @PostMapping("/multiple")
     public ResponseEntity<?> createCars(@RequestBody List<CarRequest> carRequests) {
@@ -50,9 +63,15 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCar(@PathVariable Integer id) {
+    public ResponseEntity<?> getCar(HttpServletRequest request, @PathVariable Integer id) {
         Car car = carService.findById(id);
-        if(car == null) return new ResponseEntity<String>("Car not found with given id!", HttpStatus.NOT_FOUND);
+        if(car == null)
+            return new ResponseEntity<String>("Car not found with given id!", HttpStatus.NOT_FOUND);
+        
+        // Authorization
+        if(checkUnauthorized(request, car))
+            return new ResponseEntity<String>("Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
+        
         return new ResponseEntity<Car>(car, HttpStatus.OK);
     }
 

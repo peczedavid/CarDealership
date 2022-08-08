@@ -64,21 +64,24 @@ export default {
         return {
             carData:
             {
-                id: -1,
-                brand: "BrandDef",
-                model: "ModelDef",
+                id: 0,
+                brand: "",
+                model: "",
                 region:  {
-                        id: -1,
-                        name: "RegionDef",
+                        id: 0,
+                        name: "",
                     },
-                stock: -1
+                stock: 0
             }
         }
     },
-    created() {
+    mounted() {
         axios.get("/cars/" + this.$route.params.id)
             .then((result) => { this.carData = result.data })
-            .catch((error) => { console.log(error) });
+            .catch((error) => {
+                if(error.response.status == 401 || error.response.status == 404)
+                    this.$router.push("/unauthorized");
+            });
     }
 }
 </script>

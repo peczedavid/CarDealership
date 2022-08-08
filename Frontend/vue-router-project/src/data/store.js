@@ -14,5 +14,5 @@ export const store = reactive({
         }
     },
 
-    unauthorizedMessage: "Unauthorized, log into your account or create one!"
+    unauthorizedMessage: "Unauthorized!"
 });
