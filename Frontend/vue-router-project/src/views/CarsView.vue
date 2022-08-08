@@ -1,5 +1,5 @@
 <template>
-  <div class="d-inline-flex col-12">
+  <div class="d-inline-flex col-12 bg-light bg-gradient">
     <SideBarComponent class="col-lg-3 col-md-6 col-sm-6" @carsChanged="this.cars = $event"/>
     <div class="container mt-4">
       <CarComponent class="col-sm-6" style="margin-left: 200px;" v-for="car in cars" :key="car.id" :carData="car" />

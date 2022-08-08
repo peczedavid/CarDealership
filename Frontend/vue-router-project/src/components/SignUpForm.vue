@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-lg-4">
+  <div class="container col-lg-4 mt-5">
     <form @submit.prevent="handleRegistration">
       <div class="mb-3">
         <label for="usernameInput" class="form-label">Username:</label>

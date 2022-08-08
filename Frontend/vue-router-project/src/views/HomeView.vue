@@ -1,6 +1,6 @@
 <template>
   <div class="container bg-light bg-gradient">
-    <div class="container col-lg-6">
+    <div class="mt-3 mx-auto col-lg-8">
       <h1>Welcome</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut et beatae

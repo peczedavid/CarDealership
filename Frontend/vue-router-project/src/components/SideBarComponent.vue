@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-dark bg-opacity-10 border-2 border border-secondary">
+  <div class="p-3">
     <ul class="list-unstyled">
       <h2 class="">Filter</h2>
       <li class="border-top border-dark my-3"></li>
@@ -27,22 +27,22 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-secondary my-2" type="submit">Search</button>
+      <button class="btn bg-blue-2 text-white my-2" style="background-color: #646FD4;" type="submit">Search</button>
     </form>
     <ul class="list-unstyled mt-5">
       <div>
         <h2 class="">User actions</h2>
         <li class="border-top border-dark my-3"></li>
-        <router-link to="/cars/new" class="btn btn-success mb-5" tag="button">New car</router-link>
+        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car</router-link>
       </div>
       <div v-if="activeUser.admin">
         <h2>Admin actions</h2>
         <li class="border-top border-dark my-3"></li>
         <li>
-          <button class="btn btn-warning mb-3">Reset database</button>
+          <button class="btn text-dark mb-3" style="background-color: #EBD671;">Reset database</button>
         </li>
         <li>
-          <button class="btn btn-danger">Flush database</button>
+          <button class="btn btn-danger" style="background-color: #EB5353;">Flush database</button>
         </li>
       </div>
     </ul>
@@ -102,5 +102,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+
+.bg-blue-2 {
+  background-color: $blue-2;
+}
+
+// .bg-green-1 {
+//   background-color: $green-1;
+// }
+
+// .bg-yellow-1 {
+//   background-color: $green-1;
+// }
+
+// .bg-red-1 {
+//   background-color: $red-1;
+// }
 </style>

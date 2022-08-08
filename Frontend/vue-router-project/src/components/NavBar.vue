@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark bg-gradient">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">Dealership</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -68,5 +68,5 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 </style>
