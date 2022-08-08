@@ -30,7 +30,7 @@ export default {
   methods: {
     handleLogin() {
       axios
-        .post("/auth/signin", this.user)
+        .post("/user/login", this.user)
         .then((result) => {
           // Tell navbar that someone logged in (NavBar.activeUser=result.data)
           this.emitter.emit("sign-in-form", result.data);
