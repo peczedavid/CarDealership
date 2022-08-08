@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app bg-light bg-gradient">
     <NavBar />
     <router-view />
   </div>
@@ -15,6 +15,3 @@ export default {
   }
 };
 </script>
-  
-<style>
-</style>

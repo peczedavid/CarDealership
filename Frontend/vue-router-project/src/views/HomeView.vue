@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container bg-light bg-gradient">
     <div class="container col-lg-6">
       <h1>Welcome</h1>
       <p>

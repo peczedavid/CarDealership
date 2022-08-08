@@ -10,7 +10,7 @@
           <h5 class="card-title">{{ carData.brand + " " + carData.model }}</h5>
           <p class="card-text">Availabel in: {{ carData.region.name }}</p>
           <p class="card-text">Stock: {{ carData.stock }}</p>
-          <router-link class="btn btn-primary" v-bind:to="'/cars/' + carData.id">Details</router-link>
+          <router-link class="btn btn-secondary" v-bind:to="'/cars/' + carData.id">Details</router-link>
         </div>
       </div>
     </div>

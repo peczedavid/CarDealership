@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white">
+  <div class="p-4 bg-dark bg-opacity-10 border-2 border border-secondary">
     <ul class="list-unstyled">
       <h2 class="">Filter</h2>
       <li class="border-top border-dark my-3"></li>
@@ -27,7 +27,7 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-primary my-2" type="submit">Search</button>
+      <button class="btn btn-secondary my-2" type="submit">Search</button>
     </form>
     <ul class="list-unstyled mt-5">
       <div>

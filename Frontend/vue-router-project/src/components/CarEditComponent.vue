@@ -20,8 +20,8 @@
                     <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
                 </select>
             </div>
-            <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
-            <button v-else type="submit" class="btn btn-primary">Update car</button>
+            <button v-if="carEditData == null" type="submit" class="btn btn-secondary">New car</button>
+            <button v-else type="submit" class="btn btn-secondary">Update car</button>
         </form>
     </div>
 </template>
