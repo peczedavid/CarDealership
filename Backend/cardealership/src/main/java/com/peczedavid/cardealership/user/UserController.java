@@ -2,6 +2,7 @@ package com.peczedavid.cardealership.user;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,28 @@ public class UserController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @GetMapping
+    public ResponseEntity<?> getLoggedInUser(HttpServletRequest request) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        if(jwt == null) {
+            // No user logged in
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        Long id = jwtUtils.getIdFromJwtToken(jwt);
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null)
+            return new ResponseEntity<String>("Error: User not found with id: " + id + " !", HttpStatus.NOT_FOUND);
+        LoginResponse loginResponse = LoginResponse
+            .builder()
+            .id(user.getId())
+            .username(user.getUsername())
+            .admin(user.isAdmin())
+            .region(user.getRegion())
+            .build();
+
+        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {

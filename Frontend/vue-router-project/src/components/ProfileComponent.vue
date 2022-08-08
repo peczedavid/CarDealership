@@ -20,12 +20,13 @@
                                         <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <p class="m-b-10 f-w-600">Email</p>
-                                                <h6 class="text-muted f-w-400">{{ user.email }}</h6>
+                                                <p class="m-b-10 f-w-600">From</p>
+                                                <h6 class="text-muted f-w-400">{{ user.region.name }}</h6>
                                             </div>
                                             <div class="col-sm-12">
-                                                <p class="m-b-10 f-w-600">From</p>
-                                                <h6 class="text-muted f-w-400">{{ user.regions[0] }}</h6>
+                                                <p class="m-b-10 f-w-600">Role</p>
+                                                <h6 v-if="user.admin" class="text-muted f-w-400">Admin</h6>
+                                                <h6 v-else class="text-muted f-w-400">User</h6>
                                             </div>
                                         </div>
                                         <!-- <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
@@ -70,13 +71,23 @@ import axios from "@/http-common"
 export default {
     data() {
         return {
-            user: {}
+            user: {
+                id: -1,
+                username: "",
+                region: {
+                    id: -1,
+                    name: ""
+                },
+                admin: false
+            }
         }
     },
     beforeCreate() {
         axios
-            .get("/get")
-            .then((result) => this.user = result.data)
+            .get("/user")
+            .then((result) => {
+                this.user = result.data;
+            })
             .catch((error) => console.log(error));
     }
 }

@@ -33,6 +33,7 @@
 
 <script>
 import axios from '@/http-common';
+import { store } from '@/data/store';
 
 export default {
   data() {
@@ -46,12 +47,16 @@ export default {
       .post("/user/logout")
       .then((result) => {
         this.activeUser = null;
+        store.currentUser = null;
         // Refresh page so cookie dissappears
         this.$router.go();
       });
     }
   },
-  mounted() {
+  async mounted() {
+    await store.loadCurrentUser();
+    this.activeUser = store.currentUser;
+    
     this.emitter.on("sign-in-form", data => {
       this.activeUser = data;
     });
