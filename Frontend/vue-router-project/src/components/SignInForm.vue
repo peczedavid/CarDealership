@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-lg-4">
+  <div class="container col-lg-4 mt-5">
     <form @submit.prevent="handleLogin">
       <div class="mb-3">
         <label for="usernameInput" class="form-label">Username:</label>
@@ -9,14 +9,13 @@
         <label for="passwordInput" class="form-label">Password:</label>
         <input v-model="user.password" required type="password" class="form-control" id="passwordInput" />
       </div>
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn text-white" style="background-color: #646FD4;">Login</button>
     </form>
   </div>
 </template>
 
 <script>
 import axios from "@/http-common"
-import { store } from "@/data/store"; 
 
 export default {
   data() {
@@ -33,10 +32,8 @@ export default {
         .post("/user/login", this.user)
         .then((result) => {
           // Tell navbar that someone logged in (NavBar.activeUser=result.data)
-          this.emitter.emit("sign-in-form", result.data);
-          // Go back 1 page
-          this.$router.go(-1);
-          //this.$router.push("/");
+          this.emitter.emit("sign-in", result.data);
+          this.$router.push("/");
         })
         .catch((error) => alert(error));
     },
@@ -45,4 +42,8 @@ export default {
 </script>
 
 <style>
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
 </style>

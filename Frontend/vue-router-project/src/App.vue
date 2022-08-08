@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app bg-light bg-gradient vh-100">
     <NavBar />
     <router-view />
   </div>
@@ -15,6 +15,10 @@ export default {
   }
 };
 </script>
-  
+
 <style>
+.fillHeight { 
+    min-height: 100%;
+    height: 100%;
+}
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <div class="card mb-3" style="max-width: 540px;">
+  <div class="card mb-3">
+    <!-- <div class="card mb-3" style="max-width: 540px;"> -->
     <div class="row g-0">
       <div class="col-md-4">
         <img src="https://placehold.jp/200x200.png" class="img-fluid rounded-start" alt="...">
@@ -9,7 +10,7 @@
           <h5 class="card-title">{{ carData.brand + " " + carData.model }}</h5>
           <p class="card-text">Availabel in: {{ carData.region.name }}</p>
           <p class="card-text">Stock: {{ carData.stock }}</p>
-          <router-link class="btn btn-primary" v-bind:to="'/cars/' + carData.id">Details</router-link>
+          <router-link class="btn text-white" style="background-color: #646FD4;" v-bind:to="'/cars/' + carData.id">Details</router-link>
         </div>
       </div>
     </div>
@@ -33,6 +34,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

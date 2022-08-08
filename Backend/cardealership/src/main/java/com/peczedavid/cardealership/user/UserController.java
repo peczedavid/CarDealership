@@ -50,21 +50,21 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getLoggedInUser(HttpServletRequest request) {
         String jwt = jwtUtils.getJwtFromCookies(request);
-        if(jwt == null) {
+        if (jwt == null) {
             // No user logged in
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         Long id = jwtUtils.getIdFromJwtToken(jwt);
         User user = userRepository.findById(id).orElse(null);
-        if(user == null)
+        if (user == null)
             return new ResponseEntity<String>("Error: User not found with id: " + id + " !", HttpStatus.NOT_FOUND);
         LoginResponse loginResponse = LoginResponse
-            .builder()
-            .id(user.getId())
-            .username(user.getUsername())
-            .admin(user.isAdmin())
-            .region(user.getRegion())
-            .build();
+                .builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .admin(user.isAdmin())
+                .region(user.getRegion())
+                .build();
 
         return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
     }
@@ -94,14 +94,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> regiser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> regiser(@RequestBody RegisterRequest registerRequest, HttpServletResponse response) {
         if (userRepository.existsByUsername(registerRequest.getUsername()))
             return new ResponseEntity<String>("Error: Username is already taken.", HttpStatus.BAD_REQUEST);
 
         Region region = regionRepository
                 .findByName(registerRequest.getRegion())
                 .orElseThrow(
-                        () -> new RuntimeException("Error: Region " + registerRequest.getRegion() + " not found!"));
+                        () -> new RuntimeException("Error: Region " + registerRequest.getRegion() + " not found!")); 
 
         User user = User
                 .builder()
@@ -113,8 +113,24 @@ public class UserController {
 
         userRepository.save(user);
 
-        return new ResponseEntity<String>("Account named: " + user.getUsername() + " successfully created.",
-                HttpStatus.CREATED);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        registerRequest.getUsername(), registerRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        Cookie cookie = jwtUtils.generateJwtCookie(userPrincipal);
+        response.addCookie(cookie);
+
+        LoginResponse loginResponse = LoginResponse
+                .builder()
+                .id(userPrincipal.getId())
+                .username(userPrincipal.getUsername())
+                .admin(userPrincipal.isAdmin())
+                .region(region)
+                .build();
+
+        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")

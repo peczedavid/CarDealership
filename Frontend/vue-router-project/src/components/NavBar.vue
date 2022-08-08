@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">Dealership</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -61,12 +61,12 @@ export default {
     this.activeUser = store.currentUser;
   },
   mounted() {
-    this.emitter.on("sign-in-form", data => {
+    this.emitter.on("sign-in", data => {
       this.activeUser = data;
     });
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 </style>

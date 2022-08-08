@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-lg-4">
+    <div class="container col-lg-4 mt-5">
         <form @submit.prevent="handleSubmit">
             <div class="mb-3">
                 <label for="brandInput" class="form-label">Brand:</label>
@@ -20,8 +20,8 @@
                     <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
                 </select>
             </div>
-            <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
-            <button v-else type="submit" class="btn btn-primary">Update car</button>
+            <button v-if="carEditData == null" type="submit" class="btn text-white" style="background-color: #646FD4;">New car</button>
+            <button v-else type="submit" class="btn text-white" style="background-color: #646FD4;">Update car</button>
         </form>
     </div>
 </template>
