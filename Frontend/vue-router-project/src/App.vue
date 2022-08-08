@@ -12,10 +12,7 @@ import { store } from "@/data/store"
 export default {
   components: {
     NavBar,
-  },
-  // beforeCreate() {
-  //   store.loadCurrentUser();
-  // }
+  }
 };
 </script>
   

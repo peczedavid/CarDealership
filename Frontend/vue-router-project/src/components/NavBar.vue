@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/cars" class="nav-link active">Cars</router-link>
+            <router-link v-if="activeUser" to="/cars" class="nav-link active">Cars</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -53,10 +53,11 @@ export default {
       });
     }
   },
-  async mounted() {
+  async created() {
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    
+  },
+  mounted() {
     this.emitter.on("sign-in-form", data => {
       this.activeUser = data;
     });
