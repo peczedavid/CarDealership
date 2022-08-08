@@ -50,6 +50,10 @@ export default {
       axios
         .post("/user/register", this.user)
         .then((result) => {
+          // Tell navbar that someone logged in (NavBar.activeUser=result.data)
+          this.emitter.emit("sign-in-form", result.data);
+          // Go back 1 page
+          //this.$router.go(-1);
           this.$router.push("/");
         })
         .catch((error) => alert(error));
