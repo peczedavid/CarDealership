@@ -1,5 +1,5 @@
 <template>
-  <SignInForm />
+  <SignInForm class="h-100"/>
 </template>
 
 <script>

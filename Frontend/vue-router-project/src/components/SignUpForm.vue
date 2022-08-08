@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-lg-4">
+  <div class="container col-lg-4 mt-5">
     <form @submit.prevent="handleRegistration">
       <div class="mb-3">
         <label for="usernameInput" class="form-label">Username:</label>
@@ -7,7 +7,11 @@
       </div>
       <div class="mb-3">
         <label for="passwordInput" class="form-label">Password:</label>
-        <input v-model="user.password" required type="password" class="form-control" id="passwordInput" />
+        <input v-model="user.password" required autocomplete="new-password" type="password" class="form-control" id="passwordInput" />
+      </div>
+      <div class="mb-3">
+        <label for="passwordAgainInput" class="form-label">Password again:</label>
+        <input v-model="passwordAgain" required type="password" class="form-control" id="passwordAgainInput" />
       </div>
       <div class="mb-3">
         <label for="regionSelect" class="me-2">Region:</label>
@@ -16,7 +20,7 @@
           <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn text-white" style="background-color: #646FD4;">Register</button>
     </form>
   </div>
 </template>
@@ -34,6 +38,7 @@ export default {
         region: '',
         admin: false
       },
+      passwordAgain: '',
       regions: []
     }
   },
@@ -47,9 +52,16 @@ export default {
   },
   methods: {
     handleRegistration() {
+      if(this.user.password != this.passwordAgain) {
+        alert("Passwords are not matching!");
+        return;
+      }
+
       axios
         .post("/user/register", this.user)
         .then((result) => {
+          // Tell navbar that someone logged in (NavBar.activeUser=result.data)
+          this.emitter.emit("sign-in", result.data);
           this.$router.push("/");
         })
         .catch((error) => alert(error));
