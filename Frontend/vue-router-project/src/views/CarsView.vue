@@ -3,7 +3,7 @@
     <SideBarComponent @carsChanged="this.cars = $event"/>
     <div class="container col-lg-6 col-sm-6">
       <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
-      <h1 v-if="this.cars.length == 0">No cars found</h1>
+      <h1>{{ this.message }}</h1>
     </div>
   </div>
 </template>
@@ -22,9 +22,17 @@ export default {
         .get("/cars")
         .then((result) => {
           this.cars = result.data;
-          //console.log(this.cars);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          if(error.response.status == 401)
+            this.message = "Unauthorized, log into your account or create one!";
+        });
+    }
+  },
+  watch: {
+    cars(newValue) {
+      if(newValue.length == 0)
+            this.message = "No cars found";
     }
   },
   beforeMount() {
@@ -32,7 +40,8 @@ export default {
   },
   data() {
     return {
-      cars: []
+      cars: [],
+      message: ""
     };
   },
   components: { CarComponent, SideBarComponent },

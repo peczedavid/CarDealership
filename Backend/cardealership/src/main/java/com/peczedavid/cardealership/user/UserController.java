@@ -57,7 +57,7 @@ public class UserController {
         response.addCookie(cookie);
 
         Region region = regionRepository.findByName(userPrincipal.getRegion()).orElse(null);
-        
+
         LoginResponse loginResponse = LoginResponse
                 .builder()
                 .id(userPrincipal.getId())
