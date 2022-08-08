@@ -30,12 +30,15 @@
       <button class="btn btn-primary my-2" type="submit">Search</button>
     </form>
     <ul class="list-unstyled mt-5">
-      <h2 class="">User actions</h2>
-      <li class="border-top border-dark my-3"></li>
-      <router-link to="/cars/new" class="btn btn-success mb-5" tag="button">New car</router-link>
+      <div>
+        <h2 class="">User actions</h2>
+        <li class="border-top border-dark my-3"></li>
+        <router-link to="/cars/new" class="btn btn-success mb-5" tag="button">New car</router-link>
+      </div>
       <div v-if="activeUser.admin">
         <h2>Admin actions</h2>
         <li class="border-top border-dark my-3"></li>
+        <button class="btn btn-warning">Reset database</button>
       </div>
     </ul>
   </div>
@@ -77,9 +80,9 @@ export default {
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
-      if(!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
+      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
       else {
-        if(this.filters.region !== "")
+        if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
       }
       url = url.slice(0, -1); // Remove last & symbol

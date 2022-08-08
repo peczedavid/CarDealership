@@ -39,6 +39,13 @@ public class CarController {
         return (!car.getRegion().getName().equals(region) && !admin);
     }
 
+    private boolean checkUnauthorized(HttpServletRequest request, CarRequest carRequest) {
+        String jwtCookie = jwtUtils.getJwtFromCookies(request);
+        Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+        String region = jwtUtils.getRegionFromToken(jwtCookie);
+        return (!carRequest.getRegion().equals(region) && !admin);
+    }
+
     @PostMapping("/multiple")
     public ResponseEntity<?> createCars(@RequestBody List<CarRequest> carRequests) {
         List<Car> cars = carService.create(carRequests);
@@ -46,19 +53,31 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCar(@RequestBody CarRequest carRequest) {
+    public ResponseEntity<?> createCar(HttpServletRequest request, @RequestBody CarRequest carRequest) {
+        // Authorization
+        if(checkUnauthorized(request, carRequest))
+            return new ResponseEntity<String>(
+                "Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
+
         Car car = carService.create(carRequest.getBrand(), carRequest.getModel(), carRequest.getRegion(), carRequest.getStock());
-        if(car == null) new ResponseEntity<String>("Faield to create car", HttpStatus.BAD_REQUEST);
+        if(car == null) new ResponseEntity<String>("Failed to create car", HttpStatus.BAD_REQUEST);
+        
         return new ResponseEntity<Car>(car, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<?> getCars(
+            HttpServletRequest request,
             @RequestParam(name = "brand", required = false) String brand,
             @RequestParam(name = "model", required = false) String model,
             @RequestParam(name = "region", required = false) String region,
             @RequestParam(name = "stock", required = false) Integer stock) {
-        List<Car> cars = carService.find(brand, model, region, stock);
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        boolean admin = jwtUtils.getAdminFromToken(jwt);
+        String userRegion = jwtUtils.getRegionFromToken(jwt);
+
+        // If the user is not admin, they can only view cars from their region
+        List<Car> cars = carService.find(brand, model, admin ? region : userRegion, stock);
         return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
     }
 
@@ -70,21 +89,38 @@ public class CarController {
         
         // Authorization
         if(checkUnauthorized(request, car))
-            return new ResponseEntity<String>("Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>(
+                "Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
         
         return new ResponseEntity<Car>(car, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCar(@PathVariable Integer id, @RequestBody CarRequest carRequest) {
+    public ResponseEntity<?> updateCar(HttpServletRequest request, @PathVariable Integer id, @RequestBody CarRequest carRequest) {
         Car car = carService.update(id, carRequest);
         if(car == null) return new ResponseEntity<String>("Error: Car not found with id: " + id + "!", HttpStatus.NOT_FOUND);
+
+        // Authorization
+        if(checkUnauthorized(request, car))
+            return new ResponseEntity<String>(
+                "Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
+
         return new ResponseEntity<Car>(car, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
-        if(carService.deletById(id)) return new ResponseEntity<String>("Deleted car with id: " + id + ".", HttpStatus.NO_CONTENT);
-        else return new ResponseEntity<String>("Error: Car not found with id: " + id + "!", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteCar(HttpServletRequest request, @PathVariable Integer id) {
+        Car car = carService.findById(id);
+        if(car == null) return new ResponseEntity<String>("Error: Car not found with id: " + id + "!", HttpStatus.NOT_FOUND);
+        
+        // Authorization
+        if(checkUnauthorized(request, car))
+            return new ResponseEntity<String>(
+                "Error: User is not admin and can only do operations on cars from their region!", HttpStatus.UNAUTHORIZED);
+        
+        if(!carService.deletById(id))
+            return new ResponseEntity<String>("Error: Couldn't delete car with id: " + id + "!", HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<String>("Deleted car with id: " + id + ".", HttpStatus.NO_CONTENT);
     }
 }
