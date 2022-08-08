@@ -13,16 +13,11 @@
                 <label for="stockInput" class="form-label">stock:</label>
                 <input v-model="carData.stock" type="number" min="0" required class="form-control" id="stockInput" />
             </div>
-            <div class="mb-3">
+            <div v-if="activeUser.admin" class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>
                 <select required v-model="carData.region" class="" id="regionSelect">
-                    <option value="" disabled selected>Select a region</option>
-                    <!--TODO: ask from the database the available regions-->
-                    <option value="America">America</option>
-                    <option value="United-Kingdom">United-Kingdom</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Hungary">Hungary</option>
-                    <option value="Japan">Japan</option>
+                    <option value="" disabled selected>Select the region</option>
+                    <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
                 </select>
             </div>
             <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
@@ -32,11 +27,22 @@
 </template>
 
 <script>
+import { store } from "@/data/store";
 import axios from "@/http-common"
 
 export default {
     props: {
-        carEditData: null
+        carEditData: null,
+    },
+    async created() {
+        axios
+            .get("/regions")
+            .then((result) => {
+                this.regions = result.data;
+            })
+            .catch((error) => console.log(error));
+        await store.loadCurrentUser();
+        this.activeUser = store.currentUser;
     },
     watch: {
         carEditData: function (newVal) {
@@ -58,6 +64,8 @@ export default {
                     })
                     .catch((error) => alert(error));
             } else { // Creating new
+                if(!this.activeUser.admin)
+                    this.carData.region = this.activeUser.region.name;
                 axios
                     .post("/cars", this.carData)
                     .then((result) => {
@@ -74,7 +82,9 @@ export default {
                 model: "",
                 region: "",
                 stock: 0
-            }
+            },
+            regions: [],
+            activeUser: {}
         }
     }
 }

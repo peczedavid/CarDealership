@@ -2,7 +2,7 @@ import { reactive } from "vue";
 import axios from "@/http-common"
 
 export const store = reactive({
-    currentUse: null,
+    currentUser: null,
 
     async loadCurrentUser() {
         try {
@@ -12,5 +12,7 @@ export const store = reactive({
             if(error.status == 204)
                     this.currentUser = null;
         }
-    }
+    },
+
+    unauthorizedMessage: "Unauthorized!"
 });

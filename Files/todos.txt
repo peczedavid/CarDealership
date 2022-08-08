@@ -1,0 +1,22 @@
+CAR
+	Create authorization 			DONE
+		On frontend: Done
+		On backend: Done
+
+	Get authorization 				DONE
+		On frontend
+			All: Done
+			Single(details): Done
+		On backend
+			All: Done
+			Single: Done
+
+	Delete authorization
+		On frontend
+		On backend
+
+	Update authorization
+		On frontend
+		On backend
+
+RESET DATABASE BUTTON

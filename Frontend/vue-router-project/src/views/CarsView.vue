@@ -26,7 +26,7 @@ export default {
         })
         .catch((error) => {
           if(error.response.status == 401)
-            this.message = "Unauthorized, log into your account or create one!";
+            this.$router.push("/unauthorized");
         });
     }
   },

@@ -64,6 +64,11 @@ public class JwtUtils {
     return claims.getBody().get("region", String.class);
   }
 
+  public Boolean getAdminFromToken(String token) {
+    Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+    return claims.getBody().get("admin", Boolean.class);
+  } 
+
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -82,12 +87,12 @@ public class JwtUtils {
     return false;
   }
 
-  // TODO: store admin role in token(to claims?) - Don't need to?
   public String generateTokenFromUser(UserDetailsImpl userDetails) {
     return Jwts.builder()
         .setSubject(userDetails.getId().toString())
         .claim("username", userDetails.getUsername())
         .claim("region", userDetails.getRegion())
+        .claim("admin", userDetails.isAdmin())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(SignatureAlgorithm.HS512, jwtSecret)

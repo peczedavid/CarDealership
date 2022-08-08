@@ -1,3 +1,0 @@
-RESET database button
-Only have 1 region in user and car
-Rewrite web security

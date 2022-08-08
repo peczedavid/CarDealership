@@ -14,6 +14,9 @@
         </ul>
         <ul class="navbar-nav">
           <li v-if="activeUser" class="navbar-nav">
+            <h6 class="text-light me-4 my-auto">{{ activeUser.username }}</h6>
+          </li>
+          <li v-if="activeUser" class="navbar-nav">
             <router-link to="/profile" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
           </li>
           <li v-if="activeUser" class="navbar-nav">
