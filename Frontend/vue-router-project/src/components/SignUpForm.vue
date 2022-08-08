@@ -16,7 +16,7 @@
           <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn text-white" style="background-color: #646FD4;">Register</button>
     </form>
   </div>
 </template>
