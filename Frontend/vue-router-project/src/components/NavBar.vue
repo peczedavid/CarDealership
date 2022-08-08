@@ -61,7 +61,7 @@ export default {
     this.activeUser = store.currentUser;
   },
   mounted() {
-    this.emitter.on("sign-in-form", data => {
+    this.emitter.on("sign-in", data => {
       this.activeUser = data;
     });
   }
