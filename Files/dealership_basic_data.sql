@@ -31,7 +31,7 @@ CREATE TABLE `cars` (
   PRIMARY KEY (`id`),
   KEY `FKremgq7ftbcpj1nab32x62cpm` (`region_id`),
   CONSTRAINT `FKremgq7ftbcpj1nab32x62cpm` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `cars` (
 
 LOCK TABLES `cars` WRITE;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` VALUES (10,'Volkswagen','Golf 4',5,4),(11,'Volkswagen','Golf 4',3,3),(12,'Volkswagen','Golf 5',10,4),(13,'Skoda','Octavia',11,4),(14,'Skoda','Octavia',2,3),(15,'Renault','Thalia',4,4),(16,'Renault','Thalia',6,2),(17,'Audi','R8',9,2),(18,'Audi','R8',2,1),(19,'Audi','A4',11,1),(20,'Audi','A4',11,2),(21,'Toyota','Yaris GR',1,5),(22,'Toyota','GR Supra 5',1,5),(23,'Toyota','Yaris GR',2,1);
+INSERT INTO `cars` VALUES (10,'Volkswagen','Golf 4',5,4),(11,'Volkswagen','Golf 4',3,3),(12,'Volkswagen','Golf 5',10,4),(13,'Skoda','Octavia',11,4),(14,'Skoda','Octavia',2,3),(15,'Renault','Thalia',4,4),(16,'Renault','Thalia',6,2),(17,'Audi','R8',9,2),(18,'Audi','R8',2,1),(19,'Audi','A4',11,1),(20,'Audi','A4',11,2),(21,'Toyota','Yaris GR',1,5),(22,'Toyota','GR Supra 5',1,5),(23,'Toyota','Yaris GR',2,1),(28,'Skoda','Octavia',2,2);
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `FK4muym4ujsr1xfh4qc3wsmmrhe` (`region_id`),
   CONSTRAINT `FK4muym4ujsr1xfh4qc3wsmmrhe` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'$2a$10$H1aStOUvCMaamfM2XLDa1eSZXtTFZ8AUI/aQdkrY7f74sDZdH7bhe','dealership-admin',4),(3,0,'$2a$10$NJCw/WvHmJ0E/KMWVHTpKeyYMGwnLQkywksyrbjBGwkWV9UpeNBdS','hungarian-user-1',4),(4,0,'$2a$10$hF7TIUEoK1qLwMqGHL.V8emvDxIIPo8VxP/yXYHlxqCGc/jJmbZvy','german-user-1',3),(5,0,'$2a$10$NkIJC96N75Vcua22PZRkzuiRfiaUt2DPbmFQ0QmF7CpLq2QpaG9Sa','japan-user-1',5),(6,0,'$2a$10$gDZxKHgqcDtGS8woUFLaP..u0RFcncUAV3bWAoBbbEv53UPyjTiKu','japan-user-2',5),(8,0,'$2a$10$aBVt8cIeRbqkukvXqThixOZ8cJ2DAAPuuaZ9ZhaxJFyACDcqDn34q','american-user-1',1);
+INSERT INTO `users` VALUES (1,1,'$2a$10$H1aStOUvCMaamfM2XLDa1eSZXtTFZ8AUI/aQdkrY7f74sDZdH7bhe','dealership-admin',4),(3,0,'$2a$10$NJCw/WvHmJ0E/KMWVHTpKeyYMGwnLQkywksyrbjBGwkWV9UpeNBdS','hungarian-user-1',4),(4,0,'$2a$10$hF7TIUEoK1qLwMqGHL.V8emvDxIIPo8VxP/yXYHlxqCGc/jJmbZvy','german-user-1',3),(5,0,'$2a$10$NkIJC96N75Vcua22PZRkzuiRfiaUt2DPbmFQ0QmF7CpLq2QpaG9Sa','japan-user-1',5),(6,0,'$2a$10$gDZxKHgqcDtGS8woUFLaP..u0RFcncUAV3bWAoBbbEv53UPyjTiKu','japan-user-2',5),(8,0,'$2a$10$aBVt8cIeRbqkukvXqThixOZ8cJ2DAAPuuaZ9ZhaxJFyACDcqDn34q','american-user-1',1),(9,0,'$2a$10$HAvZZp2JTuG4/Jch3h4QuejlPLFQTcxgMb9OXcNwFw2HEL3PAW3zC','uk-user-1',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -107,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-08 15:17:52
+-- Dump completed on 2022-08-08 16:04:40
