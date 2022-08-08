@@ -35,7 +35,7 @@
 import axios from "@/http-common"
 
 export default {
-  name: 'SignUpForm',
+  name: 'RegisterFormComponent',
   data() {
     return {
       user: {
