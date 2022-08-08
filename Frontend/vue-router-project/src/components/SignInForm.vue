@@ -1,6 +1,10 @@
 <template>
-  <div class="container col-lg-4 mt-5">
-    <form @submit.prevent="handleLogin">
+  <div class="container">
+    <div class="card p-4 col-lg-4 mt-5 mx-auto">
+      <form @submit.prevent="handleLogin">
+      <div class="mb-3 form-group">
+          <h2>Log in to account</h2>
+        </div>
       <div class="form-group mb-3">
         <label for="usernameInput" class="form-label">Username:</label>
         <input v-model="user.username" required class="form-control" id="usernameInput" />
@@ -23,6 +27,8 @@
       </div>
       <button type="submit" class="btn text-white" style="background-color: #646FD4;">Login</button>
     </form>
+    </div>
+    
   </div>
 </template>
 

@@ -1,27 +1,33 @@
 <template>
-  <div class="container col-lg-4 mt-5">
-    <form @submit.prevent="handleRegistration">
-      <div class="mb-3">
-        <label for="usernameInput" class="form-label">Username:</label>
-        <input v-model="user.username" required class="form-control" id="usernameInput" />
-      </div>
-      <div class="mb-3">
-        <label for="passwordInput" class="form-label">Password:</label>
-        <input v-model="user.password" required autocomplete="new-password" type="password" class="form-control" id="passwordInput" />
-      </div>
-      <div class="mb-3">
-        <label for="passwordAgainInput" class="form-label">Password again:</label>
-        <input v-model="passwordAgain" required type="password" class="form-control" id="passwordAgainInput" />
-      </div>
-      <div class="mb-3">
-        <label for="regionSelect" class="me-2">Region:</label>
-        <select required v-model="user.region" class="" id="regionSelect">
-          <option value="" disabled selected>Select your region</option>
-          <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
-        </select>
-      </div>
-      <button type="submit" class="btn text-white" style="background-color: #646FD4;">Register</button>
-    </form>
+  <div class="container">
+    <div class="card p-5 col-lg-4 mt-5 mx-auto">
+      <form @submit.prevent="handleRegistration">
+        <div class="mb-3 form-group">
+          <h2>Register new user</h2>
+        </div>
+        <div class="mb-3 form-group">
+          <label for="usernameInput" class="form-label">Username:</label>
+          <input v-model="user.username" required class="form-control" id="usernameInput" />
+        </div>
+        <div class="mb-3 form-group">
+          <label for="passwordInput" class="form-label">Password:</label>
+          <input v-model="user.password" required autocomplete="new-password" type="password" class="form-control"
+            id="passwordInput" />
+        </div>
+        <div class="mb-3 form-group">
+          <label for="passwordAgainInput" class="form-label">Password again:</label>
+          <input v-model="passwordAgain" required type="password" class="form-control" id="passwordAgainInput" />
+        </div>
+        <div class="mb-3 form-group">
+          <label for="regionSelect" class="me-2">Region:</label>
+          <select required v-model="user.region" class="" id="regionSelect">
+            <option value="" disabled selected>Select your region</option>
+            <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn text-white" style="background-color: #646FD4;">Register</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -52,7 +58,7 @@ export default {
   },
   methods: {
     handleRegistration() {
-      if(this.user.password != this.passwordAgain) {
+      if (this.user.password != this.passwordAgain) {
         alert("Passwords are not matching!");
         return;
       }
@@ -70,4 +76,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
