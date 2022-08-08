@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Dealership</router-link>
+      <router-link class="ms-1 me-3 navbar-brand" to="/">Dealership</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
