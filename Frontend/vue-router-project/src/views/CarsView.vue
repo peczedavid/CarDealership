@@ -10,8 +10,8 @@
           <select v-model="sortingType" @change="getFilteredCars" class="my-4">
             <option value="brand-a-z">Sort by: Brand (A-Z)</option>
             <option value="brand-z-a">Sort by: Brand (Z-A)</option>
-            <option value="stock-asc">Stock Low to High</option>
             <option value="stock-desc">Stock High to Low </option>
+            <option value="stock-asc">Stock Low to High</option>
           </select>
         </div>
       </div>
