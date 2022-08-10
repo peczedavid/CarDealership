@@ -32,8 +32,8 @@
         <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only" :minValue="stockMin"
           :maxValue="stockMax" :max="stockMax" :min="stockMin" :step="1" :rangeMargin="1" @input="updateStockRange" />
         <div class="d-flex justify-content-between">
-          <input v-model="filters.stockLow" class="text-end" readonly min="0" max="100" type="number">
-          <input v-model="filters.stockTop" class="text-end" readonly min="0" max="100" type="number">
+          <input v-model="filters.stockLow" class="text-end" readonly min="0" max="50" type="number">
+          <input v-model="filters.stockTop" class="text-end" readonly min="0" max="50" type="number">
         </div>
       </div>
 
@@ -76,13 +76,13 @@ export default {
         model: "",
         region: "",
         stockLow: 0,
-        stockTop: 100,
+        stockTop: 50,
       },
       regions: [],
       activeUser: {},
 
       stockMin: 0,
-      stockMax: 100,
+      stockMax: 50,
     }
   },
   async created() {
