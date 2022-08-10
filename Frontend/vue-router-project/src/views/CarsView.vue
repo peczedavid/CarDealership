@@ -35,10 +35,6 @@ export default {
     getAllCars() {
       this.getFilteredCars();
     },
-    //isUnsignedInteger(string) {
-    //  let n = Math.floor(Number(string));
-    //  return n !== Infinity && String(n) == string && n >= 0;
-    //},
     getFilteredCars() {
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
@@ -48,9 +44,6 @@ export default {
         if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
       }
-      //if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
-      //  url = url.concat("stock=" + this.filters.stock + "&");
-
       url = url.concat("sort=" + this.sortingType);
 
       axios.get(url)
@@ -58,7 +51,6 @@ export default {
           this.cars = result.data;
 
           // Filter on frontend by stock range:
-          //console.log(this.filters.stockLow + " " + this.filters.stockTop);
           this.cars = this.cars.filter(car => car.stock >= this.filters.stockLow && car.stock <= this.filters.stockTop);
         })
         .catch((error) => {
@@ -95,7 +87,6 @@ export default {
         brand: "",
         model: "",
         region: "",
-        //stock: "",
         stockLow: 0,
         stockTop: 9999999
       },

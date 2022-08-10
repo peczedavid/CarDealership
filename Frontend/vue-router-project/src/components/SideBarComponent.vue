@@ -17,12 +17,6 @@
           <input v-model="filters.model" type="text" class="form-control" id="inputModel">
         </div>
       </div>
-      <!-- <div class="form-group row">
-        <label for="inputStock" class="me-2 col-sm-2 col-form-label">Stock:</label>
-        <div class="col-sm-9">
-          <input v-model="filters.stock" type="text" class="form-control" id="inputStock">
-        </div>
-      </div> -->
       <div v-if="activeUser.admin" class="form-group row">
         <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
         <div class="col-sm-9">
@@ -81,7 +75,6 @@ export default {
         brand: "",
         model: "",
         region: "",
-        //stock: "",
         stockLow: 0,
         stockTop: 100,
       },
@@ -112,7 +105,6 @@ export default {
       this.filters.brand = "";
       this.filters.model = "";
       this.filters.region = "";
-      this.filters.stock = "";
       this.emitter.emit("cars-filter-changed", this.filters);
     },
     handleSearch() {
