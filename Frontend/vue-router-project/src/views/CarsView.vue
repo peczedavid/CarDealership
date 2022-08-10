@@ -82,7 +82,7 @@ export default {
     return {
       cars: [],
       message: "",
-      sortingType: "brand-a-z",
+      sortingType: "stock-desc",
       filters: {
         brand: "",
         model: "",
