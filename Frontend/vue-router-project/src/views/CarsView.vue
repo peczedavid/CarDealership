@@ -88,7 +88,7 @@ export default {
         model: "",
         region: "",
         stockLow: 0,
-        stockTop: 9999999
+        stockTop: Infinity
       },
       activeUser: null
     };

@@ -3,7 +3,7 @@
         <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
                 <div class="me-4">
-                    <img class="" src="../data/car-placeholder.png" alt="Car image">
+                    <img class="" src="@/assets/images/cars/car-placeholder.png" alt="Car image">
                 </div>
                 <div class="">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
