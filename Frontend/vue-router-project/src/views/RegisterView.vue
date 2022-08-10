@@ -1,5 +1,5 @@
 <template>
-  <RegisterFormComponent class="h-100"/>
+  <RegisterFormComponent class="h-100" />
 </template>
 
 <script>
@@ -13,4 +13,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

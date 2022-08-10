@@ -47,13 +47,13 @@ export default {
   methods: {
     signOut() {
       axios
-      .post("/user/logout")
-      .then((result) => {
-        this.activeUser = null;
-        store.currentUser = null;
-        // Refresh page so cookie dissappears
-        this.$router.go();
-      });
+        .post("/user/logout")
+        .then((result) => {
+          this.activeUser = null;
+          store.currentUser = null;
+          // Refresh page so cookie dissappears
+          this.$router.go();
+        });
     }
   },
   async created() {

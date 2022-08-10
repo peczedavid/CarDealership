@@ -33,7 +33,8 @@
       <div>
         <h2 class="">User actions</h2>
         <li class="border-top border-dark my-3"></li>
-        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car</router-link>
+        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car
+        </router-link>
       </div>
       <div v-if="activeUser.admin">
         <h2>Admin actions</h2>
@@ -103,7 +104,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .bg-blue-2 {
   background-color: $blue-2;
 }

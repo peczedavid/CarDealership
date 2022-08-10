@@ -68,10 +68,10 @@ export default {
                 id: 0,
                 brand: "",
                 model: "",
-                region:  {
-                        id: 0,
-                        name: "",
-                    },
+                region: {
+                    id: 0,
+                    name: "",
+                },
                 stock: 0
             }
         }
@@ -80,7 +80,7 @@ export default {
         axios.get("/cars/" + this.$route.params.id)
             .then((result) => { this.carData = result.data })
             .catch((error) => {
-                if(error.response.status == 401 || error.response.status == 404)
+                if (error.response.status == 401 || error.response.status == 404)
                     this.$router.push("/unauthorized");
             });
     }

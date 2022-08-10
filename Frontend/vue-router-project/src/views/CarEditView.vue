@@ -1,5 +1,5 @@
 <template>
-  <CarEditComponent :carEditData=this.carEditData />
+    <CarEditComponent :carEditData=this.carEditData />
 </template>
 
 <script>
@@ -27,5 +27,4 @@ export default {
 </script>
 
 <style>
-
 </style>

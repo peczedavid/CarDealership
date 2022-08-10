@@ -20,7 +20,8 @@
                     <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
                 </select>
             </div>
-            <button v-if="carEditData == null" type="submit" class="btn text-white" style="background-color: #646FD4;">New car</button>
+            <button v-if="carEditData == null" type="submit" class="btn text-white"
+                style="background-color: #646FD4;">New car</button>
             <button v-else type="submit" class="btn text-white" style="background-color: #646FD4;">Update car</button>
         </form>
     </div>
@@ -64,7 +65,7 @@ export default {
                     })
                     .catch((error) => alert(error));
             } else { // Creating new
-                if(!this.activeUser.admin)
+                if (!this.activeUser.admin)
                     this.carData.region = this.activeUser.region.name;
                 axios
                     .post("/cars", this.carData)
