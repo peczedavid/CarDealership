@@ -18,7 +18,6 @@ export default {
   name: "CarsView",
   methods: {
     getCars() {
-      // TODO: sort by brand or stock
       axios
         .get("/cars")
         .then((result) => {
@@ -28,7 +27,29 @@ export default {
           if (error.response.status == 401)
             this.$router.push("/unauthorized");
         });
-    }
+    },
+    isUnsignedInteger(string) {
+      let n = Math.floor(Number(string));
+      return n !== Infinity && String(n) == string && n >= 0;
+    },
+    getFilteredCars(filters) {
+      let url = "/cars?"
+      if (filters.brand !== "") url = url.concat("brand=" + filters.brand + "&");
+      if (filters.model !== "") url = url.concat("model=" + filters.model + "&");
+      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
+      else {
+        if (filters.region !== "")
+          url = url.concat("region=" + filters.region + "&");
+      }
+      if (filters.stock !== "" && this.isUnsignedInteger(filters.stock))
+        url = url.concat("stock=" + filters.stock + "&");
+      url = url.slice(0, -1); // Remove last & symbol
+      axios.get(url)
+        .then((result) => {
+          this.cars = result.data;
+        })
+        .catch((error) => console.log(error));
+    },
   },
   watch: {
     cars(newValue) {
@@ -41,7 +62,13 @@ export default {
   async beforeMount() {
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    this.getCars()
+    this.getCars();
+  },
+  mounted() {
+    this.emitter.on("cars-filter-changed", filters => {
+      //console.log("Filters changed");
+      this.getFilteredCars(filters);
+    });
   },
   data() {
     return {

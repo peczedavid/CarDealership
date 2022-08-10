@@ -66,7 +66,6 @@ import { store } from '@/data/store'
 export default {
   data() {
     return {
-      // TODO: add stock filter property
       filters: {
         brand: "",
         model: "",
@@ -87,8 +86,6 @@ export default {
 
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-
-    this.getFilteredCars();
   },
   methods: {
     clearFilters() {
@@ -96,50 +93,14 @@ export default {
       this.filters.model = "";
       this.filters.region = "";
       this.filters.stock = "";
-    },
-    isUnsignedInteger(string) {
-      let n = Math.floor(Number(string));
-      return n !== Infinity && String(n) == string && n >= 0;
-    },
-    getFilteredCars() {
-      let url = "/cars?"
-      if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
-      if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
-      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
-      else {
-        if (this.filters.region !== "")
-          url = url.concat("region=" + this.filters.region + "&");
-      }
-      if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
-        url = url.concat("stock=" + this.filters.stock + "&");
-      url = url.slice(0, -1); // Remove last & symbol
-      axios.get(url)
-        .then((result) => {
-          this.$emit("carsChanged", result.data);
-        })
-        .catch((error) => console.log(error));
+      this.emitter.emit("cars-filter-changed", this.filters);
     },
     handleSearch() {
-      this.getFilteredCars();
+      this.emitter.emit("cars-filter-changed", this.filters);
     }
   }
 };
 </script>
 
-<style lang="scss">
-.bg-blue-2 {
-  background-color: $blue-2;
-}
-
-// .bg-green-1 {
-//   background-color: $green-1;
-// }
-
-// .bg-yellow-1 {
-//   background-color: $green-1;
-// }
-
-// .bg-red-1 {
-//   background-color: $red-1;
-// }
+<style>
 </style>
