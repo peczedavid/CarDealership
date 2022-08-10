@@ -17,6 +17,12 @@
           <input v-model="filters.model" type="text" class="form-control" id="inputModel">
         </div>
       </div>
+      <div class="form-group row">
+        <label for="inputStock" class="me-2 col-sm-2 col-form-label">Stock:</label>
+        <div class="col-sm-9">
+          <input v-model="filters.stock" type="text" class="form-control" id="inputStock">
+        </div>
+      </div>
       <div v-if="activeUser.admin" class="form-group row">
         <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
         <div class="col-sm-9">
@@ -27,13 +33,17 @@
           </select>
         </div>
       </div>
+
       <button class="btn bg-blue-2 text-white my-2" style="background-color: #646FD4;" type="submit">Search</button>
+      <button class="btn bg-blue-2 text-white ms-2 my-2" style="background-color: #9BA3EB;" @click="clearFilters"
+        type="button">Clear</button>
     </form>
     <ul class="list-unstyled mt-5">
       <div>
         <h2 class="">User actions</h2>
         <li class="border-top border-dark my-3"></li>
-        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car</router-link>
+        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car
+        </router-link>
       </div>
       <div v-if="activeUser.admin">
         <h2>Admin actions</h2>
@@ -59,7 +69,8 @@ export default {
       filters: {
         brand: "",
         model: "",
-        region: ""
+        region: "",
+        stock: ""
       },
       regions: [],
       activeUser: {}
@@ -75,48 +86,21 @@ export default {
 
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-
-    this.getFilteredCars();
   },
   methods: {
-    getFilteredCars() {
-      let url = "/cars?"
-      if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
-      if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
-      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
-      else {
-        if (this.filters.region !== "")
-          url = url.concat("region=" + this.filters.region + "&");
-      }
-      url = url.slice(0, -1); // Remove last & symbol
-      axios.get(url)
-        .then((result) => {
-          this.$emit("carsChanged", result.data);
-        })
-        .catch((error) => console.log(error));
+    clearFilters() {
+      this.filters.brand = "";
+      this.filters.model = "";
+      this.filters.region = "";
+      this.filters.stock = "";
+      this.emitter.emit("cars-filter-changed", this.filters);
     },
     handleSearch() {
-      this.getFilteredCars();
+      this.emitter.emit("cars-filter-changed", this.filters);
     }
   }
 };
 </script>
 
-<style lang="scss">
-
-.bg-blue-2 {
-  background-color: $blue-2;
-}
-
-// .bg-green-1 {
-//   background-color: $green-1;
-// }
-
-// .bg-yellow-1 {
-//   background-color: $green-1;
-// }
-
-// .bg-red-1 {
-//   background-color: $red-1;
-// }
+<style>
 </style>

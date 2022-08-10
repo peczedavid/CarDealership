@@ -8,17 +8,16 @@
 import { store } from '@/data/store'
 
 export default {
-    created() {
-        this.message = store.unauthorizedMessage;
-    },
-    data() {
-        return {
-            message: ""
-        }
+  created() {
+    this.message = store.unauthorizedMessage;
+  },
+  data() {
+    return {
+      message: ""
     }
+  }
 }
 </script>
 
 <style>
-
 </style>

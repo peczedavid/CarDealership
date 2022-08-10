@@ -7,7 +7,6 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
-import { store } from "@/data/store"
 
 export default {
   components: {
@@ -17,8 +16,4 @@ export default {
 </script>
 
 <style>
-.fillHeight { 
-    min-height: 100%;
-    height: 100%;
-}
 </style>

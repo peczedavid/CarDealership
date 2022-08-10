@@ -6,12 +6,11 @@
 import CarEditComponent from '@/components/CarEditComponent.vue'
 
 export default {
-    components: {
-        CarEditComponent
-    }
+  components: {
+    CarEditComponent
+  }
 }
 </script>
 
 <style>
-
 </style>

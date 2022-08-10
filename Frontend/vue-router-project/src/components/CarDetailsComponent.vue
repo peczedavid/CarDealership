@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <div class="card col-lg-6 mx-auto mb-3">
+        <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
                 <div class="me-4">
-                    <img class="" src="https://placehold.jp/200x200.png" alt="Car image">
+                    <img class="" src="../data/car-placeholder.png" alt="Car image">
                 </div>
                 <div class="">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
@@ -68,10 +68,10 @@ export default {
                 id: 0,
                 brand: "",
                 model: "",
-                region:  {
-                        id: 0,
-                        name: "",
-                    },
+                region: {
+                    id: 0,
+                    name: "",
+                },
                 stock: 0
             }
         }
@@ -80,7 +80,7 @@ export default {
         axios.get("/cars/" + this.$route.params.id)
             .then((result) => { this.carData = result.data })
             .catch((error) => {
-                if(error.response.status == 401 || error.response.status == 404)
+                if (error.response.status == 401 || error.response.status == 404)
                     this.$router.push("/unauthorized");
             });
     }

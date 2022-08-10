@@ -1,8 +1,10 @@
 package com.peczedavid.cardealership.car;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,13 @@ public class CarService {
 
     public Car findById(Integer id) {
         Car car = carRepository.findById((long) id).orElse(null);
-        if(car == null) return null;
+        if (car == null)
+            return null;
         return car;
     }
 
     public boolean deletById(Integer id) {
-        if(!carRepository.existsById((long) id))
+        if (!carRepository.existsById((long) id))
             return false;
         carRepository.deleteById((long) id);
         return true;
@@ -43,7 +46,8 @@ public class CarService {
 
     public Car update(Integer id, CarRequest carRequest) {
         Car car = carRepository.findById((long) id).orElse(null);
-        if (car == null) return null;
+        if (car == null)
+            return null;
         Region region = regionRepository.findByName(carRequest.getRegion()).orElse(null);
         if (region == null)
             throw new RuntimeException("Can't update car, region " + carRequest.getRegion() + " not found!");
@@ -83,17 +87,35 @@ public class CarService {
         }
     }
 
-    public List<Car> find(String brand, String model, String region, Integer stock) {
-        List<Car> cars = carRepository.findAll();
+    public List<Car> find(String brand, String model, String region, Integer stock, String sort) {
+        Stream<Car> cars = carRepository.findAll().stream();
 
         if (brand != null)
-            cars = cars.stream().filter(car -> car.getBrand().equals(brand)).collect(Collectors.toList());
+            cars = cars.filter(car -> car.getBrand().equals(brand));
         if (model != null)
-            cars = cars.stream().filter(car -> car.getModel().equals(model)).collect(Collectors.toList());
+            cars = cars.filter(car -> car.getModel().equals(model));
         if (region != null)
-            cars = cars.stream().filter(car -> car.getRegion().getName().equals(region)).collect(Collectors.toList());
+            cars = cars.filter(car -> car.getRegion().getName().equals(region));
         if (stock != null)
-            cars = cars.stream().filter(car -> car.getStock().equals(stock)).collect(Collectors.toList());
-        return cars;
+            cars = cars.filter(car -> car.getStock().equals(stock));
+
+        switch (sort) {
+            case "brand-a-z":
+                cars = cars.sorted((car1, car2) -> car1.getBrand().compareTo(car2.getBrand()));
+                break;
+            case "brand-z-a":
+                cars = cars.sorted((car1, car2) -> car2.getBrand().compareTo(car1.getBrand()));
+                break;
+            case "stock-asc":
+                cars = cars.sorted(Comparator.comparingInt(Car::getStock));
+                break;
+            case "stock-desc":
+                cars = cars.sorted(Comparator.comparingInt(Car::getStock).reversed());
+                break;
+            default:
+                break;
+        }
+
+        return cars.collect(Collectors.toList());
     }
 }

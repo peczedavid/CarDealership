@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Dealership</router-link>
+      <router-link class="ms-1 me-3 navbar-brand" to="/">Dealership</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,10 +23,10 @@
             <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
           </li>
           <li v-if="!activeUser" class="navbar-nav">
-            <router-link to="/signin" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
+            <router-link to="/login" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
           </li>
           <li v-if="!activeUser" class="navbar-nav">
-            <router-link to="/signup" class="btn btn-outline-light me-2" tag="button">Register</router-link>
+            <router-link to="/register" class="btn btn-outline-light me-2" tag="button">Register</router-link>
           </li>
         </ul>
       </div>
@@ -47,13 +47,13 @@ export default {
   methods: {
     signOut() {
       axios
-      .post("/user/logout")
-      .then((result) => {
-        this.activeUser = null;
-        store.currentUser = null;
-        // Refresh page so cookie dissappears
-        this.$router.go();
-      });
+        .post("/user/logout")
+        .then((result) => {
+          this.activeUser = null;
+          store.currentUser = null;
+          // Refresh page so cookie dissappears
+          this.$router.go();
+        });
     }
   },
   async created() {

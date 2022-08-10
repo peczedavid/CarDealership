@@ -1,18 +1,17 @@
 import { reactive } from "vue";
-import axios from "@/http-common"
+import axios from "@/http-common";
 
 export const store = reactive({
-    currentUser: null,
+  currentUser: null,
 
-    async loadCurrentUser() {
-        try {
-            const result = await axios.get("user");
-            this.currentUser = result.data;
-        } catch (error) {
-            if(error.status == 204)
-                    this.currentUser = null;
-        }
-    },
+  async loadCurrentUser() {
+    try {
+      const result = await axios.get("user");
+      this.currentUser = result.data;
+    } catch (error) {
+      if (error.status == 204) this.currentUser = null;
+    }
+  },
 
-    unauthorizedMessage: "Unauthorized!"
+  unauthorizedMessage: "Unauthorized!",
 });

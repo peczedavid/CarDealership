@@ -1,6 +1,5 @@
 package com.peczedavid.cardealership.security;
 
-
 import java.util.Date;
 
 import javax.servlet.http.Cookie;

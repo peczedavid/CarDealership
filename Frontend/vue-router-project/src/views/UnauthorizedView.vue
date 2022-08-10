@@ -6,12 +6,11 @@
 import UnauthorizedComponent from '@/components/UnauthorizedComponent.vue'
 
 export default {
-    components: {
-        UnauthorizedComponent
-    }
+  components: {
+    UnauthorizedComponent
+  }
 }
 </script>
 
 <style>
-
 </style>
