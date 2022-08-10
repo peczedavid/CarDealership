@@ -1,9 +1,24 @@
 <template>
-  <div class="d-inline-flex col-12 bg-light bg-gradient">
-    <SideBarComponent class="col-lg-3 col-md-6 col-sm-6" @carsChanged="this.cars = $event" />
-    <div class="container mt-4">
-      <CarComponent class="col-sm-6" style="margin-left: 200px;" v-for="car in cars" :key="car.id" :carData="car" />
-      <h1>{{ this.message }}</h1>
+  <div class="row m-0 p-0">
+    <div class="col-3 p-0 m-0">
+      <SideBarComponent @carsChanged="this.cars = $event" />
+    </div>
+    <div class="col-9">
+      <div class="col-12 d-flex">
+        <div class="col-8"></div>
+        <div class="col-4">
+          <select v-model="sortingType" @change="getFilteredCars" class="my-4">
+            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
+            <option value="stock-asc">Stock Low to High</option>
+            <option value="stock-desc">Stock High to Low </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 m-0 p-0">
+        <CarComponent class="col-6" style="margin-left: 225px;" v-for="car in cars" :key="car.id" :carData="car" />
+        <h1>{{ this.message }}</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -17,10 +32,29 @@ import { store } from "@/data/store"
 export default {
   name: "CarsView",
   methods: {
-    getCars() {
-      // TODO: sort by brand or stock
-      axios
-        .get("/cars")
+    getAllCars() {
+      this.getFilteredCars();
+    },
+    isUnsignedInteger(string) {
+      let n = Math.floor(Number(string));
+      return n !== Infinity && String(n) == string && n >= 0;
+    },
+    getFilteredCars() {
+      let url = "/cars?"
+      if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
+      if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
+      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
+      else {
+        if (this.filters.region !== "")
+          url = url.concat("region=" + this.filters.region + "&");
+      }
+      if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
+        url = url.concat("stock=" + this.filters.stock + "&");
+
+      url = url.concat("sort=" + this.sortingType);
+
+      //url = url.slice(0, -1); // Remove last & symbol
+      axios.get(url)
         .then((result) => {
           this.cars = result.data;
         })
@@ -28,7 +62,7 @@ export default {
           if (error.response.status == 401)
             this.$router.push("/unauthorized");
         });
-    }
+    },
   },
   watch: {
     cars(newValue) {
@@ -41,12 +75,25 @@ export default {
   async beforeMount() {
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    this.getCars()
+    this.getAllCars();
+  },
+  mounted() {
+    this.emitter.on("cars-filter-changed", filters => {
+      this.filters = filters;
+      this.getFilteredCars(this.filters);
+    });
   },
   data() {
     return {
       cars: [],
       message: "",
+      sortingType: "brand-a-z",
+      filters: {
+        brand: "",
+        model: "",
+        region: "",
+        stock: ""
+      },
       activeUser: null
     };
   },
