@@ -1,9 +1,22 @@
 <template>
-  <div class="d-inline-flex col-12 bg-light bg-gradient">
-    <SideBarComponent class="col-lg-3 col-md-6 col-sm-6" @carsChanged="this.cars = $event" />
-    <div class="container mt-4">
-      <CarComponent class="col-sm-6" style="margin-left: 200px;" v-for="car in cars" :key="car.id" :carData="car" />
-      <h1>{{ this.message }}</h1>
+  <div class="row m-0 p-0">
+    <div class="col-3 p-0 m-0">
+      <SideBarComponent @carsChanged="this.cars = $event" />
+    </div>
+    <div class="col-9">
+      <div class="col-12 d-flex">
+        <div class="col-8"></div>
+        <div class="col-4">
+          <select class="my-4">
+            <option value="a-z">Sort by: Brand (A-Z)</option>
+            <option value="z-a">Sort by: Brand (Z-A)</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 m-0 p-0">
+        <CarComponent class="col-6" style="margin-left: 225px;" v-for="car in cars" :key="car.id" :carData="car" />
+        <h1>{{ this.message }}</h1>
+      </div>
     </div>
   </div>
 </template>
