@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="card col-lg-6 mx-auto mb-3">
+        <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
                 <div class="me-4">
                     <img class="" src="../data/car-placeholder.png" alt="Car image">
