@@ -7,9 +7,9 @@
       <div class="col-12 d-flex">
         <div class="col-8"></div>
         <div class="col-4">
-          <select class="my-4">
-            <option value="a-z">Sort by: Brand (A-Z)</option>
-            <option value="z-a">Sort by: Brand (Z-A)</option>
+          <select v-model="sortingType" @change="getFilteredCars" class="my-4">
+            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
           </select>
         </div>
       </div>
@@ -30,9 +30,29 @@ import { store } from "@/data/store"
 export default {
   name: "CarsView",
   methods: {
-    getCars() {
-      axios
-        .get("/cars")
+    getAllCars() {
+      this.getFilteredCars();
+    },
+    isUnsignedInteger(string) {
+      let n = Math.floor(Number(string));
+      return n !== Infinity && String(n) == string && n >= 0;
+    },
+    getFilteredCars() {
+      let url = "/cars?"
+      if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
+      if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
+      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
+      else {
+        if (this.filters.region !== "")
+          url = url.concat("region=" + this.filters.region + "&");
+      }
+      if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
+        url = url.concat("stock=" + this.filters.stock + "&");
+
+      url = url.concat("sort=" + this.sortingType);
+
+      //url = url.slice(0, -1); // Remove last & symbol
+      axios.get(url)
         .then((result) => {
           this.cars = result.data;
         })
@@ -40,28 +60,6 @@ export default {
           if (error.response.status == 401)
             this.$router.push("/unauthorized");
         });
-    },
-    isUnsignedInteger(string) {
-      let n = Math.floor(Number(string));
-      return n !== Infinity && String(n) == string && n >= 0;
-    },
-    getFilteredCars(filters) {
-      let url = "/cars?"
-      if (filters.brand !== "") url = url.concat("brand=" + filters.brand + "&");
-      if (filters.model !== "") url = url.concat("model=" + filters.model + "&");
-      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
-      else {
-        if (filters.region !== "")
-          url = url.concat("region=" + filters.region + "&");
-      }
-      if (filters.stock !== "" && this.isUnsignedInteger(filters.stock))
-        url = url.concat("stock=" + filters.stock + "&");
-      url = url.slice(0, -1); // Remove last & symbol
-      axios.get(url)
-        .then((result) => {
-          this.cars = result.data;
-        })
-        .catch((error) => console.log(error));
     },
   },
   watch: {
@@ -75,18 +73,25 @@ export default {
   async beforeMount() {
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    this.getCars();
+    this.getAllCars();
   },
   mounted() {
     this.emitter.on("cars-filter-changed", filters => {
-      //console.log("Filters changed");
-      this.getFilteredCars(filters);
+      this.filters = filters;
+      this.getFilteredCars(this.filters);
     });
   },
   data() {
     return {
       cars: [],
       message: "",
+      sortingType: "brand-a-z",
+      filters: {
+        brand: "",
+        model: "",
+        region: "",
+        stock: ""
+      },
       activeUser: null
     };
   },

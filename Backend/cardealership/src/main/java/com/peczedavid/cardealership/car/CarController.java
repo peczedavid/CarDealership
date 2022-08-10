@@ -71,13 +71,14 @@ public class CarController {
             @RequestParam(name = "brand", required = false) String brand,
             @RequestParam(name = "model", required = false) String model,
             @RequestParam(name = "region", required = false) String region,
-            @RequestParam(name = "stock", required = false) Integer stock) {
+            @RequestParam(name = "stock", required = false) Integer stock,
+            @RequestParam(name = "sort", required = false) String sort) {
         String jwt = jwtUtils.getJwtFromCookies(request);
         boolean admin = jwtUtils.getAdminFromToken(jwt);
         String userRegion = jwtUtils.getRegionFromToken(jwt);
-
+        
         // If the user is not admin, they can only view cars from their region
-        List<Car> cars = carService.find(brand, model, admin ? region : userRegion, stock);
+        List<Car> cars = carService.find(brand, model, admin ? region : userRegion, stock, sort == null ? "" : sort);
         return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
     }
 
