@@ -1,6 +1,7 @@
 package com.peczedavid.cardealership.user.payload;
 
 import com.peczedavid.cardealership.region.Region;
+import com.peczedavid.cardealership.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginResponse {
+public class UserData {
     
     private Long id;
 
@@ -21,5 +22,12 @@ public class LoginResponse {
 
     private Region region;
 
-    private boolean admin;    
+    private boolean admin;
+
+    public UserData(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.region = user.getRegion();
+        this.admin = user.isAdmin();
+    }
 }

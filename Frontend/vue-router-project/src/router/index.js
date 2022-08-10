@@ -8,6 +8,7 @@ import CarNewView from "@/views/CarNewView.vue";
 import CarEditView from "@/views/CarEditView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import UnauthorizedView from "@/views/UnauthorizedView.vue";
+import AdminBoardView from "@/views/AdminBoardView.vue";
 
 const routes = [
   { path: "/", name: "home", component: HomeView },
@@ -18,6 +19,7 @@ const routes = [
   { path: "/cars/new", name: "carNew", component: CarNewView },
   { path: "/cars/edit/:id", name: "carEdit", component: CarEditView },
   { path: "/profile", name: "profile", component: ProfileView },
+  { path: "/adminboard", name: "adminboard", component: AdminBoardView },
   { path: "/unauthorized", name: "unauthorized", component: UnauthorizedView },
 ];
 

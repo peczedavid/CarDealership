@@ -17,12 +17,6 @@
           <input v-model="filters.model" type="text" class="form-control" id="inputModel">
         </div>
       </div>
-      <div class="form-group row">
-        <label for="inputStock" class="me-2 col-sm-2 col-form-label">Stock:</label>
-        <div class="col-sm-9">
-          <input v-model="filters.stock" type="text" class="form-control" id="inputStock">
-        </div>
-      </div>
       <div v-if="activeUser.admin" class="form-group row">
         <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
         <div class="col-sm-9">
@@ -31,6 +25,15 @@
             <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
             <option value="">All</option>
           </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stockRangeInput">Stock:</label>
+        <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only" :minValue="stockMin"
+          :maxValue="stockMax" :max="stockMax" :min="stockMin" :step="1" :rangeMargin="1" @input="updateStockRange" />
+        <div class="d-flex justify-content-between">
+          <input v-model="filters.stockLow" class="text-end" readonly min="0" max="100" type="number">
+          <input v-model="filters.stockTop" class="text-end" readonly min="0" max="100" type="number">
         </div>
       </div>
 
@@ -62,6 +65,8 @@
 <script>
 import axios from '@/http-common';
 import { store } from '@/data/store'
+import MultiRangeSlider from "multi-range-slider-vue";
+import "../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css"
 
 export default {
   data() {
@@ -70,10 +75,14 @@ export default {
         brand: "",
         model: "",
         region: "",
-        stock: ""
+        stockLow: 0,
+        stockTop: 100,
       },
       regions: [],
-      activeUser: {}
+      activeUser: {},
+
+      stockMin: 0,
+      stockMax: 100,
     }
   },
   async created() {
@@ -88,16 +97,22 @@ export default {
     this.activeUser = store.currentUser;
   },
   methods: {
+    updateStockRange(e) {
+      this.filters.stockLow = e.minValue;
+      this.filters.stockTop = e.maxValue;
+    },
     clearFilters() {
       this.filters.brand = "";
       this.filters.model = "";
       this.filters.region = "";
-      this.filters.stock = "";
       this.emitter.emit("cars-filter-changed", this.filters);
     },
     handleSearch() {
       this.emitter.emit("cars-filter-changed", this.filters);
     }
+  },
+  components: {
+    MultiRangeSlider
   }
 };
 </script>

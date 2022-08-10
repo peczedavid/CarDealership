@@ -1,5 +1,8 @@
 package com.peczedavid.cardealership.user;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +27,7 @@ import com.peczedavid.cardealership.region.RegionRepository;
 import com.peczedavid.cardealership.security.JwtUtils;
 import com.peczedavid.cardealership.security.UserDetailsImpl;
 import com.peczedavid.cardealership.user.payload.LoginRequest;
-import com.peczedavid.cardealership.user.payload.LoginResponse;
+import com.peczedavid.cardealership.user.payload.UserData;
 import com.peczedavid.cardealership.user.payload.RegisterRequest;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
@@ -47,6 +50,22 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserData>> getAllUsers(HttpServletRequest request) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        if (jwt == null || !jwtUtils.getAdminFromToken(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<UserData> users = userRepository
+                .findAll()
+                .stream()
+                .map(user -> new UserData(user))
+                .collect(Collectors.toList());
+        
+        return new ResponseEntity<List<UserData>>(users, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<?> getLoggedInUser(HttpServletRequest request) {
         String jwt = jwtUtils.getJwtFromCookies(request);
@@ -58,15 +77,9 @@ public class UserController {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             return new ResponseEntity<String>("Error: User not found with id: " + id + " !", HttpStatus.NOT_FOUND);
-        LoginResponse loginResponse = LoginResponse
-                .builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .admin(user.isAdmin())
-                .region(user.getRegion())
-                .build();
+        UserData userData = new UserData(user);
 
-        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
+        return new ResponseEntity<UserData>(userData, HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -82,7 +95,7 @@ public class UserController {
 
         Region region = regionRepository.findByName(userPrincipal.getRegion()).orElse(null);
 
-        LoginResponse loginResponse = LoginResponse
+        UserData userData = UserData
                 .builder()
                 .id(userPrincipal.getId())
                 .username(userPrincipal.getUsername())
@@ -90,7 +103,7 @@ public class UserController {
                 .region(region)
                 .build();
 
-        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
+        return new ResponseEntity<UserData>(userData, HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -101,7 +114,7 @@ public class UserController {
         Region region = regionRepository
                 .findByName(registerRequest.getRegion())
                 .orElseThrow(
-                        () -> new RuntimeException("Error: Region " + registerRequest.getRegion() + " not found!")); 
+                        () -> new RuntimeException("Error: Region " + registerRequest.getRegion() + " not found!"));
 
         User user = User
                 .builder()
@@ -122,7 +135,7 @@ public class UserController {
         Cookie cookie = jwtUtils.generateJwtCookie(userPrincipal);
         response.addCookie(cookie);
 
-        LoginResponse loginResponse = LoginResponse
+        UserData loginResponse = UserData
                 .builder()
                 .id(userPrincipal.getId())
                 .username(userPrincipal.getUsername())
@@ -130,7 +143,7 @@ public class UserController {
                 .region(region)
                 .build();
 
-        return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.CREATED);
+        return new ResponseEntity<UserData>(loginResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
