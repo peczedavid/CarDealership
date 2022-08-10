@@ -1,6 +1,7 @@
 package com.peczedavid.cardealership.car;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -104,6 +105,12 @@ public class CarService {
                 break;
             case "brand-z-a":
                 cars = cars.sorted((car1, car2) -> car2.getBrand().compareTo(car1.getBrand()));
+                break;
+            case "stock-asc":
+                cars = cars.sorted(Comparator.comparingInt(Car::getStock));
+                break;
+            case "stock-desc":
+                cars = cars.sorted(Comparator.comparingInt(Car::getStock).reversed());
                 break;
             default:
                 break;
