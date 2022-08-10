@@ -35,10 +35,10 @@ export default {
     getAllCars() {
       this.getFilteredCars();
     },
-    isUnsignedInteger(string) {
-      let n = Math.floor(Number(string));
-      return n !== Infinity && String(n) == string && n >= 0;
-    },
+    //isUnsignedInteger(string) {
+    //  let n = Math.floor(Number(string));
+    //  return n !== Infinity && String(n) == string && n >= 0;
+    //},
     getFilteredCars() {
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
@@ -48,15 +48,18 @@ export default {
         if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
       }
-      if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
-        url = url.concat("stock=" + this.filters.stock + "&");
+      //if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
+      //  url = url.concat("stock=" + this.filters.stock + "&");
 
       url = url.concat("sort=" + this.sortingType);
 
-      //url = url.slice(0, -1); // Remove last & symbol
       axios.get(url)
         .then((result) => {
           this.cars = result.data;
+
+          // Filter on frontend by stock range:
+          //console.log(this.filters.stockLow + " " + this.filters.stockTop);
+          this.cars = this.cars.filter(car => car.stock >= this.filters.stockLow && car.stock <= this.filters.stockTop);
         })
         .catch((error) => {
           if (error.response.status == 401)
@@ -92,7 +95,9 @@ export default {
         brand: "",
         model: "",
         region: "",
-        stock: ""
+        //stock: "",
+        stockLow: 0,
+        stockTop: 9999999
       },
       activeUser: null
     };
