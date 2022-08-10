@@ -17,6 +17,12 @@
           <input v-model="filters.model" type="text" class="form-control" id="inputModel">
         </div>
       </div>
+      <div class="form-group row">
+        <label for="inputStock" class="me-2 col-sm-2 col-form-label">Stock:</label>
+        <div class="col-sm-9">
+          <input v-model="filters.stock" type="text" class="form-control" id="inputStock">
+        </div>
+      </div>
       <div v-if="activeUser.admin" class="form-group row">
         <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
         <div class="col-sm-9">
@@ -27,7 +33,10 @@
           </select>
         </div>
       </div>
+
       <button class="btn bg-blue-2 text-white my-2" style="background-color: #646FD4;" type="submit">Search</button>
+      <button class="btn bg-blue-2 text-white ms-2 my-2" style="background-color: #9BA3EB;" @click="clearFilters"
+        type="button">Clear</button>
     </form>
     <ul class="list-unstyled mt-5">
       <div>
@@ -57,10 +66,12 @@ import { store } from '@/data/store'
 export default {
   data() {
     return {
+      // TODO: add stock filter property
       filters: {
         brand: "",
         model: "",
-        region: ""
+        region: "",
+        stock: ""
       },
       regions: [],
       activeUser: {}
@@ -80,6 +91,16 @@ export default {
     this.getFilteredCars();
   },
   methods: {
+    clearFilters() {
+      this.filters.brand = "";
+      this.filters.model = "";
+      this.filters.region = "";
+      this.filters.stock = "";
+    },
+    isUnsignedInteger(string) {
+      let n = Math.floor(Number(string));
+      return n !== Infinity && String(n) == string && n >= 0;
+    },
     getFilteredCars() {
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
@@ -89,6 +110,8 @@ export default {
         if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
       }
+      if (this.filters.stock !== "" && this.isUnsignedInteger(this.filters.stock))
+        url = url.concat("stock=" + this.filters.stock + "&");
       url = url.slice(0, -1); // Remove last & symbol
       axios.get(url)
         .then((result) => {
