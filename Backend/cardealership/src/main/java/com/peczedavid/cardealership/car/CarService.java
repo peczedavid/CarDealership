@@ -91,11 +91,11 @@ public class CarService {
         Stream<Car> cars = carRepository.findAll().stream();
 
         if (brand != null)
-            cars = cars.filter(car -> car.getBrand().equals(brand));
+            cars = cars.filter(car -> car.getBrand().toUpperCase().contains(brand.toUpperCase()));
         if (model != null)
-            cars = cars.filter(car -> car.getModel().equals(model));
+            cars = cars.filter(car -> car.getModel().toUpperCase().contains(model.toUpperCase()));
         if (region != null)
-            cars = cars.filter(car -> car.getRegion().getName().equals(region));
+            cars = cars.filter(car -> car.getRegion().getName().toUpperCase().contains(region.toUpperCase()));
         if (stock != null)
             cars = cars.filter(car -> car.getStock().equals(stock));
 
