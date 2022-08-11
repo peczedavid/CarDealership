@@ -36,6 +36,9 @@ export default {
       this.getFilteredCars();
     },
     getFilteredCars() {
+      if(!this.activeUser)
+        this.$router.push("/unauthorized");
+      
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
@@ -45,6 +48,7 @@ export default {
           url = url.concat("region=" + this.filters.region + "&");
       }
       url = url.concat("sort=" + this.sortingType);
+
 
       axios.get(url)
         .then((result) => {
