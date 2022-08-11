@@ -20,6 +20,9 @@
         <h1>{{ this.message }}</h1>
       </div>
     </div>
+    <div class="text-center my-3">
+      <button class="btn text-white" style="background-color: #9BA3EB;" @click="backToTop">Back to top</button>
+    </div>
   </div>
 </template>
 
@@ -32,13 +35,16 @@ import { store } from "@/data/store"
 export default {
   name: "CarsView",
   methods: {
+    backToTop() {
+      document.documentElement.scrollTop = 0;
+    },
     getAllCars() {
       this.getFilteredCars();
     },
     getFilteredCars() {
-      if(!this.activeUser)
+      if (!this.activeUser)
         this.$router.push("/unauthorized");
-      
+
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
@@ -76,6 +82,12 @@ export default {
     this.activeUser = store.currentUser;
     this.getAllCars();
   },
+  created() {
+
+  },
+  destroyed() {
+
+  },
   mounted() {
     this.emitter.on("cars-filter-changed", filters => {
       this.filters = filters;
@@ -97,7 +109,10 @@ export default {
       activeUser: null
     };
   },
-  components: { CarComponent, SideBarComponent },
+  components: {
+    CarComponent,
+    SideBarComponent,
+  },
 };
 </script>
 
