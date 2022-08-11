@@ -5,7 +5,13 @@
     </div>
     <div class="col-9">
       <div class="col-12 d-flex">
-        <div class="col-8"></div>
+        <div class="col-4 d-flex align-items-center" style="background-color: 0;">
+          <div class="mx-auto" style="background-color: 0;">
+              <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+          </div>
+        </div>
+        <div class="col-4" style="background-color: 0;">
+        </div>
         <div class="col-4">
           <select v-model="sortingType" @change="getFilteredCars" class="my-4">
             <option value="brand-a-z">Sort by: Brand (A-Z)</option>
@@ -17,7 +23,6 @@
       </div>
       <div class="col-12 m-0 p-0">
         <CarComponent class="col-6" style="margin-left: 225px;" v-for="car in cars" :key="car.id" :carData="car" />
-        <h1>{{ this.message }}</h1>
       </div>
     </div>
     <div class="text-center my-3">
@@ -45,7 +50,7 @@ export default {
       if (!this.activeUser)
         this.$router.push("/unauthorized");
 
-      document.cookie = "sortingType=" + this.sortingType;
+      store.setCookie("sortingType", this.sortingType, 7);
 
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");

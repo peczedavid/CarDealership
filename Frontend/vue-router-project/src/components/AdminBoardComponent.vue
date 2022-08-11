@@ -2,7 +2,7 @@
     <div class="container">
         <div class="mx-auto col-9 my-5">
             <table class="table table-striped table-bordered">
-                <thead>
+                <thead style="background-color: #b2b7df;">
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Username</th>
