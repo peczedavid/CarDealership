@@ -45,6 +45,8 @@ export default {
       if (!this.activeUser)
         this.$router.push("/unauthorized");
 
+      document.cookie = "sortingType=" + this.sortingType;
+
       let url = "/cars?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
@@ -54,7 +56,6 @@ export default {
           url = url.concat("region=" + this.filters.region + "&");
       }
       url = url.concat("sort=" + this.sortingType);
-
 
       axios.get(url)
         .then((result) => {
@@ -83,10 +84,10 @@ export default {
     this.getAllCars();
   },
   created() {
-
-  },
-  destroyed() {
-
+    // Read in the sorting cookie
+    const sortingTypeFromCookie = store.getCookie("sortingType");
+    if (sortingTypeFromCookie !== "")
+      this.sortingType = sortingTypeFromCookie;
   },
   mounted() {
     this.emitter.on("cars-filter-changed", filters => {
