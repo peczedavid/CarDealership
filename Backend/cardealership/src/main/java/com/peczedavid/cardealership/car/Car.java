@@ -44,10 +44,14 @@ public class Car {
     @Column(nullable = false)
     private Integer stock;
 
-    public Car(String brand, String model, Region region, Integer stock) {
+    @Column(nullable = false)
+    private String description;
+
+    public Car(String brand, String model, Region region, Integer stock, String description) {
         this.brand = brand;
         this.model = model;
         this.region = region;
         this.stock = stock;
+        this.description = description;
     }
 }
