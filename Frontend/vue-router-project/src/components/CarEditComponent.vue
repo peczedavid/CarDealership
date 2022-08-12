@@ -13,6 +13,10 @@
                 <label for="stockInput" class="form-label">stock:</label>
                 <input v-model="carData.stock" type="number" min="0" required class="form-control" id="stockInput" />
             </div>
+            <div class="mb-3">
+                <label for="descriptionInput" class="form-label">Description:</label>
+                <input v-model="carData.description" autocomplete="new-password" type="text" required class="form-control" id="descriptionInput" />
+            </div>
             <div v-if="activeUser.admin" class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>
                 <select required v-model="carData.region" class="" id="regionSelect">
@@ -63,6 +67,7 @@ export default {
                 this.carData.model = newVal.model;
                 this.carData.region = newVal.region.name;
                 this.carData.stock = newVal.stock;
+                this.carData.description = newVal.description;
             }
         }
     },
@@ -92,10 +97,12 @@ export default {
     data() {
         return {
             carData: {
+                id: 0,
                 brand: "",
                 model: "",
                 region: "",
-                stock: 0
+                stock: 0,
+                description: "",
             },
             regions: [],
             activeUser: {}

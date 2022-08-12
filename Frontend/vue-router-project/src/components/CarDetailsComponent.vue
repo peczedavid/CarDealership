@@ -9,10 +9,7 @@
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
                     <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.region.name }}</p>
                     <p class="card-text">Stock: {{ carData.stock }}</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusantium sit ullam optio.
-                        Repudiandae quis doloribus exercitationem nam explicabo, praesentium vel cumque labore nesciunt
-                        illum iste odio, laudantium recusandae molestiae omnis placeat molestias quia quam reprehenderit
-                        unde maiores?</p>
+                    <p>{{ carData.description }}</p>
                 </div>
             </div>
             <ul class="list-group list-group-flush">
@@ -81,7 +78,8 @@ export default {
                     id: 0,
                     name: "",
                 },
-                stock: 0
+                stock: 0,
+                description: ""
             },
             toast: null
         }

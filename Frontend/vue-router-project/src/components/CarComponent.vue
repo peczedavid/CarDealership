@@ -29,7 +29,8 @@ export default {
         id: -1,
         name: "RegionDefault"
       },
-      stock: -1
+      stock: -1,
+      description: "DescriptionDefault"
     },
   },
 };

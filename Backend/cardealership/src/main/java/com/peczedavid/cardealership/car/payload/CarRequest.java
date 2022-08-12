@@ -15,4 +15,5 @@ public class CarRequest {
     private String model;
     private String region;
     private Integer stock;
+    private String description;
 }
