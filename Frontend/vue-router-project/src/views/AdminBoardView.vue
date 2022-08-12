@@ -1,5 +1,7 @@
 <template>
+<div class="container mx-auto col-9 mt-5 mh-100">
     <AdminBoardComponent />
+</div>
 </template>
 
 <script>

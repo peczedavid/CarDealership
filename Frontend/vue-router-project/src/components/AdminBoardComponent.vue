@@ -1,6 +1,4 @@
 <template>
-    <div class="container">
-        <div class="mx-auto col-9 my-5">
             <table class="table table-striped table-bordered">
                 <thead style="background-color: #b2b7df;">
                     <tr>
@@ -20,8 +18,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
 </template>
 
 <script>

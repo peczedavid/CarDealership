@@ -1,5 +1,7 @@
 <template>
-  <div class="contianer col-9 mx-auto d-flex justify-content-center">
+  <!-- Hacky wrapper div so there is background when scrolling -->
+  <div class="col-12 bg-light bg-gradient">
+    <div class="contianer col-9 mx-auto d-flex justify-content-center">
     <div class="row col-12">
       <div class="col-3">
         <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
@@ -37,6 +39,8 @@
       </Transition>
     </div>
   </div>
+  </div>
+  
 </template>
 
 <script>
