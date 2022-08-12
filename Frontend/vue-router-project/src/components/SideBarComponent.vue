@@ -1,7 +1,7 @@
 <template>
-  <div class="position-fixed col-3 ps-4 pt-5">
-    <FiltersComponent :admin=currentUser.admin></FiltersComponent>
-    <UserActionsComponent></UserActionsComponent>
+  <div>
+    <FiltersComponent class="mb-3" :admin=currentUser.admin></FiltersComponent>
+    <UserActionsComponent class="mb-3"></UserActionsComponent>
     <AdminActionsComponent v-if="currentUser.admin"></AdminActionsComponent>
   </div>
 </template>

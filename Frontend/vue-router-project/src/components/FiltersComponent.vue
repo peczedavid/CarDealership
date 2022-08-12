@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown">
+    <div class="dropdown dropend">
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
             data-bs-auto-close="outside">
             <fa class="display-4" icon="filter"></fa>

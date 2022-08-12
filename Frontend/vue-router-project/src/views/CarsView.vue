@@ -1,7 +1,8 @@
 <template>
-  <div class="row m-0 p-0">
-    <div class="col-3 p-0 m-0">
-      <SideBarComponent @carsChanged="this.cars = $event" />
+<div class="contianer col-9 mx-auto d-flex justify-content-center">
+  <div class="row col-12">
+    <div class="col-3">
+      <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
     </div>
     <div class="col-9">
       <div class="col-12 d-flex">
@@ -21,8 +22,8 @@
           </select>
         </div>
       </div>
-      <div class="col-12 m-0 p-0">
-        <CarComponent class="col-6" style="margin-left: 225px;" v-for="car in cars" :key="car.id" :carData="car" />
+      <div class="col-9">
+        <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
       </div>
     </div>
     <Transition name="slide-fade">
@@ -35,6 +36,7 @@
       </div>
     </Transition>
   </div>
+</div>
 </template>
 
 <script>

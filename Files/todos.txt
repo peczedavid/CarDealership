@@ -7,7 +7,7 @@ DONE - back to cars button floating
      - car::description
       
      - response popup when editing or creating or deleting o.o - animated toast ? ()
-     - floating buttons on sidebar
+DONE - floating buttons on sidebar
      - navbar detailed
       
      - paging admin board
