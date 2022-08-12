@@ -1,6 +1,6 @@
 <template>
     <div class="container col-lg-4 mt-5">
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="handleSubmit" autocomplete="off">
             <div class="mb-3">
                 <label for="brandInput" class="form-label">Brand:</label>
                 <input v-model="carData.brand" required class="form-control" id="brandInput" />
@@ -15,7 +15,7 @@
             </div>
             <div class="mb-3">
                 <label for="descriptionInput" class="form-label">Description:</label>
-                <input v-model="carData.description" autocomplete="new-password" type="text" required class="form-control" id="descriptionInput" />
+                <input v-model="carData.description" type="text" required class="form-control" id="descriptionInput" />
             </div>
             <div v-if="activeUser.admin" class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>

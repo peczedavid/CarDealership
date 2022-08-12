@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card p-5 col-lg-4 mt-5 mx-auto">
-      <form @submit.prevent="handleRegistration">
+      <form @submit.prevent="handleRegistration" autocomplete="off">
         <div class="mb-3 form-group">
           <h2>Register new user</h2>
         </div>
@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3 form-group">
           <label for="passwordInput" class="form-label">Password:</label>
-          <input v-model="user.password" required autocomplete="new-password" type="password" class="form-control"
+          <input v-model="user.password" required type="password" class="form-control"
             id="passwordInput" />
         </div>
         <div class="mb-3 form-group">
