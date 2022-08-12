@@ -53,13 +53,16 @@
 </template>
 
 <script>
+import { store } from '@/data/store';
 import axios from '@/http-common'
+import { useToast, POSITION } from "vue-toastification";
 
 export default {
     methods: {
         deleteCar() {
             axios.delete("/cars/" + this.carData.id)
                 .then((result) => {
+                    store.carEdited.status = "Deleted";
                     this.$router.push("/cars");
                 })
                 .catch((error) => {
@@ -79,10 +82,18 @@ export default {
                     name: "",
                 },
                 stock: 0
-            }
+            },
+            toast: null
         }
     },
     mounted() {
+        this.toast = useToast();
+
+        if (store.carEdited.status === "Edited") {
+            this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+            store.carEdited.status = "None";
+        }
+
         axios.get("/cars/" + this.$route.params.id)
             .then((result) => { this.carData = result.data })
             .catch((error) => {

@@ -1,42 +1,42 @@
 <template>
-<div class="contianer col-9 mx-auto d-flex justify-content-center">
-  <div class="row col-12">
-    <div class="col-3">
-      <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
-    </div>
-    <div class="col-9">
-      <div class="col-12 d-flex">
-        <div class="col-4 d-flex align-items-center">
-          <div class="mx-auto">
-            <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
-          </div>
-        </div>
-        <div class="col-4">
-        </div>
-        <div class="col-4">
-          <select v-model="sortingType" @change="getFilteredCars" class="my-4">
-            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
-            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
-            <option value="stock-desc">Stock High to Low </option>
-            <option value="stock-asc">Stock Low to High</option>
-          </select>
-        </div>
+  <div class="contianer col-9 mx-auto d-flex justify-content-center">
+    <div class="row col-12">
+      <div class="col-3">
+        <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
       </div>
       <div class="col-9">
-        <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
-      </div>
-    </div>
-    <Transition name="slide-fade">
-      <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-        <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
-          <div class="p-0 m-0">
-            <fa class="me-2" icon="arrow-up"></fa>Back to top
+        <div class="col-12 d-flex">
+          <div class="col-4 d-flex align-items-center">
+            <div class="mx-auto">
+              <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+            </div>
           </div>
-        </button>
+          <div class="col-4">
+          </div>
+          <div class="col-4">
+            <select v-model="sortingType" @change="getFilteredCars" class="my-4">
+              <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+              <option value="brand-z-a">Sort by: Brand (Z-A)</option>
+              <option value="stock-desc">Stock High to Low </option>
+              <option value="stock-asc">Stock Low to High</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-9">
+          <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
+        </div>
       </div>
-    </Transition>
+      <Transition name="slide-fade">
+        <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+          <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
+            <div class="p-0 m-0">
+              <fa class="me-2" icon="arrow-up"></fa>Back to top
+            </div>
+          </button>
+        </div>
+      </Transition>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -44,6 +44,7 @@ import CarComponent from "@/components/CarComponent.vue";
 import SideBarComponent from "@/components/SideBarComponent.vue";
 import axios from "@/http-common"
 import { store } from "@/data/store"
+import { useToast, POSITION } from "vue-toastification";
 
 export default {
   name: "CarsView",
@@ -100,6 +101,13 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
+    this.toast = useToast();
+
+    if(store.carEdited.status === "Deleted") {
+      this.toast.success("Car deleted from database!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+      store.carEdited.status = "None";
+    }
+
     this.emitter.on("cars-filter-changed", filters => {
       this.filters = filters;
       this.getFilteredCars(this.filters);
@@ -117,7 +125,8 @@ export default {
         stockTop: Infinity
       },
       showBackToTop: false,
-      activeUser: null
+      activeUser: null,
+      toast: null
     };
   },
   components: {

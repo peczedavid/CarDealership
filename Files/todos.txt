@@ -6,7 +6,7 @@ DONE - back to cars button floating
      - search bar
      - car::description
       
-     - response popup when editing or creating or deleting o.o - animated toast ? ()
+DONE - response popup when editing or creating or deleting o.o - animated toast ? ()
 DONE - floating buttons on sidebar
      - navbar detailed
       

@@ -34,8 +34,6 @@
                         car</button>
                 </div>
             </div>
-
-
         </form>
     </div>
 </template>
@@ -74,6 +72,7 @@ export default {
                 axios
                     .put("/cars/" + this.carEditData.id, this.carData)
                     .then((result) => {
+                        store.carEdited.status = "Edited";
                         this.$router.push("/cars/" + result.data.id);
                     })
                     .catch((error) => alert(error));
@@ -83,6 +82,7 @@ export default {
                 axios
                     .post("/cars", this.carData)
                     .then((result) => {
+                        store.carEdited.status = "Created";
                         this.$router.push("/cars/" + result.data.id);
                     })
                     .catch((error) => alert(error));
