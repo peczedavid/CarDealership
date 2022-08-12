@@ -1,40 +1,43 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
-    <div class="container-fluid">
-      <router-link class="ms-1 me-3 navbar-brand" to="/">Dealership</router-link>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link v-if="activeUser" to="/cars" class="nav-link active">Cars</router-link>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li v-if="activeUser" class="navbar-nav">
-            <h6 class="text-light me-4 my-auto">{{ activeUser.username }}</h6>
-          </li>
-          <li v-if="activeUser && activeUser.admin" class="navbar-nav">
-            <router-link to="/adminboard" class="btn btn-outline-light me-2" tag="button">Admin board</router-link>
-          </li>
-          <li v-if="activeUser" class="navbar-nav">
-            <router-link to="/profile" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
-          </li>
-          <li v-if="activeUser" class="navbar-nav">
-            <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
-          </li>
-          <li v-if="!activeUser" class="navbar-nav">
-            <router-link to="/login" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
-          </li>
-          <li v-if="!activeUser" class="navbar-nav">
-            <router-link to="/register" class="btn btn-outline-light me-2" tag="button">Register</router-link>
-          </li>
-        </ul>
+  <div>
+    <br><br>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-gradient" style="background-color: #242F9B;">
+      <div class="container-fluid">
+        <router-link class="ms-1 me-3 navbar-brand" to="/">Dealership</router-link>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <router-link v-if="activeUser" to="/cars" class="nav-link active">Cars</router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li v-if="activeUser" class="navbar-nav">
+              <h6 class="text-light me-4 my-auto">{{ activeUser.username }}</h6>
+            </li>
+            <li v-if="activeUser && activeUser.admin" class="navbar-nav">
+              <router-link to="/adminboard" class="btn btn-outline-light me-2" tag="button">Admin board</router-link>
+            </li>
+            <li v-if="activeUser" class="navbar-nav">
+              <router-link to="/profile" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
+            </li>
+            <li v-if="activeUser" class="navbar-nav">
+              <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
+            </li>
+            <li v-if="!activeUser" class="navbar-nav">
+              <router-link to="/login" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
+            </li>
+            <li v-if="!activeUser" class="navbar-nav">
+              <router-link to="/register" class="btn btn-outline-light me-2" tag="button">Register</router-link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script>

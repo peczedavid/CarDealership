@@ -5,12 +5,12 @@
     </div>
     <div class="col-9">
       <div class="col-12 d-flex">
-        <div class="col-4 d-flex align-items-center" style="background-color: 0;">
-          <div class="mx-auto" style="background-color: 0;">
-              <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+        <div class="col-4 d-flex align-items-center">
+          <div class="mx-auto">
+            <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
           </div>
         </div>
-        <div class="col-4" style="background-color: 0;">
+        <div class="col-4">
         </div>
         <div class="col-4">
           <select v-model="sortingType" @change="getFilteredCars" class="my-4">
@@ -25,9 +25,13 @@
         <CarComponent class="col-6" style="margin-left: 225px;" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
     </div>
-    <div class="text-center my-3">
-      <button class="btn text-white" style="background-color: #9BA3EB;" @click="backToTop">Back to top</button>
-    </div>
+    <Transition name="slide-fade">
+      <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+        <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
+         <fa class="me-2" icon="arrow-up"></fa>Back to top
+        </button>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -40,6 +44,9 @@ import { store } from "@/data/store"
 export default {
   name: "CarsView",
   methods: {
+    handleScroll() {
+        this.showBackToTop = document.documentElement.scrollTop > 400;
+    },
     backToTop() {
       document.documentElement.scrollTop = 0;
     },
@@ -93,6 +100,8 @@ export default {
     const sortingTypeFromCookie = store.getCookie("sortingType");
     if (sortingTypeFromCookie !== "")
       this.sortingType = sortingTypeFromCookie;
+
+    window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
     this.emitter.on("cars-filter-changed", filters => {
@@ -112,6 +121,7 @@ export default {
         stockLow: 0,
         stockTop: Infinity
       },
+      showBackToTop: false,
       activeUser: null
     };
   },
@@ -122,5 +132,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
+}
 </style>

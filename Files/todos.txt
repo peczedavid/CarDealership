@@ -1,26 +1,14 @@
-CAR
-	Create authorization 			DONE
-		On frontend: Done
-		On backend: Done
-
-	Get authorization 				DONE
-		On frontend
-			All: Done
-			Single(details): Done
-		On backend
-			All: Done
-			Single: Done
-
-	Delete authorization
-		On frontend
-		On backend
-
-	Update authorization
-		On frontend
-		On backend
-
-RESET DATABASE BUTTON
-
-REFRESH TOKEN
-
-OAUTH 2.0?
+DONE - car detailed view back to cars buttons
+DONE - navbar fixed (hacked: 2xbr + fixed-top)
+     - hamburger menu alul
+     - back to cars button floating
+     - search bar
+     - car::description
+     - 
+     - response popup when editing or creating or deleting o.o
+     - floating buttons on sidebar
+     - navbar detailed
+     - 
+     - paging admin board
+     - admin board sorting -> save cookie
+     - background light all the way down

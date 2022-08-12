@@ -15,13 +15,19 @@
                         unde maiores?</p>
                 </div>
             </div>
-            <ul class="list-group list-group-flush align-items-end">
-                <li class="list-group-item p-3">
-                    <router-link v-bind:to="'edit/' + carData.id" class="btn text-white me-3"
-                        style="background-color: #646FD4;">Edit</router-link>
-                    <button class="btn text-white" style="background-color: #EB5353;" data-bs-toggle="modal"
-                        data-bs-target="#confirmDeleteModal">Delete</button>
-                </li>
+            <ul class="list-group list-group-flush">
+                <div class="col-12 d-flex p-3 px-4" style="background-color: 0;">
+                    <div class="col-6 d-flex justify-content-start" style="background-color: 0;">
+                        <router-link to="/cars" class="btn text-white me-3" style="background-color: #9BA3EB;">Back
+                        </router-link>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end" style="background-color: 0;">
+                        <router-link v-bind:to="'edit/' + carData.id" class="btn text-white me-3"
+                            style="background-color: #646FD4;">Edit</router-link>
+                        <button class="btn text-white" style="background-color: #EB5353;" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal">Delete</button>
+                    </div>
+                </div>
             </ul>
         </div>
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" area-labelledby="modal-title" aria-hidden="true">
@@ -35,10 +41,10 @@
                         Are you sure want to delete this car from the database?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            data-dismiss="modal">Close</button>
-                        <button @click="deleteCar" type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                            data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn text-white" data-bs-dismiss="modal"
+                            style="background-color: #9BA3EB;" data-dismiss="modal">Close</button>
+                        <button @click="deleteCar" type="button" class="btn text-white" data-bs-dismiss="modal"
+                            style="background-color: #EB5353;" data-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </div>
