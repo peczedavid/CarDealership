@@ -1,5 +1,5 @@
 <template>
-  <div class="app bg-light bg-gradient vh-100">
+  <div class="app bg-light bg-gradient">
     <NavBar />
     <router-view />
   </div>
