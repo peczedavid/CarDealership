@@ -1,11 +1,12 @@
+DONE - Available typo fix
 DONE - car detailed view back to cars buttons
 DONE - navbar fixed (hacked: 2xbr + fixed-top)
      - hamburger menu alul
-     - back to cars button floating
+DONE - back to cars button floating
      - search bar
      - car::description
      - 
-     - response popup when editing or creating or deleting o.o
+     - response popup when editing or creating or deleting o.o - animated toast ? ()
      - floating buttons on sidebar
      - navbar detailed
      - 

@@ -20,9 +20,22 @@
                     <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
                 </select>
             </div>
-            <button v-if="carEditData == null" type="submit" class="btn text-white"
-                style="background-color: #646FD4;">New car</button>
-            <button v-else type="submit" class="btn text-white" style="background-color: #646FD4;">Update car</button>
+            <div class="col-12 d-flex">
+                <div class="col-6 d-flex justify-content-start">
+                    <router-link v-if="carEditData == null" to="/cars" class="btn text-white"
+                        style="background-color: #9BA3EB;">Back</router-link>
+                    <router-link v-else v-bind:to="'/cars/' + carEditData.id" class="btn text-white"
+                        style="background-color: #9BA3EB;">Back</router-link>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <button v-if="carEditData == null" type="submit" class="btn text-white"
+                        style="background-color: #646FD4;">New car</button>
+                    <button v-else type="submit" class="btn text-white" style="background-color: #646FD4;">Update
+                        car</button>
+                </div>
+            </div>
+
+
         </form>
     </div>
 </template>

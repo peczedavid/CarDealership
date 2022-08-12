@@ -28,7 +28,9 @@
     <Transition name="slide-fade">
       <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
         <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
-         <fa class="me-2" icon="arrow-up"></fa>Back to top
+          <div class="p-0 m-0">
+            <fa class="me-2" icon="arrow-up"></fa>Back to top
+          </div>
         </button>
       </div>
     </Transition>
@@ -45,7 +47,7 @@ export default {
   name: "CarsView",
   methods: {
     handleScroll() {
-        this.showBackToTop = document.documentElement.scrollTop > 400;
+      this.showBackToTop = document.documentElement.scrollTop > 400;
     },
     backToTop() {
       document.documentElement.scrollTop = 0;

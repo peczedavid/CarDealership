@@ -3,7 +3,6 @@
     <div class="row g-0">
       <div class="col-md-4">
         <img src="@/assets/images/cars/car-placeholder.png" class="img-fluid rounded-start" alt="...">
-        <!-- <img src="../data/car-placeholder.png" class="img-fluid rounded-start" alt="..."> -->
       </div>
       <div class="col-md-8">
         <div class="card-body p-0 ps-3 pt-3">
