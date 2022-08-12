@@ -1,0 +1,22 @@
+<template>
+  <div class="dropdown">
+      <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        data-bs-auto-close="outside">
+        <fa class="display-4" icon="user"></fa>
+      </button>
+      <div class="dropdown-menu">
+        <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car
+        </router-link>
+      </div>
+    </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>
