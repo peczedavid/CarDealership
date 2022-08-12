@@ -86,14 +86,6 @@ export default {
         });
     },
   },
-  watch: {
-    cars(newValue) {
-      if (newValue.length == 0)
-        this.message = "No cars found";
-      else
-        this.message = "";
-    }
-  },
   async beforeMount() {
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
@@ -116,7 +108,6 @@ export default {
   data() {
     return {
       cars: [],
-      message: "",
       sortingType: "stock-desc",
       filters: {
         brand: "",

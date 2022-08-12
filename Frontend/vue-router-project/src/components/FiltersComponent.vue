@@ -29,9 +29,9 @@
             </div>
             <div class="form-group">
                 <label for="stockRangeInput">Stock:</label>
-                <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only" :minValue="stockMin"
-                    :maxValue="stockMax" :max="stockMax" :min="stockMin" :step="1" :rangeMargin="1"
-                    @input="updateStockRange" />
+                <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only" :minValue="filters.stockLow"
+                    :maxValue="filters.stockTop" :max="50" :min="0" :step="1" :rangeMargin="1"
+                    @input="updateStockRange"/>
                 <div class="d-flex justify-content-between">
                     <input v-model="filters.stockLow" class="text-end" readonly min="0" max="50" type="number"
                         style="width: 55px;">
@@ -65,9 +65,6 @@ export default {
                 stockTop: 50,
             },
             regions: [],
-
-            stockMin: 0,
-            stockMax: 50,
         }
     },
     async created() {
@@ -87,6 +84,8 @@ export default {
             this.filters.brand = "";
             this.filters.model = "";
             this.filters.region = "";
+            this.filters.stockLow = 0;
+            this.filters.stockTop = 50;
             this.emitter.emit("cars-filter-changed", this.filters);
         },
         handleSearch() {
