@@ -13,8 +13,6 @@ import com.peczedavid.cardealership.car.payload.CarRequest;
 import com.peczedavid.cardealership.region.Region;
 import com.peczedavid.cardealership.region.RegionRepository;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 @Service
 public class CarService {
 

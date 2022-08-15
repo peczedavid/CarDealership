@@ -7,9 +7,8 @@ DONE - response popup when editing or creating or deleting o.o - animated toast 
 DONE - floating buttons on sidebar
 DONE - background light all the way down
 
-     - search bar
+DONE - search bar
      - navbar detailed
-     - dark theme
 
      - paging admin board
      - admin board sorting -> save cookie
