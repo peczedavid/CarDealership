@@ -1,16 +1,24 @@
 <template>
     <div>
         <table class="table table-striped table-bordered">
-            <thead style="background-color: #9BA3EB;">
+            <thead style="background-color: #9BA3EB; width: 100%;">
                 <tr>
                     <th v-for="(userProperty, index) in userProperties" :key="userProperty[0]">
+                        <button v-if="index > 0" class="bg-transparent border-0 text-dark"
+                            @click="moveColumn(index, -1)">
+                            <fa icon="arrow-left"></fa>
+                        </button>
                         {{ userProperty }}
                         <button v-if="sortAsc" @click="setConfig(false, index)"
-                            class="float-end bg-transparent border-0">
+                            class="bg-transparent border-0 text-dark">
                             <fa icon="arrow-down"></fa>
                         </button>
-                        <button v-else @click="setConfig(true, index)" class="float-end bg-transparent border-0">
+                        <button v-else @click="setConfig(true, index)" class="bg-transparent border-0  text-dark">
                             <fa icon="arrow-up"></fa>
+                        </button>
+                         <button v-if="index < (userProperties.length - 1)" class="float-end bg-transparent border-0"
+                            @click="moveColumn(index, 1)">
+                            <fa icon="arrow-right"></fa>
                         </button>
                     </th>
                 </tr>
@@ -18,7 +26,9 @@
             <tbody>
                 <tr v-for="user in users" :key="user.id">
                     <td v-for="userProperty in userProperties" :key="userProperty[0]"
-                        :class="{ 'table-warning': user.admin }">{{ user[userProperty] }}</td>
+                        :class="{ 'table-warning': user.admin }" style="width: 0%">
+                        {{ user[userProperty] }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -39,10 +49,18 @@ export default {
             sortAsc: true,
             currentPage: 1,
             itemsPerPage: 5,
-            numAllUsers: 9
+            numAllUsers: 9,
         }
     },
     methods: {
+        moveColumn(columnIndex, indexDelta) {
+            // Swap the two columns
+            let temp = this.userProperties[columnIndex];
+            this.userProperties[columnIndex] = this.userProperties[columnIndex + indexDelta];
+            this.userProperties[columnIndex + indexDelta] = temp;
+
+            this.$forceUpdate();
+        },
         onPageChanged(page) {
             this.currentPage = page;
 
