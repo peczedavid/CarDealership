@@ -11,8 +11,8 @@ DONE  - search bar
       - navbar detailed
 
 WIP   - paging admin board
-DEBUG - admin board sorting -> save cookie
-DEBUG - mixing order of coloumns -> save to cookie
+DONE  - admin board sorting -> save to localstorage
+DONE  - mixing order of coloumns -> save to localstorage
 
-	  - add more users	
+	  - add more users and get count from backend
 	  - hamburger menu alul
