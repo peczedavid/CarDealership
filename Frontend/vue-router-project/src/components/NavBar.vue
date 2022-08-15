@@ -9,43 +9,35 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+          <div class="col-12 navbar-nav">
+            <div class="col-3 d-flex">
               <router-link v-if="activeUser" to="/cars" class="nav-link active">Cars</router-link>
-            </li>
-            <li class="nav-item">
-              <label class="nav-link active my-auto">></label>
-            </li>
-            <li class="nav-item">
+              <label v-if="activeUser" class="nav-link active my-auto">></label>
               <label v-if="activeUser" class="nav-link active">Detalied</label>
-            </li>
-            <li class="nav-item">
-              <label class="nav-link active my-auto">></label>
-            </li>
-            <li class="nav-item">
+              <label v-if="activeUser" class="nav-link active my-auto">></label>
               <label v-if="activeUser" class="nav-link active">Edit</label>
-            </li>
-          </ul>
-          <ul class="navbar-nav">
-            <li v-if="activeUser" class="navbar-nav">
-              <h6 class="text-light me-4 my-auto">{{ activeUser.username }}</h6>
-            </li>
-            <li v-if="activeUser && activeUser.admin" class="navbar-nav">
-              <router-link to="/adminboard" class="btn btn-outline-light me-2" tag="button">Admin board</router-link>
-            </li>
-            <li v-if="activeUser" class="navbar-nav">
-              <router-link to="/profile" class="btn btn-outline-light me-2" tag="button">Profile</router-link>
-            </li>
-            <li v-if="activeUser" class="navbar-nav">
-              <router-link @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log out</router-link>
-            </li>
-            <li v-if="!activeUser" class="navbar-nav">
-              <router-link to="/login" class="btn btn-outline-light me-2" tag="button">Log in</router-link>
-            </li>
-            <li v-if="!activeUser" class="navbar-nav">
-              <router-link to="/register" class="btn btn-outline-light me-2" tag="button">Register</router-link>
-            </li>
-          </ul>
+            </div>
+            <div class="col-3 d-flex">
+              <form v-if="activeUser" class="flex-fill" @submit.prevent="handleSearch">
+                <div class="form-group">
+                  <input v-model="searchQuery" placeholder="Search" class="form-control" id="searchQueryInput" />
+                </div>
+              </form>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <h6 v-if="activeUser" class="text-light me-4 my-auto">{{ activeUser.username }}</h6>
+              <router-link v-if="activeUser && activeUser.admin" to="/adminboard" class="btn btn-outline-light me-2"
+                tag="button">Admin board</router-link>
+              <router-link v-if="activeUser" to="/profile" class="btn btn-outline-light me-2" tag="button">Profile
+              </router-link>
+              <router-link v-if="activeUser" @click="signOut" to="/" class="btn btn-outline-light me-2" tag="button">Log
+                out</router-link>
+              <router-link v-if="!activeUser" to="/login" class="btn btn-outline-light me-2" tag="button">Log in
+              </router-link>
+              <router-link v-if="!activeUser" to="/register" class="btn btn-outline-light me-2" tag="button">Register
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -59,7 +51,8 @@ import { store } from '@/data/store';
 export default {
   data() {
     return {
-      activeUser: null
+      activeUser: null,
+      searchQuery: ""
     };
   },
   methods: {
@@ -72,7 +65,11 @@ export default {
           // Refresh page so cookie dissappears
           this.$router.go();
         });
-    }
+    },
+    handleSearch() {
+      this.$router.push("cars");
+      this.emitter.emit("cars-queried", this.searchQuery);
+    },
   },
   async created() {
     await store.loadCurrentUser();

@@ -1,46 +1,50 @@
 <template>
   <!-- Hacky wrapper div so there is background when scrolling -->
   <div class="col-12 bg-light bg-gradient">
-    <div class="contianer col-9 mx-auto d-flex justify-content-center">
-    <div class="row col-12">
-      <div class="col-3">
-        <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
+    <div class="position-fixed col-12">
+      <div class="col-12 d-flex">
+        <div class="col-4 d-flex align-items-center">
+          <div class="mx-auto">
+            <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+          </div>
+        </div>
+        <div class="col-4">
+        </div>
+        <div class="col-4 d-flex">
+          <select v-model="sortingType" @change="getFilteredCars" class="my-4 mx-auto">
+            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
+            <option value="stock-desc">Stock High to Low </option>
+            <option value="stock-asc">Stock Low to High</option>
+          </select>
+        </div>
       </div>
-      <div class="col-9">
-        <div class="col-12 d-flex">
-          <div class="col-4 d-flex align-items-center">
-            <div class="mx-auto">
-              <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
-            </div>
-          </div>
-          <div class="col-4">
-          </div>
-          <div class="col-4">
-            <select v-model="sortingType" @change="getFilteredCars" class="my-4">
-              <option value="brand-a-z">Sort by: Brand (A-Z)</option>
-              <option value="brand-z-a">Sort by: Brand (Z-A)</option>
-              <option value="stock-desc">Stock High to Low </option>
-              <option value="stock-asc">Stock Low to High</option>
-            </select>
-          </div>
+    </div>
+    <br><br>
+    <div class="contianer col-9 mx-auto d-flex justify-content-center">
+      <div class="row col-12">
+        <div class="col-3">
+          <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
         </div>
         <div class="col-9">
-          <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
+
+          <div class="col-9">
+            <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
+          </div>
         </div>
+        <Transition name="slide-fade">
+          <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+            <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
+              <div class="p-0 m-0">
+                <fa class="me-2" icon="arrow-up"></fa>Back to top
+              </div>
+            </button>
+          </div>
+        </Transition>
       </div>
-      <Transition name="slide-fade">
-        <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-          <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
-            <div class="p-0 m-0">
-              <fa class="me-2" icon="arrow-up"></fa>Back to top
-            </div>
-          </button>
-        </div>
-      </Transition>
     </div>
   </div>
-  </div>
-  
+
 </template>
 
 <script>
@@ -68,7 +72,7 @@ export default {
 
       store.setCookie("sortingType", this.sortingType, 7);
 
-      let url = "/cars?"
+      let url = "/cars/filtered?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
       if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
@@ -76,6 +80,29 @@ export default {
         if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
       }
+      url = url.concat("sort=" + this.sortingType);
+
+      axios.get(url)
+        .then((result) => {
+          this.cars = result.data;
+
+          // Filter on frontend by stock range:
+          this.cars = this.cars.filter(car => car.stock >= this.filters.stockLow && car.stock <= this.filters.stockTop);
+        })
+        .catch((error) => {
+          if (error.response.status == 401)
+            this.$router.push("/unauthorized");
+        });
+    },
+    getQueriedCars(query) {
+      if (!this.activeUser)
+        this.$router.push("/unauthorized");
+
+      store.setCookie("sortingType", this.sortingType, 7);
+
+      let url = "/cars?"
+      if(query != "")
+        url = url.concat("query=" + query + "&");
       url = url.concat("sort=" + this.sortingType);
 
       axios.get(url)
@@ -107,7 +134,7 @@ export default {
   mounted() {
     this.toast = useToast();
 
-    if(store.carEdited.status === "Deleted") {
+    if (store.carEdited.status === "Deleted") {
       this.toast.success("Car deleted from database!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
       store.carEdited.status = "None";
     }
@@ -115,6 +142,10 @@ export default {
     this.emitter.on("cars-filter-changed", filters => {
       this.filters = filters;
       this.getFilteredCars(this.filters);
+    });
+
+    this.emitter.on("cars-queried", query => {
+      this.getQueriedCars(query);
     });
   },
   data() {

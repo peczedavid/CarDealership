@@ -1,8 +1,11 @@
 package com.peczedavid.cardealership.car;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +71,8 @@ public class CarController {
         return new ResponseEntity<Car>(car, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getCars(
+    @GetMapping("/filtered")
+    public ResponseEntity<?> getCarsFilter(
             HttpServletRequest request,
             @RequestParam(name = "brand", required = false) String brand,
             @RequestParam(name = "model", required = false) String model,
@@ -82,8 +85,25 @@ public class CarController {
         String userRegion = jwtUtils.getRegionFromToken(jwt);
 
         // If the user is not admin, they can only view cars from their region
-        List<Car> cars = carService.find(brand, model, admin ? region : userRegion, stock,
+        List<Car> cars = carService.findByFilters(brand, model, admin ? region : userRegion, stock,
                 description, sort == null ? "" : sort);
+        return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getCarsQuery(
+            HttpServletRequest request,
+            @RequestParam(name = "query", required = false) String query,
+            @RequestParam(name = "sort", required = false) String sort) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        boolean admin = jwtUtils.getAdminFromToken(jwt);
+        String userRegion = jwtUtils.getRegionFromToken(jwt);
+
+        List<Car> cars = carService.findByQuery(query, sort == null ? "" : sort);
+        // If the user is not admin, they can only view cars from their region
+        if (!admin)
+            cars = cars.stream().filter(car -> car.getRegion().getName().toUpperCase().equals(userRegion.toUpperCase()))
+                    .collect(Collectors.toList());
         return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
     }
 
