@@ -44,22 +44,33 @@ export default {
     data() {
         return {
             users: [{}],
-            userProperties: [""],
-            sortByIndex: 0, // id
-            sortAsc: true,
             currentPage: 1,
             itemsPerPage: 5,
             numAllUsers: 9,
+
+             // Persist
+            userProperties: [""],
+            sortByIndex: 0, // id
+            sortAsc: true,
         }
     },
     methods: {
+        persistState() {
+            localStorage.userProperties = JSON.stringify(this.userProperties);
+            localStorage.sortAsc = this.sortAsc;
+            localStorage.sortByIndex = this.sortByIndex;
+        },
         moveColumn(columnIndex, indexDelta) {
             // Swap the two columns
             let temp = this.userProperties[columnIndex];
             this.userProperties[columnIndex] = this.userProperties[columnIndex + indexDelta];
             this.userProperties[columnIndex + indexDelta] = temp;
 
+            if(columnIndex === this.sortByIndex)
+                this.sortByIndex += indexDelta;
+
             this.$forceUpdate();
+            this.persistState();
         },
         onPageChanged(page) {
             this.currentPage = page;
@@ -69,6 +80,8 @@ export default {
         setConfig(ascending, colIndex) {
             this.sortAsc = ascending;
             this.sortByIndex = colIndex;
+
+            this.persistState();
 
             this.refreshTable();
         },
@@ -97,8 +110,19 @@ export default {
         },
     },
     created() {
+        this.sortAsc = Boolean(parseInt(localStorage.sortAsc));
+        this.sortByIndex = parseInt(localStorage.sortByIndex);
+
+        console.log(this.sortAsc);
+        console.log(this.sortByIndex);
+
+        const userProps = JSON.parse(localStorage.userProperties);
+        if(userProps != null)
+            this.userProperties = userProps;
+        else
+            this.userProperties = ["id", "username", "region", "admin"];
         // this.userProperties = Reflect.ownKeys(this.users[0]);
-        this.userProperties = ["id", "username", "region", "admin"];
+
         this.refreshTable();
     }
 }
