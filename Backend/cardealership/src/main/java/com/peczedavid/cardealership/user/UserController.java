@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.region.Region;
@@ -54,10 +56,22 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    private Direction convertDirection(String direction) {
+        if(direction == null)
+            return Direction.ASC;
+        if(direction.equals("desc"))
+            return Direction.DESC;
+        
+        return Direction.ASC;
+    }
+
     @GetMapping("paging/{offset}/{pageSize}/{field}")
     private ResponseEntity<Page<UserData>> getUserPagingAndSorting(@PathVariable int offset, @PathVariable int pageSize,
-            @PathVariable String field) {
-        Page<User> userPage = userRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));
+            @PathVariable String field,
+            @RequestParam(name = "direction", required = false) String direction) {
+        Page<User> userPage = userRepository
+            .findAll(PageRequest.of(offset, pageSize)
+            .withSort(Sort.by(this.convertDirection(direction), field)));
 
         Page<UserData> userDataPage = userPage.map(user -> new UserData(user));
         return new ResponseEntity<Page<UserData>>(userDataPage, HttpStatus.OK);

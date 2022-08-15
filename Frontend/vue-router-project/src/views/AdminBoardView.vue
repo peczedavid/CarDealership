@@ -1,17 +1,18 @@
 <template>
 <div class="container mx-auto col-9 mt-5 mh-100">
-    <AdminBoardComponent />
+    <!-- <AdminBoardComponent /> -->
+    <AdminDashboardComponent />
 </div>
 </template>
 
 <script>
-import AdminBoardComponent from '@/components/AdminBoardComponent.vue';
 import axios from "@/http-common";
+import AdminDashboardComponent from '@/components/AdminDashboardComponent.vue';
 
 export default {
     components: {
-        AdminBoardComponent,
-    },
+    AdminDashboardComponent
+},
     created() {
         axios
             .get("/user")
