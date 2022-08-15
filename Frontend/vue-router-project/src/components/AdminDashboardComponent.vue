@@ -16,7 +16,7 @@
                         <button v-else @click="setConfig(true, index)" class="bg-transparent border-0  text-dark">
                             <fa icon="arrow-up"></fa>
                         </button>
-                         <button v-if="index < (userProperties.length - 1)" class="float-end bg-transparent border-0"
+                        <button v-if="index < (userProperties.length - 1)" class="float-end bg-transparent border-0"
                             @click="moveColumn(index, 1)">
                             <fa icon="arrow-right"></fa>
                         </button>
@@ -32,8 +32,8 @@
                 </tr>
             </tbody>
         </table>
-        <vue-awesome-paginate :total-items="numAllUsers" :items-per-page="itemsPerPage"
-        :current-page="currentPage" :on-click="onPageChanged"/>
+        <vue-awesome-paginate :total-items="numAllUsers" :items-per-page="itemsPerPage" :current-page="currentPage"
+            :on-click="onPageChanged" />
     </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
             itemsPerPage: 5,
             numAllUsers: 9,
 
-             // Persist
+            // Persist
             userProperties: [""],
             sortByIndex: 0, // id
             sortAsc: true,
@@ -56,9 +56,32 @@ export default {
     },
     methods: {
         persistState() {
-            localStorage.userProperties = JSON.stringify(this.userProperties);
-            localStorage.sortAsc = this.sortAsc;
-            localStorage.sortByIndex = this.sortByIndex;
+            localStorage.setItem("userProperties", JSON.stringify(this.userProperties));
+            localStorage.setItem("sortAsc", this.sortAsc); 
+            localStorage.setItem("sortByIndex", this.sortByIndex);
+        },
+        loadState() {
+            const sortAsc = localStorage.getItem("sortAsc");
+            if(sortAsc != null)
+                this.sortAsc = Boolean(sortAsc);
+            else
+                this.sortAsc = true;
+
+            const sortByIndex = localStorage.getItem("sortByIndex");
+            if(sortByIndex != null)
+                this.sortByIndex =  parseInt(sortByIndex);
+            else
+                this.sortByIndex = 0; // first column
+
+            const userProps = localStorage.getItem("userProperties");
+            if (userProps != null)
+                this.userProperties = JSON.parse(userProps);
+            else
+                this.userProperties = ["id", "username", "region", "admin"];
+
+            console.log(this.sortAsc);
+            console.log(this.sortByIndex);
+            console.log(this.userProps);
         },
         moveColumn(columnIndex, indexDelta) {
             // Swap the two columns
@@ -66,7 +89,7 @@ export default {
             this.userProperties[columnIndex] = this.userProperties[columnIndex + indexDelta];
             this.userProperties[columnIndex + indexDelta] = temp;
 
-            if(columnIndex === this.sortByIndex)
+            if (columnIndex === this.sortByIndex)
                 this.sortByIndex += indexDelta;
 
             this.$forceUpdate();
@@ -110,17 +133,7 @@ export default {
         },
     },
     created() {
-        this.sortAsc = Boolean(parseInt(localStorage.sortAsc));
-        this.sortByIndex = parseInt(localStorage.sortByIndex);
-
-        console.log(this.sortAsc);
-        console.log(this.sortByIndex);
-
-        const userProps = JSON.parse(localStorage.userProperties);
-        if(userProps != null)
-            this.userProperties = userProps;
-        else
-            this.userProperties = ["id", "username", "region", "admin"];
+        this.loadState();
         // this.userProperties = Reflect.ownKeys(this.users[0]);
 
         this.refreshTable();
