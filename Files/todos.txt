@@ -1,17 +1,18 @@
-DONE - Available typo fix
-DONE - car detailed view back to cars buttons
-DONE - navbar fixed (hacked: 2xbr + fixed-top)
-DONE - back to cars button floating
-DONE - car::description
-DONE - response popup when editing or creating or deleting o.o - animated toast ? ()
-DONE - floating buttons on sidebar
-DONE - background light all the way down
+DONE  - Available typo fix
+DONE  - car detailed view back to cars buttons
+DONE  - navbar fixed (hacked: 2xbr + fixed-top)
+DONE  - back to cars button floating
+DONE  - car::description
+DONE  - response popup when editing or creating or deleting o.o - animated toast ? ()
+DONE  - floating buttons on sidebar
+DONE  - background light all the way down
 
-DONE - search bar
-     - navbar detailed
+DONE  - search bar
+      - navbar detailed
 
-     - paging admin board
-     - admin board sorting -> save cookie
-     - mixing order of coloumns -> save to cookie
+WIP   - paging admin board
+DEBUG - admin board sorting -> save cookie
+DEBUG - mixing order of coloumns -> save to cookie
 
-	 - hamburger menu alul
+	  - add more users	
+	  - hamburger menu alul
