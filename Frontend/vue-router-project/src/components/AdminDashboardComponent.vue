@@ -40,7 +40,7 @@
             </div>
             <div class="col-6 d-flex justify-content-end pe-4">
                 <div class="form-group d-flex">
-                    <label for="perPageInput" class="me-2 col-form-label">Users per page:</label>
+                    <label for="perPageInput" class="me-2 col-form-label text-dark">Users per page:</label>
                     <div>
                         <select @click="(event) => { refreshTable(); persistState(); }" v-model.number="itemsPerPage" class="mt-2 rounded-2" id="perPageInput">
                             <option value="3">3</option>
