@@ -12,10 +12,6 @@
           <div class="col-12 navbar-nav">
             <div class="col-3 d-flex">
               <router-link v-if="activeUser" to="/cars" class="nav-link active">Cars</router-link>
-              <label v-if="activeUser" class="nav-link active my-auto">></label>
-              <label v-if="activeUser" class="nav-link active">Detalied</label>
-              <label v-if="activeUser" class="nav-link active my-auto">></label>
-              <label v-if="activeUser" class="nav-link active">Edit</label>
             </div>
             <div class="col-3 d-flex">
               <form v-if="activeUser" class="flex-fill" @submit.prevent="handleSearch">
