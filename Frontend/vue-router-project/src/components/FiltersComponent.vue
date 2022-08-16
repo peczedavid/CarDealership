@@ -4,7 +4,7 @@
             data-bs-auto-close="outside">
             <fa class="display-4" icon="filter"></fa>
         </button>
-        <form @submit.prevent="handleSearch" class="dropdown-menu p-3 fadeIn">
+        <form @submit.prevent="handleSearch" class="col-sm-5 col-xl-3 position-fixed dropdown-menu p-3 fadeIn">
             <div class="form-group row">
                 <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
                 <div class="col-sm-9">

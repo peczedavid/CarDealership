@@ -13,7 +13,8 @@
         </select>
       </div>
     </div>
-    <SideBarComponent class="col-6 position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
+    <!-- <SideBarComponent class="col-6 col-xl-3 position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" /> -->
+    <SideBarComponent class="position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
     <div class="row">
       <div class="col-6 mx-auto">
         <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
