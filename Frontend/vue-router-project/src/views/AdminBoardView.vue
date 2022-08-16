@@ -1,5 +1,5 @@
 <template>
-<div class="container mx-auto col-7 mt-5 mh-100">
+<div class="container mx-auto mt-5 mh-100">
     <AdminDashboardComponent />
 </div>
 </template>

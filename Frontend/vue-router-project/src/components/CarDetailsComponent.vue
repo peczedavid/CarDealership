@@ -15,13 +15,12 @@
             <ul class="list-group list-group-flush">
                 <div class="col-12 d-flex p-3 px-4">
                     <div class="col-6 d-flex justify-content-start">
-                        <router-link to="/cars" class="btn text-white me-3" style="background-color: #9BA3EB;">Back
+                        <router-link to="/cars" class="btn btn-secondary me-3">Back
                         </router-link>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <router-link v-bind:to="'edit/' + carData.id" class="btn text-white me-3"
-                            style="background-color: #646FD4;">Edit</router-link>
-                        <button class="btn text-white" style="background-color: #EB5353;" data-bs-toggle="modal"
+                        <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">Edit</router-link>
+                        <button class="btn btn-danger" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal">Delete</button>
                     </div>
                 </div>

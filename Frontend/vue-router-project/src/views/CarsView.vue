@@ -20,7 +20,7 @@
       </div>
     </div>
       <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-        <button class="btn btn-info text-white rounded-4" @click="backToTop">
+        <button class="btn btn-primary text-white rounded-4" @click="backToTop">
             <fa class="me-2" icon="arrow-up"></fa>Back to top
         </button>
       </div>

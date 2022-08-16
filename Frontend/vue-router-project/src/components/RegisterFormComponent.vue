@@ -11,8 +11,7 @@
         </div>
         <div class="mb-3 form-group">
           <label for="passwordInput" class="form-label">Password:</label>
-          <input v-model="user.password" required type="password" class="form-control"
-            id="passwordInput" />
+          <input v-model="user.password" required type="password" class="form-control" id="passwordInput" />
         </div>
         <div class="mb-3 form-group">
           <label for="passwordAgainInput" class="form-label">Password again:</label>
@@ -25,7 +24,7 @@
             <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
           </select>
         </div>
-        <button type="submit" class="btn text-white" style="background-color: #646FD4;">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
     </div>
   </div>
@@ -66,7 +65,7 @@ export default {
       axios
         .post("/user/register", this.user)
         .then((result) => {
-          // Tell navbar that someone logged in (NavBar.activeUser=result.data)
+          // Tell navbar that someone logged in
           this.emitter.emit("sign-in", result.data);
           this.$router.push("/");
         })

@@ -39,8 +39,8 @@
                         style="width: 55px;">
                 </div>
             </div>
-            <button class="btn text-white my-2" style="background-color: #646FD4;" type="submit">Search</button>
-            <button class="btn text-white ms-2 my-2" style="background-color: #9BA3EB;" @click="clearFilters"
+            <button class="btn btn-primary my-2" type="submit">Search</button>
+            <button class="btn btn-secondary ms-2 my-2" @click="clearFilters"
                 type="button">Clear</button>
         </form>
     </div>

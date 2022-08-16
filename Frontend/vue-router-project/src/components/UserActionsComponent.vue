@@ -7,7 +7,7 @@
     <div class="dropdown-menu fadeIn">
       <div class="container p-2">
         <div class="d-flex justify-content-center align-items-center">
-          <router-link to="/cars/new" class="btn text-white" style="background-color: #70be75;" tag="button">
+          <router-link to="/cars/new" class="btn btn-success" tag="button">
           New car
           </router-link>
         </div>

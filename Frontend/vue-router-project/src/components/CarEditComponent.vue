@@ -26,16 +26,12 @@
             </div>
             <div class="col-12 d-flex">
                 <div class="col-6 d-flex justify-content-start">
-                    <router-link v-if="carEditData == null" to="/cars" class="btn text-white"
-                        style="background-color: #9BA3EB;">Back</router-link>
-                    <router-link v-else v-bind:to="'/cars/' + carEditData.id" class="btn text-white"
-                        style="background-color: #9BA3EB;">Back</router-link>
+                    <router-link v-if="carEditData == null" to="/cars" class="btn btn-secondary">Back</router-link>
+                    <router-link v-else v-bind:to="'/cars/' + carEditData.id" class="btn btn-secondary">Back</router-link>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <button v-if="carEditData == null" type="submit" class="btn text-white"
-                        style="background-color: #646FD4;">New car</button>
-                    <button v-else type="submit" class="btn text-white" style="background-color: #646FD4;">Update
-                        car</button>
+                    <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
+                    <button v-else type="submit" class="btn btn-primary">Update car</button>
                 </div>
             </div>
         </form>

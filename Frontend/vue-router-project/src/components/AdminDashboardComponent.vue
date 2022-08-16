@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12">
+    <div class="col">
         <table class="table table-striped table-bordered">
             <thead style="background-color: #9BA3EB; width: 100%;">
                 <tr>
@@ -42,7 +42,8 @@
                 <div class="form-group d-flex">
                     <label for="perPageInput" class="me-2 col-form-label text-dark">Users per page:</label>
                     <div>
-                        <select @click="(event) => { refreshTable(); persistState(); }" v-model.number="itemsPerPage" class="mt-2 rounded-2" id="perPageInput">
+                        <select @click="(event) => { refreshTable(); persistState(); }" v-model.number="itemsPerPage"
+                            class="mt-2 rounded-2" id="perPageInput">
                             <option value="3">3</option>
                             <option selected value="5">5</option>
                             <option value="10">10</option>
@@ -88,7 +89,7 @@ export default {
         },
         async loadState() {
             const itemsPerPage = localStorage.getItem("itemsPerPage")
-            if(itemsPerPage != null)
+            if (itemsPerPage != null)
                 this.itemsPerPage = parseInt(itemsPerPage);
             else
                 this.itemsPerPage = 5;
