@@ -18,7 +18,7 @@
                 </ul>
                 <!-- TODO: if clicked away from /cars clear the query -->
                 <!-- TODO: if searched outside of /cars, navigate to /cars and search -->
-                <form class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
+                <form v-if="activeUser" class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
                     <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
