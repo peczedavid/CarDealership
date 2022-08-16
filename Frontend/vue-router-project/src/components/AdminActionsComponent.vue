@@ -5,12 +5,14 @@
             <fa class="display-4" icon="user-shield"></fa>
         </button>
         <div class="dropdown-menu fadeIn">
-            <div class="container p-2">
-                <div class="mb-3">
-                    <button type="button" class="btn btn-warning">Reset database</button>
+            <div class="container text-center p-2">
+                <div>
+                    <button type="button" class="btn text-dark mb-3" style="background-color: #EBD671;">Reset
+                        database</button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-danger">Flush database</button>
+                    <button type="button" class="btn btn-danger" style="background-color: #EB5353;">Flush
+                        database</button>
                 </div>
             </div>
         </div>
