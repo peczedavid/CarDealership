@@ -85,6 +85,16 @@ public class UserController {
         return new ResponseEntity<List<UserData>>(userDatas, HttpStatus.OK);
     }
 
+    @GetMapping("/num")
+    public ResponseEntity<Long> getNumberOfUsers(HttpServletRequest request) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        if (jwt == null || !jwtUtils.getAdminFromToken(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<Long>(userRepository.count(), HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<UserData>> getAllUsers(HttpServletRequest request) {
         String jwt = jwtUtils.getJwtFromCookies(request);

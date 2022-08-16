@@ -1,24 +1,25 @@
 <template>
-    <div>
+    <div class="col-12">
         <table class="table table-striped table-bordered">
             <thead style="background-color: #9BA3EB; width: 100%;">
                 <tr>
                     <th v-for="(userProperty, index) in userProperties" :key="userProperty[0]">
-                        <button v-if="index > 0" class="bg-transparent border-0 text-dark"
-                            @click="moveColumn(index, -1)">
-                            <fa icon="arrow-left"></fa>
+                        <button v-if="index > 0" class="bg-transparent border-0" @click="moveColumn(index, -1)"
+                            :class="calcArrowColor(index)">
+                            <fa class="user-nav-icon" icon="arrow-left"></fa>
                         </button>
                         {{ userProperty }}
-                        <button v-if="sortAsc" @click="setConfig(false, index)"
-                            class="bg-transparent border-0 text-dark">
-                            <fa icon="arrow-down"></fa>
+                        <button v-if="sortAsc" @click="setConfig(false, index)" class="bg-transparent border-0"
+                            :class="calcArrowColor(index)">
+                            <fa class="user-nav-icon" icon="arrow-down"></fa>
                         </button>
-                        <button v-else @click="setConfig(true, index)" class="bg-transparent border-0  text-dark">
-                            <fa icon="arrow-up"></fa>
+                        <button v-else @click="setConfig(true, index)" class="bg-transparent border-0"
+                            :class="calcArrowColor(index)">
+                            <fa class="user-nav-icon" icon="arrow-up"></fa>
                         </button>
                         <button v-if="index < (userProperties.length - 1)" class="float-end bg-transparent border-0"
-                            @click="moveColumn(index, 1)">
-                            <fa icon="arrow-right"></fa>
+                            @click="moveColumn(index, 1)" :class="calcArrowColor(index)">
+                            <fa class="user-nav-icon" icon="arrow-right"></fa>
                         </button>
                     </th>
                 </tr>
@@ -32,8 +33,27 @@
                 </tr>
             </tbody>
         </table>
-        <vue-awesome-paginate :total-items="numAllUsers" :items-per-page="itemsPerPage" :current-page="currentPage"
-            :on-click="onPageChanged" />
+        <div class="col-12 d-flex">
+            <div class="col-6 d-flex justify-content-start ps-3">
+                <vue-awesome-paginate :total-items="numAllUsers" :items-per-page="itemsPerPage"
+                    :current-page="currentPage" :on-click="onPageChanged" />
+            </div>
+            <div class="col-6 d-flex justify-content-end pe-4">
+                <form>
+                    <div class="form-group d-flex">
+                        <label for="perPageInput" class="me-2 col-form-label">Users per page:</label>
+                        <div>
+                            <select class="mt-2 rounded-2" id="perPageInput">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="25">25</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -55,21 +75,27 @@ export default {
         }
     },
     methods: {
+        calcArrowColor(index) {
+            if (index == this.sortByIndex)
+                return "text-dark";
+            else
+                return "text-secondary";
+        },
         persistState() {
             localStorage.setItem("userProperties", JSON.stringify(this.userProperties));
-            localStorage.setItem("sortAsc", this.sortAsc); 
+            localStorage.setItem("sortAsc", this.sortAsc);
             localStorage.setItem("sortByIndex", this.sortByIndex);
         },
         loadState() {
             const sortAsc = localStorage.getItem("sortAsc");
-            if(sortAsc != null)
-                this.sortAsc = Boolean(sortAsc);
+            if (sortAsc != null)
+                this.sortAsc = sortAsc === "true";
             else
                 this.sortAsc = true;
 
             const sortByIndex = localStorage.getItem("sortByIndex");
-            if(sortByIndex != null)
-                this.sortByIndex =  parseInt(sortByIndex);
+            if (sortByIndex != null)
+                this.sortByIndex = parseInt(sortByIndex);
             else
                 this.sortByIndex = 0; // first column
 
@@ -78,10 +104,6 @@ export default {
                 this.userProperties = JSON.parse(userProps);
             else
                 this.userProperties = ["id", "username", "region", "admin"];
-
-            console.log(this.sortAsc);
-            console.log(this.sortByIndex);
-            console.log(this.userProps);
         },
         moveColumn(columnIndex, indexDelta) {
             // Swap the two columns
@@ -105,7 +127,6 @@ export default {
             this.sortByIndex = colIndex;
 
             this.persistState();
-
             this.refreshTable();
         },
         refreshTable() {
@@ -131,9 +152,20 @@ export default {
                     console.log("Error: ", error);
                 });
         },
+        logConfig() {
+            console.log(this.sortAsc);
+            console.log(this.sortByIndex);
+            console.log(this.userProperties);
+        },
     },
-    created() {
+    async created() {
         this.loadState();
+        try {
+            const result = await axios.get("/user/num");
+            this.numAllUsers = result.data;
+        } catch (error) {
+            console.log(error);
+        }
         // this.userProperties = Reflect.ownKeys(this.users[0]);
 
         this.refreshTable();
@@ -169,5 +201,9 @@ export default {
 
 .active-page:hover {
     background-color: #9BA3EB;
+}
+
+.user-nav-icon:hover {
+    color: #d8d8d8;
 }
 </style>
