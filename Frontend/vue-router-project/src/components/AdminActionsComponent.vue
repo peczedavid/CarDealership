@@ -4,7 +4,7 @@
             data-bs-auto-close="outside">
             <fa class="display-4" icon="user-shield"></fa>
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu fadeIn">
             <button class="btn text-dark" style="background-color: #EBD671;">Reset database</button>
             <button class="btn btn-danger" style="background-color: #EB5353;">Flush database</button>
         </div>
@@ -17,5 +17,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@keyframes fadeIn {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s;
+}
 </style>

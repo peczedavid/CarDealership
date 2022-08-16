@@ -4,7 +4,7 @@
         data-bs-auto-close="outside">
         <fa class="display-4" icon="user"></fa>
       </button>
-      <div class="dropdown-menu">
+      <div class="dropdown-menu fadeIn">
         <router-link to="/cars/new" class="btn text-white mb-5" style="background-color: #70be75;" tag="button">New car
         </router-link>
       </div>
@@ -17,6 +17,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@keyframes fadeIn {
+    from {
+        opacity: 0%;
+    }
 
+    to {
+        opacity: 100%;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s;
+}
 </style>

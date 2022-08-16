@@ -4,7 +4,7 @@
             data-bs-auto-close="outside">
             <fa class="display-4" icon="filter"></fa>
         </button>
-        <form @submit.prevent="handleSearch" class="dropdown-menu p-3">
+        <form @submit.prevent="handleSearch" class="dropdown-menu p-3 fadeIn">
             <div class="form-group row">
                 <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
                 <div class="col-sm-9">
@@ -29,9 +29,9 @@
             </div>
             <div class="form-group">
                 <label for="stockRangeInput">Stock:</label>
-                <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only" :minValue="filters.stockLow"
-                    :maxValue="filters.stockTop" :max="50" :min="0" :step="1" :rangeMargin="1"
-                    @input="updateStockRange"/>
+                <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only"
+                    :minValue="filters.stockLow" :maxValue="filters.stockTop" :max="50" :min="0" :step="1"
+                    :rangeMargin="1" @input="updateStockRange" />
                 <div class="d-flex justify-content-between">
                     <input v-model="filters.stockLow" class="text-end" readonly min="0" max="50" type="number"
                         style="width: 55px;">
@@ -97,5 +97,19 @@ export default {
     }
 };
 </script>
-<style>
+
+<style scoped>
+@keyframes fadeIn {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s;
+}
 </style>
