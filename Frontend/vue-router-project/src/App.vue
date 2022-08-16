@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="bg-light">
+      <br><br>
       <NavigationBarComponent/>
       <router-view />
     </div>

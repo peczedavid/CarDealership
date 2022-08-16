@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark">
         <div class="container">
             <router-link class="navbar-brand" to="/">
                 <fa icon="car"></fa> Dealership
@@ -80,6 +80,7 @@ export default {
                 .then(() => {
                     this.activeUser = null;
                     store.currentUser = null;
+                    
                     // Refresh page so cookie dissappears
                     this.$router.go();
                 })

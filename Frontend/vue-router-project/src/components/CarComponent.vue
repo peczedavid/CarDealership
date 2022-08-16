@@ -9,7 +9,7 @@
           <h5 class="card-title">{{ carData.brand + " " + carData.model }}</h5>
           <p class="card-text">Available in: {{ carData.region.name }}</p>
           <p class="card-text">Stock: {{ carData.stock }}</p>
-          <router-link class="btn text-white" style="background-color: #646FD4;" v-bind:to="'/cars/' + carData.id">
+          <router-link class="btn btn-info text-white" v-bind:to="'/cars/' + carData.id">
             Details</router-link>
         </div>
       </div>

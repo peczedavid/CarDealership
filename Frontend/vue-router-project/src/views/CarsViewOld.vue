@@ -1,30 +1,50 @@
 <template>
-  <div class="container bg-light">
-    <div class="row mt-4">
-      <div class="col">
-        <p class="fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
-      </div>
-      <div class="col text-end">
-        <select v-model="sortingType" @change="getFilteredCars">
-          <option value="brand-a-z">Sort by: Brand (A-Z)</option>
-          <option value="brand-z-a">Sort by: Brand (Z-A)</option>
-          <option value="stock-desc">Stock High to Low </option>
-          <option value="stock-asc">Stock Low to High</option>
-        </select>
+  <!-- Hacky wrapper div so there is background when scrolling -->
+  <div class="col-12 bg-light bg-gradient">
+    <div class="position-fixed col-12">
+      <div class="col-12 d-flex">
+        <div class="col-4 d-flex align-items-center">
+          <div class="mx-auto">
+            <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+          </div>
+        </div>
+        <div class="col-4">
+        </div>
+        <div class="col-4 d-flex">
+          <select v-model="sortingType" @change="getFilteredCars" class="my-4 mx-auto">
+            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
+            <option value="stock-desc">Stock High to Low </option>
+            <option value="stock-asc">Stock Low to High</option>
+          </select>
+        </div>
       </div>
     </div>
-    <SideBarComponent class="col-3 position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
-    <div class="row">
-      <div class="col-6 mx-auto">
-        <CarComponent v-for="car in cars" :key="car.id" :carData="car" />
+    <br><br>
+    <div class="contianer col-9 mx-auto d-flex justify-content-center">
+      <div class="row col-12">
+        <div class="col-3">
+          <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
+        </div>
+        <div class="col-9">
+
+          <div class="col-9">
+            <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
+          </div>
+        </div>
+        <Transition name="slide-fade">
+          <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+            <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
+              <div class="p-0 m-0">
+                <fa class="me-2" icon="arrow-up"></fa>Back to top
+              </div>
+            </button>
+          </div>
+        </Transition>
       </div>
     </div>
-      <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-        <button class="btn btn-info text-white rounded-4" @click="backToTop">
-            <fa class="me-2" icon="arrow-up"></fa>Back to top
-        </button>
-      </div>
   </div>
+
 </template>
 
 <script>
@@ -81,7 +101,7 @@ export default {
       store.setCookie("sortingType", this.sortingType, 7);
 
       let url = "/cars?"
-      if (query != "")
+      if(query != "")
         url = url.concat("query=" + query + "&");
       url = url.concat("sort=" + this.sortingType);
 
@@ -152,19 +172,17 @@ export default {
 </script>
 
 <style scoped>
-@keyframes fadeIn {
-    from {
-        opacity: 0%;
-        translate: 0px 50px;
-    }
-
-    to {
-        opacity: 100%;
-        translate: 0px 0px;
-    }
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
 }
 
-.fadeIn {
-    animation: fadeIn 0.2s;
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
 }
 </style>
