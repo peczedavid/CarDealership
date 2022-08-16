@@ -22,7 +22,7 @@
                     <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mt-2 mt-lg-0">
                     <li>
                         <!-- User logged in -->
                         <fa v-if="activeUser && activeUser.admin" class="text-white me-1" icon="user-shield"></fa>
