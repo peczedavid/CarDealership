@@ -7,12 +7,15 @@ DONE  - response popup when editing or creating or deleting o.o - animated toast
 DONE  - floating buttons on sidebar
 DONE  - background light all the way down
 
-DONE  - search bar
+WIP   - search bar -> doesn't work from different pages
       - navbar detailed
 
-WIP   - paging admin board
+DONE  - paging admin board
 DONE  - admin board sorting -> save to localstorage
 DONE  - mixing order of coloumns -> save to localstorage
 
-	  - add more users and get count from backend
-	  - hamburger menu alul
+	- add more users
+DONE	- get numbers of users from backend
+DONE	- get user properties from backend /users/get
+
+	- hamburger menu alul

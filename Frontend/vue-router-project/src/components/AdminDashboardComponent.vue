@@ -39,19 +39,18 @@
                     :current-page="currentPage" :on-click="onPageChanged" />
             </div>
             <div class="col-6 d-flex justify-content-end pe-4">
-                <form>
-                    <div class="form-group d-flex">
-                        <label for="perPageInput" class="me-2 col-form-label">Users per page:</label>
-                        <div>
-                            <select class="mt-2 rounded-2" id="perPageInput">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="25">25</option>
-                            </select>
-                        </div>
+                <div class="form-group d-flex">
+                    <label for="perPageInput" class="me-2 col-form-label">Users per page:</label>
+                    <div>
+                        <select @click="(event) => { refreshTable(); persistState(); }" v-model.number="itemsPerPage" class="mt-2 rounded-2" id="perPageInput">
+                            <option value="3">3</option>
+                            <option selected value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                        </select>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -65,10 +64,10 @@ export default {
         return {
             users: [{}],
             currentPage: 1,
-            itemsPerPage: 5,
             numAllUsers: 9,
 
             // Persist
+            itemsPerPage: 5,
             userProperties: [""],
             sortByIndex: 0, // id
             sortAsc: true,
@@ -85,8 +84,15 @@ export default {
             localStorage.setItem("userProperties", JSON.stringify(this.userProperties));
             localStorage.setItem("sortAsc", this.sortAsc);
             localStorage.setItem("sortByIndex", this.sortByIndex);
+            localStorage.setItem("itemsPerPage", this.itemsPerPage);
         },
-        loadState() {
+        async loadState() {
+            const itemsPerPage = localStorage.getItem("itemsPerPage")
+            if(itemsPerPage != null)
+                this.itemsPerPage = parseInt(itemsPerPage);
+            else
+                this.itemsPerPage = 5;
+
             const sortAsc = localStorage.getItem("sortAsc");
             if (sortAsc != null)
                 this.sortAsc = sortAsc === "true";
@@ -102,8 +108,14 @@ export default {
             const userProps = localStorage.getItem("userProperties");
             if (userProps != null)
                 this.userProperties = JSON.parse(userProps);
-            else
-                this.userProperties = ["id", "username", "region", "admin"];
+            else {
+                try {
+                    const result = await axios.get("/user");
+                    this.userProperties = Reflect.ownKeys(result.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         },
         moveColumn(columnIndex, indexDelta) {
             // Swap the two columns
@@ -166,8 +178,6 @@ export default {
         } catch (error) {
             console.log(error);
         }
-        // this.userProperties = Reflect.ownKeys(this.users[0]);
-
         this.refreshTable();
     }
 }
