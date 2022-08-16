@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>{{ this.message }}</h1>
+    <div class="col text-center mt-5">
+      <h1>{{ this.message }}</h1>
+    </div>
   </div>
 </template>
 

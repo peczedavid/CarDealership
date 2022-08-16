@@ -37,10 +37,10 @@
                         Are you sure want to delete this car from the database?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn text-white" data-bs-dismiss="modal"
-                            style="background-color: #9BA3EB;" data-dismiss="modal">Close</button>
-                        <button @click="deleteCar" type="button" class="btn text-white" data-bs-dismiss="modal"
-                            style="background-color: #EB5353;" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            data-dismiss="modal">Close</button>
+                        <button @click="deleteCar" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            data-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-3">
+    <div class="row mt-5">
       <h1 class="text-info display-4">Welcome</h1>
     </div>
     <div class="row">
@@ -18,7 +18,7 @@
         repudiandae?
       </p>
     </div>
-    <div class="row mt-1">
+    <div class="row mt-3">
       <h1 class="text-info display-5">About</h1>
     </div>
     <div class="row">
