@@ -21,10 +21,12 @@ export default {
 @keyframes fadeIn {
     from {
         opacity: 0%;
+        translate: 0px 50px;
     }
 
     to {
         opacity: 100%;
+        translate: 0px 0px;
     }
 }
 
