@@ -1,7 +1,7 @@
 <template>
     <div class="col">
         <table class="table table-striped table-bordered">
-            <thead style="background-color: #9BA3EB; width: 100%;">
+            <thead class="bg-secondary bg-opacity-50">
                 <tr>
                     <th v-for="(userProperty, index) in userProperties" :key="userProperty[0]">
                         <button v-if="index > 0" class="bg-transparent border-0" @click="moveColumn(index, -1)"
@@ -43,7 +43,7 @@
                     <label for="perPageInput" class="me-2 col-form-label text-dark">Users per page:</label>
                     <div>
                         <select @click="(event) => { refreshTable(); persistState(); }" v-model.number="itemsPerPage"
-                            class="mt-2 rounded-2" id="perPageInput">
+                            class="mt-2 rounded-2 text-end" id="perPageInput">
                             <option value="3">3</option>
                             <option selected value="5">5</option>
                             <option value="10">10</option>
@@ -205,13 +205,13 @@ export default {
 }
 
 .active-page {
-    background-color: #9BA3EB;
-    border: 1px solid #9BA3EB;
+    background-color: #adb5bd;
+    border: 1px solid #adb5bd;
     color: white;
 }
 
 .active-page:hover {
-    background-color: #9BA3EB;
+    background-color: #adb5bd;
 }
 
 .user-nav-icon:hover {
