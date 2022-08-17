@@ -15,14 +15,15 @@
             <ul class="list-group list-group-flush">
                 <div class="col-12 d-flex p-3 px-4">
                     <div class="col-6 d-flex justify-content-start">
-                        <router-link to="/cars" class="btn text-white me-3" style="background-color: #9BA3EB;">Back
+                        <router-link to="/cars" class="btn btn-secondary me-3">
+                            <fa icon="arrow-left"></fa> Back
                         </router-link>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <router-link v-bind:to="'edit/' + carData.id" class="btn text-white me-3"
-                            style="background-color: #646FD4;">Edit</router-link>
-                        <button class="btn text-white" style="background-color: #EB5353;" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal">Delete</button>
+                        <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">
+                        <fa icon="pen-to-square"></fa> Edit</router-link>
+                        <button class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"><fa icon="trash-can"></fa> Delete</button>
                     </div>
                 </div>
             </ul>
@@ -38,10 +39,10 @@
                         Are you sure want to delete this car from the database?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn text-white" data-bs-dismiss="modal"
-                            style="background-color: #9BA3EB;" data-dismiss="modal">Close</button>
-                        <button @click="deleteCar" type="button" class="btn text-white" data-bs-dismiss="modal"
-                            style="background-color: #EB5353;" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            data-dismiss="modal">Close</button>
+                        <button @click="deleteCar" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            data-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,6 @@
 </template>
 
 <script>
-import { store } from '@/data/store';
 import axios from '@/http-common'
 import { useToast, POSITION } from "vue-toastification";
 
@@ -59,8 +59,12 @@ export default {
         deleteCar() {
             axios.delete("/cars/" + this.carData.id)
                 .then((result) => {
-                    store.carEdited.status = "Deleted";
-                    this.$router.push("/cars");
+                    this.$router.push({
+                        name: "cars",
+                        params: {
+                            action: "delete"
+                        }
+                        });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -87,9 +91,13 @@ export default {
     mounted() {
         this.toast = useToast();
 
-        if (store.carEdited.status === "Edited") {
-            this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
-            store.carEdited.status = "None";
+        const action = this.$route.params.action;
+        console.log(action);
+        if(action) {
+            if(action === "edit")
+                this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+            else if(action === "create")
+                this.toast.success("Car created successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
         }
 
         axios.get("/cars/" + this.$route.params.id)

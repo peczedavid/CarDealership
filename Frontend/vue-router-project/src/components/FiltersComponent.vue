@@ -4,45 +4,47 @@
             data-bs-auto-close="outside">
             <fa class="display-4" icon="filter"></fa>
         </button>
-        <form @submit.prevent="handleSearch" class="dropdown-menu p-3 fadeIn">
-            <div class="form-group row">
-                <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
-                <div class="col-sm-9">
-                    <input v-model="filters.brand" type="text" class="form-control" id="inputBrand">
+        <div class="dropdown-menu fadeIn p-3 form-dropdown" style="width: 300px;">
+            <form @submit.prevent="handleSearch">
+                <div class="form-group row">
+                    <label for="inputBrand" class="me-2 col-sm-2 col-form-label">Brand:</label>
+                    <div class="col-sm-9">
+                        <input v-model="filters.brand" type="text" class="form-control" id="inputBrand">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputModel" class="me-2 col-sm-2 col-form-label">Model:</label>
-                <div class="col-sm-9">
-                    <input v-model="filters.model" type="text" class="form-control" id="inputModel">
+                <div class="form-group row">
+                    <label for="inputModel" class="me-2 col-sm-2 col-form-label">Model:</label>
+                    <div class="col-sm-9">
+                        <input v-model="filters.model" type="text" class="form-control" id="inputModel">
+                    </div>
                 </div>
-            </div>
-            <div v-if="admin" class="form-group row">
-                <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
-                <div class="col-sm-9">
-                    <select v-model="filters.region" class="mt-2" id="regionSelect">
-                        <option value="" disabled selected>Select a region</option>
-                        <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}</option>
-                        <option value="">All</option>
-                    </select>
+                <div v-if="admin" class="form-group row">
+                    <label for="inputRegion" class="me-2 col-sm-2 col-form-label">Region:</label>
+                    <div class="col-sm-9">
+                        <select v-model="filters.region" class="mt-2" id="regionSelect">
+                            <option value="" disabled selected>Select a region</option>
+                            <option v-for="region in regions" :key="region.id" :value=region.name>{{ region.name }}
+                            </option>
+                            <option value="">All</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="stockRangeInput">Stock:</label>
-                <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only"
-                    :minValue="filters.stockLow" :maxValue="filters.stockTop" :max="50" :min="0" :step="1"
-                    :rangeMargin="1" @input="updateStockRange" />
-                <div class="d-flex justify-content-between">
-                    <input v-model="filters.stockLow" class="text-end" readonly min="0" max="50" type="number"
-                        style="width: 55px;">
-                    <input v-model="filters.stockTop" class="text-end" readonly min="0" max="50" type="number"
-                        style="width: 55px;">
+                <div class="form-group">
+                    <label for="stockRangeInput">Stock:</label>
+                    <MultiRangeSlider id="stockRangeInput" baseClassName="multi-range-slider-bar-only"
+                        :minValue="filters.stockLow" :maxValue="filters.stockTop" :max="50" :min="0" :step="1"
+                        :rangeMargin="1" @input="updateStockRange" />
+                    <div class="d-flex justify-content-between">
+                        <input v-model="filters.stockLow" class="text-end" readonly min="0" max="50" type="number"
+                            style="width: 55px;">
+                        <input v-model="filters.stockTop" class="text-end" readonly min="0" max="50" type="number"
+                            style="width: 55px;">
+                    </div>
                 </div>
-            </div>
-            <button class="btn text-white my-2" style="background-color: #646FD4;" type="submit">Search</button>
-            <button class="btn text-white ms-2 my-2" style="background-color: #9BA3EB;" @click="clearFilters"
-                type="button">Clear</button>
-        </form>
+                <button class="btn btn-primary my-2" type="submit">Search</button>
+                <button class="btn btn-secondary ms-2 my-2" @click="clearFilters" type="button">Clear</button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -113,5 +115,9 @@ export default {
 
 .fadeIn {
     animation: fadeIn 0.3s;
+}
+
+.form-dropdown {
+    width: calc(300px)
 }
 </style>

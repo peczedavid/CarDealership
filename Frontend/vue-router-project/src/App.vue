@@ -1,17 +1,19 @@
 <template>
-  <div class="app bg-light bg-gradient vh-100">
-    <NavBar />
-    <router-view />
-  </div>
+    <div class="bg-light">
+      <br><br>
+      <!-- <br><br><br> -->
+      <NavigationBarComponent/>
+      <router-view />
+    </div>
 </template>
 
 <script>
-import NavBar from "@/components/NavBar.vue";
+import NavigationBarComponent from "./components/NavigationBarComponent.vue";
 
 export default {
   components: {
-    NavBar,
-  }
+    NavigationBarComponent
+}
 };
 </script>
 

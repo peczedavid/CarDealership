@@ -1,50 +1,30 @@
 <template>
-  <!-- Hacky wrapper div so there is background when scrolling -->
-  <div class="col-12 bg-light bg-gradient">
-    <div class="position-fixed col-12">
-      <div class="col-12 d-flex">
-        <div class="col-4 d-flex align-items-center">
-          <div class="mx-auto">
-            <p class="m-0 fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
-          </div>
-        </div>
-        <div class="col-4">
-        </div>
-        <div class="col-4 d-flex">
-          <select v-model="sortingType" @change="getFilteredCars" class="my-4 mx-auto">
-            <option value="brand-a-z">Sort by: Brand (A-Z)</option>
-            <option value="brand-z-a">Sort by: Brand (Z-A)</option>
-            <option value="stock-desc">Stock High to Low </option>
-            <option value="stock-asc">Stock Low to High</option>
-          </select>
-        </div>
+  <div class="container bg-light">
+    <div class="row mt-4">
+      <div class="col">
+        <p class="fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
+      </div>
+      <div class="col text-end">
+        <select v-model="sortingType" @change="getFilteredCars">
+          <option value="brand-a-z">Sort by: Brand (A-Z)</option>
+          <option value="brand-z-a">Sort by: Brand (Z-A)</option>
+          <option value="stock-desc">Stock High to Low </option>
+          <option value="stock-asc">Stock Low to High</option>
+        </select>
       </div>
     </div>
-    <br><br>
-    <div class="contianer col-9 mx-auto d-flex justify-content-center">
-      <div class="row col-12">
-        <div class="col-3">
-          <SideBarComponent class="position-fixed col-3 pt-5" @carsChanged="this.cars = $event" />
-        </div>
-        <div class="col-9">
-
-          <div class="col-9">
-            <CarComponent v-for="car in cars" style="margin-left: 125px;" :key="car.id" :carData="car" />
-          </div>
-        </div>
-        <Transition name="slide-fade">
-          <div v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-            <button class="btn text-white rounded-pill" style="background-color: #9BA3EB;" @click="backToTop">
-              <div class="p-0 m-0">
-                <fa class="me-2" icon="arrow-up"></fa>Back to top
-              </div>
-            </button>
-          </div>
-        </Transition>
+    <SideBarComponent class="position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
+    <div class="row">
+      <div class="col-6 mx-auto">
+        <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
+    </div>
+    <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+      <button class="btn btn-primary text-white rounded-4" @click="backToTop">
+        <fa class="me-2" icon="arrow-up"></fa>Back to top
+      </button>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -101,7 +81,7 @@ export default {
       store.setCookie("sortingType", this.sortingType, 7);
 
       let url = "/cars?"
-      if(query != "")
+      if (query != "")
         url = url.concat("query=" + query + "&");
       url = url.concat("sort=" + this.sortingType);
 
@@ -119,9 +99,16 @@ export default {
     },
   },
   async beforeMount() {
+    // Authenticate user
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    this.getAllCars();
+
+    // Searched from other page
+    const query = this.$route.params.query;
+    if(query)
+      this.getQueriedCars(query);
+    else
+      this.getAllCars();
   },
   created() {
     // Read in the sorting cookie
@@ -134,16 +121,19 @@ export default {
   mounted() {
     this.toast = useToast();
 
-    if (store.carEdited.status === "Deleted") {
+    // Show deleted toast
+    const action = this.$route.params.action;
+    if(action && action === "delete") {
       this.toast.success("Car deleted from database!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
-      store.carEdited.status = "None";
     }
 
+    // Changed filters from this page (overrides the search query)
     this.emitter.on("cars-filter-changed", filters => {
       this.filters = filters;
       this.getFilteredCars(this.filters);
     });
 
+    // Searched from this page
     this.emitter.on("cars-queried", query => {
       this.getQueriedCars(query);
     });
@@ -172,17 +162,19 @@ export default {
 </script>
 
 <style scoped>
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+    translate: 0px 50px;
+  }
+
+  to {
+    opacity: 100%;
+    translate: 0px 0px;
+  }
 }
 
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(50px);
-  opacity: 0;
+.fadeIn {
+  animation: fadeIn 0.2s;
 }
 </style>
