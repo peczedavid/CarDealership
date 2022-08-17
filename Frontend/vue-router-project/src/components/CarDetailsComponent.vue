@@ -15,13 +15,15 @@
             <ul class="list-group list-group-flush">
                 <div class="col-12 d-flex p-3 px-4">
                     <div class="col-6 d-flex justify-content-start">
-                        <router-link to="/cars" class="btn btn-secondary me-3">Back
+                        <router-link to="/cars" class="btn btn-secondary me-3">
+                            <fa icon="arrow-left"></fa> Back
                         </router-link>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">Edit</router-link>
+                        <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">
+                        <fa icon="pen-to-square"></fa> Edit</router-link>
                         <button class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal">Delete</button>
+                            data-bs-target="#confirmDeleteModal"><fa icon="trash-can"></fa> Delete</button>
                     </div>
                 </div>
             </ul>

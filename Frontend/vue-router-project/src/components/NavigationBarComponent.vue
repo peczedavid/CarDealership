@@ -10,7 +10,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0 me-auto">
+                <ul class="navbar-nav mb-2 mb-lg-0 me-5">
                     <li class="nav-item">
                         <router-link v-if="activeUser" to="/cars" aria-current="page" class="nav-link active">Cars
                         </router-link>
@@ -20,9 +20,9 @@
                 <!-- TODO: if clicked away from /cars clear the query -->
                 <!-- TODO: if searched outside of /cars, navigate to /cars and search -->
                 <form v-if="activeUser" class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
-                    <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Search"
+                    <input v-model="searchQuery" class="form-control searchbar-input" type="search" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
+                    <button class="btn btn-outline-light searchbar-button" type="submit"><fa icon="search"></fa></button>
                 </form>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li>
@@ -53,28 +53,6 @@
             </div>
         </div>
     </nav>
-    <!-- <li class="nav-item">
-                        <p class="text-white nav-link active m-0">
-                            <fa icon="angle-right"></fa>
-                        </p>
-                    </li>
-                    <li class="nav-item">
-                        <p class="text-white nav-link active m-0">Details</p>
-                    </li>
-                    <li class="nav-item">
-                        <p class="text-white nav-link active m-0">
-                            <fa icon="angle-right"></fa>
-                        </p>
-                    </li>
-                    <li class="nav-item">
-                        <p class="text-white nav-link active m-0">Edit</p>
-                    </li> -->
-    <!-- <nav class="navbar container-fluid navbar-expand-lg bg-dark text-white navbar-dark pt-3 pb-0"
-    style="z-index: 10; position: fixed; top: 50px;">
-        <div class="container fs-6">
-            <p>Cars</p>
-        </div>
-    </nav> -->
 </template>
 
 <script>
@@ -123,4 +101,11 @@ export default {
 </script>
 
 <style>
+.searchbar-input {
+    border-radius: 10px 0px 0px 10px;
+}
+
+.searchbar-button {
+    border-radius: 0px 10px 10px 0px;
+}
 </style>

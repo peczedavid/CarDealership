@@ -26,12 +26,19 @@
             </div>
             <div class="col-12 d-flex">
                 <div class="col-6 d-flex justify-content-start">
-                    <router-link v-if="carEditData == null" to="/cars" class="btn btn-secondary">Back</router-link>
-                    <router-link v-else v-bind:to="'/cars/' + carEditData.id" class="btn btn-secondary">Back</router-link>
+                    <router-link v-if="carEditData == null" to="/cars" class="btn btn-secondary">
+                        <fa icon="arrow-left"></fa> Back
+                    </router-link>
+                    <router-link v-else v-bind:to="'/cars/' + carEditData.id" class="btn btn-secondary">
+                        <fa icon="arrow-left"></fa> Back
+                    </router-link>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <button v-if="carEditData == null" type="submit" class="btn btn-primary">New car</button>
-                    <button v-else type="submit" class="btn btn-primary">Update car</button>
+                    <button v-if="carEditData == null" type="submit" class="btn btn-primary">
+                     <fa icon="file-circle-plus"></fa> New car</button>
+                    <button v-else type="submit" class="btn btn-primary">
+                        <fa icon="pencil"></fa> Update car
+                    </button>
                 </div>
             </div>
         </form>
@@ -70,7 +77,7 @@ export default {
     methods: {
         handleSubmit() {
             // Editing
-            if (this.carEditData != null) { 
+            if (this.carEditData != null) {
                 axios
                     .put("/cars/" + this.carEditData.id, this.carData)
                     .then((result) => {
@@ -79,12 +86,13 @@ export default {
                             params: {
                                 id: result.data.id,
                                 action: "edit"
-                            }});
+                            }
+                        });
                     })
                     .catch((error) => alert(error));
             }
             // Creating new
-            else { 
+            else {
                 if (!this.activeUser.admin)
                     this.carData.region = this.activeUser.region.name;
                 axios
@@ -95,7 +103,8 @@ export default {
                             params: {
                                 id: result.data.id,
                                 action: "create"
-                            }});
+                            }
+                        });
                     })
                     .catch((error) => alert(error));
             }

@@ -8,7 +8,7 @@
       <div class="container p-2">
         <div class="d-flex justify-content-center align-items-center">
           <router-link to="/cars/new" class="btn btn-success" tag="button">
-          New car
+            <fa icon="file-circle-plus"></fa> New car
           </router-link>
         </div>
       </div>
