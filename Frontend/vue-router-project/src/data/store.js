@@ -2,11 +2,6 @@ import { reactive } from "vue";
 import axios from "@/http-common";
 
 export const store = reactive({
-  carEdited: {
-    // Edited, Failed, Deleted, None
-    status: "None"
-  },
-
   currentUser: null,
 
   async loadCurrentUser() {

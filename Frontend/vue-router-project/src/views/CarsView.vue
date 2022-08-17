@@ -105,7 +105,7 @@ export default {
 
     // Searched from other page
     const query = this.$route.params.query;
-    if(query !== undefined)
+    if(query)
       this.getQueriedCars(query);
     else
       this.getAllCars();
@@ -122,9 +122,9 @@ export default {
     this.toast = useToast();
 
     // Show deleted toast
-    if (store.carEdited.status === "Deleted") {
+    const action = this.$route.params.action;
+    if(action && action === "delete") {
       this.toast.success("Car deleted from database!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
-      store.carEdited.status = "None";
     }
 
     // Changed filters from this page (overrides the search query)

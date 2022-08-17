@@ -69,22 +69,33 @@ export default {
     },
     methods: {
         handleSubmit() {
-            if (this.carEditData != null) {  // Editing
+            // Editing
+            if (this.carEditData != null) { 
                 axios
                     .put("/cars/" + this.carEditData.id, this.carData)
                     .then((result) => {
-                        store.carEdited.status = "Edited";
-                        this.$router.push("/cars/" + result.data.id);
+                        this.$router.push({
+                            name: "carDetail",
+                            params: {
+                                id: result.data.id,
+                                action: "edit"
+                            }});
                     })
                     .catch((error) => alert(error));
-            } else { // Creating new
+            }
+            // Creating new
+            else { 
                 if (!this.activeUser.admin)
                     this.carData.region = this.activeUser.region.name;
                 axios
                     .post("/cars", this.carData)
                     .then((result) => {
-                        store.carEdited.status = "Created";
-                        this.$router.push("/cars/" + result.data.id);
+                        this.$router.push({
+                            name: "carDetail",
+                            params: {
+                                id: result.data.id,
+                                action: "create"
+                            }});
                     })
                     .catch((error) => alert(error));
             }

@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import { store } from '@/data/store';
 import axios from '@/http-common'
 import { useToast, POSITION } from "vue-toastification";
 
@@ -58,8 +57,12 @@ export default {
         deleteCar() {
             axios.delete("/cars/" + this.carData.id)
                 .then((result) => {
-                    store.carEdited.status = "Deleted";
-                    this.$router.push("/cars");
+                    this.$router.push({
+                        name: "cars",
+                        params: {
+                            action: "delete"
+                        }
+                        });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -86,9 +89,13 @@ export default {
     mounted() {
         this.toast = useToast();
 
-        if (store.carEdited.status === "Edited") {
-            this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
-            store.carEdited.status = "None";
+        const action = this.$route.params.action;
+        console.log(action);
+        if(action) {
+            if(action === "edit")
+                this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+            else if(action === "create")
+                this.toast.success("Car created successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
         }
 
         axios.get("/cars/" + this.$route.params.id)
