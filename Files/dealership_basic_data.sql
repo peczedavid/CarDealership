@@ -32,7 +32,7 @@ CREATE TABLE `cars` (
   PRIMARY KEY (`id`),
   KEY `FKremgq7ftbcpj1nab32x62cpm` (`region_id`),
   CONSTRAINT `FKremgq7ftbcpj1nab32x62cpm` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `cars` (
 
 LOCK TABLES `cars` WRITE;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` VALUES (10,'Volkswagen','Golf 4',5,4,''),(11,'Volkswagen','Golf 4',3,3,''),(12,'Volkswagen','Golf 5',10,4,''),(13,'Skoda','Octavia',11,4,''),(14,'Skoda','Octavia',2,3,''),(15,'Renault','Thalia',4,4,''),(16,'Renault','Thalia',4,2,''),(17,'Audi','R8',9,2,'This car is an Audi R8.'),(18,'Audi','R8',32,1,'American Audi R8 description.'),(19,'Audi','A4',11,1,''),(20,'Audi','A4',11,2,''),(21,'Toyota','Yaris GR',11,5,'Toyota Yaris GR car from Japan.'),(22,'Toyota','GR Supra 5',1,5,''),(23,'Toyota','Yaris GR',2,1,''),(28,'Skoda','Octavia',2,2,''),(29,'Tesla','Model S',10,5,''),(30,'Tesla','Model X',3,5,''),(31,'Tesla','Model 3',20,1,''),(32,'Renault','Thalia',8,3,''),(33,'Ford','Mustang Shelby GT500',3,1,'This is a very good car, yes.'),(34,'Ford','Mustang Shelby GT500',2,3,''),(35,'Ford','GT',3,2,''),(37,'Mercedes','Benz',3,3,'');
+INSERT INTO `cars` VALUES (10,'Volkswagen','Golf 4',5,4,''),(11,'Volkswagen','Golf 4',3,3,''),(12,'Volkswagen','Golf 5',10,4,''),(13,'Skoda','Octavia',11,4,''),(14,'Skoda','Octavia',2,3,''),(15,'Renault','Thalia',4,4,''),(16,'Renault','Thalia',4,2,''),(17,'Audi','R8',9,2,'This car is an Audi R8.'),(18,'Audi','R8',32,1,'American Audi R8 description.'),(19,'Audi','A4',11,1,''),(20,'Audi','A4',11,2,''),(21,'Toyota','Yaris GR',11,5,'Toyota Yaris GR car from Japan.'),(22,'Toyota','GR Supra 5',1,5,''),(23,'Toyota','Yaris GR',2,1,''),(28,'Skoda','Octavia',2,2,''),(29,'Tesla','Model S',10,5,''),(30,'Tesla','Model X',3,5,''),(31,'Tesla','Model 3',20,1,''),(32,'Renault','Thalia',8,3,'Renault car.'),(33,'Ford','Mustang Shelby GT500',3,1,'This is a very good car, yes.'),(34,'Ford','Mustang Shelby GT500',2,3,''),(35,'Ford','GT',3,2,''),(37,'Mercedes','Benz',3,3,'');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-16 15:52:25
+-- Dump completed on 2022-08-17 11:30:02

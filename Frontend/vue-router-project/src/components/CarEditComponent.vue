@@ -34,7 +34,7 @@
                     </router-link>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <button v-if="carEditData == null" type="submit" class="btn btn-primary">
+                    <button v-if="carEditData == null" type="submit" class="btn btn-success">
                      <fa icon="file-circle-plus"></fa> New car</button>
                     <button v-else type="submit" class="btn btn-primary">
                         <fa icon="pencil"></fa> Update car

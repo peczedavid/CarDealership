@@ -12,8 +12,9 @@
             <p class="card-text"><small class="text-muted">Stock: {{ carData.stock }}</small></p>
           </div>
           <div class="col">
-            <router-link class="btn btn-primary" v-bind:to="'/cars/' + carData.id">
-              Details</router-link>
+            <router-link class="btn btn-primary fw-semibold" v-bind:to="'/cars/' + carData.id">
+              Details<fa class="ms-2" icon="angle-right"></fa>
+            </router-link>
           </div>
         </div>
       </div>
