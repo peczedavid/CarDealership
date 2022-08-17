@@ -19,10 +19,13 @@
                 </ul>
                 <!-- TODO: if clicked away from /cars clear the query -->
                 <!-- TODO: if searched outside of /cars, navigate to /cars and search -->
-                <form v-if="activeUser" class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
-                    <input v-model="searchQuery" class="form-control searchbar-input" type="search" placeholder="Search"
+                
+                <!-- Always render the form so the Login and Register buttons are on the end of the
+                    navbar, beacuse of the mx-auto on the form -->
+                <form class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
+                    <input v-if="activeUser" v-model="searchQuery" class="form-control searchbar-input" type="search" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-outline-light searchbar-button" type="submit"><fa icon="search"></fa></button>
+                    <button v-if="activeUser" class="btn btn-outline-light searchbar-button" type="submit"><fa icon="search"></fa></button>
                 </form>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li>
