@@ -17,4 +17,5 @@ DONE	- get numbers of users from backend
 DONE	- get user properties from backend /users/get
 
       - detailed navbar
+      - rewrite toast to router params instead of store hack
 	- hamburger menu alul

@@ -15,11 +15,13 @@
                         <router-link v-if="activeUser" to="/cars" aria-current="page" class="nav-link active">Cars
                         </router-link>
                     </li>
+
                 </ul>
                 <!-- TODO: if clicked away from /cars clear the query -->
                 <!-- TODO: if searched outside of /cars, navigate to /cars and search -->
                 <form v-if="activeUser" class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
-                    <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
                 <ul class="navbar-nav mt-2 mt-lg-0">
@@ -51,6 +53,28 @@
             </div>
         </div>
     </nav>
+    <!-- <li class="nav-item">
+                        <p class="text-white nav-link active m-0">
+                            <fa icon="angle-right"></fa>
+                        </p>
+                    </li>
+                    <li class="nav-item">
+                        <p class="text-white nav-link active m-0">Details</p>
+                    </li>
+                    <li class="nav-item">
+                        <p class="text-white nav-link active m-0">
+                            <fa icon="angle-right"></fa>
+                        </p>
+                    </li>
+                    <li class="nav-item">
+                        <p class="text-white nav-link active m-0">Edit</p>
+                    </li> -->
+    <!-- <nav class="navbar container-fluid navbar-expand-lg bg-dark text-white navbar-dark pt-3 pb-0"
+    style="z-index: 10; position: fixed; top: 50px;">
+        <div class="container fs-6">
+            <p>Cars</p>
+        </div>
+    </nav> -->
 </template>
 
 <script>
@@ -80,7 +104,7 @@ export default {
                 .then(() => {
                     this.activeUser = null;
                     store.currentUser = null;
-                    
+
                     // Refresh page so cookie dissappears
                     this.$router.go();
                 })
@@ -89,11 +113,10 @@ export default {
                 });
         },
         handleSearch() {
-            if(this.$router.currentRoute.value.name !== "cars") {
-                this.$router.push({ name: "cars", params: { query: this.searchQuery }});
+            // Redirect to /cars with the query passed through params
+            if (this.$router.currentRoute.value.name !== "cars") {
+                this.$router.push({ name: "cars", params: { query: this.searchQuery } });
             }
-            
-            //this.emitter.emit("cars-queried", this.searchQuery);
         },
     },
 };
