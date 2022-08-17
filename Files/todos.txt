@@ -17,7 +17,6 @@ DONE	- get numbers of users from backend
 DONE	- get user properties from backend /users/get
 
 DONE  - rewrite toast to router params instead of store hack
-DONE?	- FIX BACKGROUND AGAIN
       - backend sorting - ignore letter case
       - detailed navbar
 	- hamburger menu alul

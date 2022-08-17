@@ -1,11 +1,11 @@
 <template>
-  <div class="container bg-light">
+  <div class="container">
     <div class="row mt-4">
       <div class="col">
         <p class="fw-semibold fs-5">Cars found: {{ this.cars.length }}</p>
       </div>
       <div class="col text-end">
-        <select v-model="sortingType" @change="getFilteredCars">
+        <select class="rounded" v-model="sortingType" @change="getFilteredCars">
           <option value="brand-a-z">Sort by: Brand (A-Z)</option>
           <option value="brand-z-a">Sort by: Brand (Z-A)</option>
           <option value="stock-desc">Stock High to Low </option>
@@ -15,7 +15,7 @@
     </div>
     <SideBarComponent class="position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
     <div class="row">
-      <div class="col-6 mx-auto fadeIn">
+      <div class="col-6 mx-auto car-div-anim">
         <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
     </div>
@@ -175,6 +175,22 @@ export default {
 }
 
 .fadeIn {
-  animation: fadeIn 0.2s;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0%;
+    translate: 100px 0px;
+  }
+
+  to {
+    opacity: 100%;
+    translate: 0px 0px;
+  }
+}
+
+.car-div-anim {
+  animation: slideLeft 0.75s;
 }
 </style>
