@@ -95,6 +95,9 @@ export default {
             if (this.$router.currentRoute.value.name !== "cars") {
                 this.$router.push({ name: "cars", params: { query: this.searchQuery } });
             }
+            else {
+                this.emitter.emit("cars-queried", this.searchQuery);
+            }
         },
     },
 };
