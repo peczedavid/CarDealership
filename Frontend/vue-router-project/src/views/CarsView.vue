@@ -15,7 +15,7 @@
     </div>
     <SideBarComponent class="position-fixed" style="z-index: 10;" @carsChanged="this.cars = $event" />
     <div class="row">
-      <div class="col-6 mx-auto">
+      <div class="col-6 mx-auto fadeIn">
         <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
     </div>

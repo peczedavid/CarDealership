@@ -103,7 +103,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .searchbar-input {
     border-radius: 10px 0px 0px 10px;
 }

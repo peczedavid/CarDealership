@@ -1,9 +1,8 @@
 <template>
-    <div class="bg-light">
+    <div class="bg-light h-100">
       <br><br>
-      <!-- <br><br><br> -->
       <NavigationBarComponent/>
-      <router-view />
+      <router-view/>
     </div>
 </template>
 
