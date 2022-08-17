@@ -19,11 +19,11 @@
         <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
     </div>
-      <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
-        <button class="btn btn-primary text-white rounded-4" @click="backToTop">
-            <fa class="me-2" icon="arrow-up"></fa>Back to top
-        </button>
-      </div>
+    <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+      <button class="btn btn-primary text-white rounded-4" @click="backToTop">
+        <fa class="me-2" icon="arrow-up"></fa>Back to top
+      </button>
+    </div>
   </div>
 </template>
 
@@ -99,9 +99,16 @@ export default {
     },
   },
   async beforeMount() {
+    // Authenticate user
     await store.loadCurrentUser();
     this.activeUser = store.currentUser;
-    this.getAllCars();
+
+    // Searched from other page
+    const query = this.$route.params.query;
+    if(query !== undefined)
+      this.getQueriedCars(query);
+    else
+      this.getAllCars();
   },
   created() {
     // Read in the sorting cookie
@@ -114,16 +121,19 @@ export default {
   mounted() {
     this.toast = useToast();
 
+    // Show deleted toast
     if (store.carEdited.status === "Deleted") {
       this.toast.success("Car deleted from database!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
       store.carEdited.status = "None";
     }
 
+    // Changed filters from this page (overrides the search query)
     this.emitter.on("cars-filter-changed", filters => {
       this.filters = filters;
       this.getFilteredCars(this.filters);
     });
 
+    // Searched from this page
     this.emitter.on("cars-queried", query => {
       this.getQueriedCars(query);
     });
@@ -153,18 +163,18 @@ export default {
 
 <style scoped>
 @keyframes fadeIn {
-    from {
-        opacity: 0%;
-        translate: 0px 50px;
-    }
+  from {
+    opacity: 0%;
+    translate: 0px 50px;
+  }
 
-    to {
-        opacity: 100%;
-        translate: 0px 0px;
-    }
+  to {
+    opacity: 100%;
+    translate: 0px 0px;
+  }
 }
 
 .fadeIn {
-    animation: fadeIn 0.2s;
+  animation: fadeIn 0.2s;
 }
 </style>

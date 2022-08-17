@@ -89,8 +89,11 @@ export default {
                 });
         },
         handleSearch() {
-            this.$router.push("cars");
-            this.emitter.emit("cars-queried", this.searchQuery);
+            if(this.$router.currentRoute.value.name !== "cars") {
+                this.$router.push({ name: "cars", params: { query: this.searchQuery }});
+            }
+            
+            //this.emitter.emit("cars-queried", this.searchQuery);
         },
     },
 };
