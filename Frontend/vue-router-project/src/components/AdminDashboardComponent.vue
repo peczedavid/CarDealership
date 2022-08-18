@@ -73,8 +73,7 @@ export default {
         return {
             users: [{}],
             currentPage: 1,
-            // TODO: GET FROM DATABASE (CORS)
-            numAllUsers: 9,
+            numAllUsers: 0, // Get from database
 
             // Persist
             itemsPerPage: 5,
@@ -200,16 +199,17 @@ export default {
             console.log(this.userProperties);
         },
     },
-    async created() {
+    created() {
         this.loadState();
-        // TODO!!!!!!!
-        // try {
-        //     const result = await axios.get("/user/num");
-        //     this.numAllUsers = result.data;
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        this.refreshTable();
+        axios
+            .get("/user/count")
+            .then((result) => {
+                this.numAllUsers = result.data;
+                this.refreshTable();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 }
 </script>

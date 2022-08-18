@@ -37,7 +37,7 @@ import com.peczedavid.cardealership.user.payload.LoginRequest;
 import com.peczedavid.cardealership.user.payload.UserData;
 import com.peczedavid.cardealership.user.payload.RegisterRequest;
 
-@CrossOrigin(origins = { "http://localhost:8081/", "http://://localhost:8081/adminboard" }, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -66,8 +66,19 @@ public class UserController {
         return Direction.ASC;
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<?> getUsersCount(HttpServletRequest request) {
+        String jwtCookie = jwtUtils.getJwtFromCookies(request);
+        Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+        if(!admin)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        Long usersCount = userRepository.count();
+        return new ResponseEntity<Long>(usersCount, HttpStatus.OK);
+    }
+
     @GetMapping("paging/{offset}/{pageSize}/{field}")
-    private ResponseEntity<Page<UserData>> getUserPagingAndSorting(@PathVariable int offset, @PathVariable int pageSize,
+    public ResponseEntity<Page<UserData>> getUserPagingAndSorting(@PathVariable int offset, @PathVariable int pageSize,
             @PathVariable String field,
             @RequestParam(name = "direction", required = false) String direction) {
         Page<User> userPage = userRepository
