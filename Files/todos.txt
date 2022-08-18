@@ -19,4 +19,6 @@ DONE  - rewrite toast to router params instead of store hack
 DONE  - backend sorting - ignore letter case
 DONE	- detailed navbar
 
+	- combine search and filters
+
 Footer lett helyette - hamburger menu alul
