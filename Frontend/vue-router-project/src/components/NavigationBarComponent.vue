@@ -35,8 +35,10 @@
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li>
                         <!-- User logged in -->
-                        <fa v-if="activeUser && activeUser.admin" class="text-white me-1" icon="user-shield"></fa>
-                        <fa v-if="activeUser && !activeUser.admin" class="text-white me-1" icon="user"></fa>
+                        <router-link v-if="activeUser" to="/profile" tag="button" class="text-white me-1">
+                            <fa v-if="activeUser.admin" icon="user-shield"></fa>
+                            <fa v-else icon="user"></fa>
+                        </router-link>
                         <router-link v-if="activeUser && activeUser.admin" to="/adminboard" tag="button"
                             class="btn btn-outline-light ms-2">
                             Users
