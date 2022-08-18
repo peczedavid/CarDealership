@@ -2,7 +2,6 @@
     <div class="col">
         <table class="table table-striped table-bordered">
             <thead>
-                <!-- <thead class="bg-secondary bg-opacity-50"> -->
                 <tr>
                     <th :class="calcHeadColor(index)" v-for="(userProperty, index) in userProperties"
                         :key="userProperty[0]">
@@ -30,7 +29,13 @@
                 <tr v-for="user in users" :key="user.id">
                     <td v-for="userProperty in userProperties" :key="userProperty[0]"
                         :class="{ 'table-warning': user.admin }" style="width: 0%">
-                        {{ user[userProperty] }}
+                        <span class="mx-auto">
+                            {{ user[userProperty] }}
+                        </span>
+                        <button class="admin-button btn-sm my-auto" @click="toggleAdmin(user)" v-if="userProperty === 'admin'">
+                            <fa v-if="!user.admin" icon="plus"></fa>
+                            <fa v-else icon="minus"></fa>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -61,12 +66,14 @@
 
 <script>
 import axios from "@/http-common.js";
+import { store } from "@/data/store";
 
 export default {
     data() {
         return {
             users: [{}],
             currentPage: 1,
+            // TODO: GET FROM DATABASE (CORS)
             numAllUsers: 9,
 
             // Persist
@@ -77,6 +84,24 @@ export default {
         }
     },
     methods: {
+        toggleAdmin(user) {
+            if(store.currentUser.id === user.id)
+                return;
+
+            const copyUser = {...user};
+            copyUser.admin = !user.admin;
+            axios
+                .put("/user", copyUser)
+                .then((result) => {
+                    if(copyUser.id === result.data.id) {
+                        user.admin = result.data.admin;
+                    }
+                    this.refreshTable();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         calcHeadColor(index) {
             return index == this.sortByIndex ?
                 "bg-secondary bg-opacity-50" : "bg-secondary bg-opacity-25";
@@ -177,12 +202,13 @@ export default {
     },
     async created() {
         this.loadState();
-        try {
-            const result = await axios.get("/user/num");
-            this.numAllUsers = result.data;
-        } catch (error) {
-            console.log(error);
-        }
+        // TODO!!!!!!!
+        // try {
+        //     const result = await axios.get("/user/num");
+        //     this.numAllUsers = result.data;
+        // } catch (error) {
+        //     console.log(error);
+        // }
         this.refreshTable();
     }
 }
@@ -220,5 +246,11 @@ export default {
 
 .user-nav-icon:hover {
     color: #d8d8d8;
+}
+
+.admin-button {
+    background-color: transparent;
+    border: 0;
+    color: #464646;
 }
 </style>

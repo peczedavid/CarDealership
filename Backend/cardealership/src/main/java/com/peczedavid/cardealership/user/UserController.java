@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ import com.peczedavid.cardealership.user.payload.LoginRequest;
 import com.peczedavid.cardealership.user.payload.UserData;
 import com.peczedavid.cardealership.user.payload.RegisterRequest;
 
-@CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:8081/", "http://://localhost:8081/adminboard" }, maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -75,24 +76,6 @@ public class UserController {
 
         Page<UserData> userDataPage = userPage.map(user -> new UserData(user));
         return new ResponseEntity<Page<UserData>>(userDataPage, HttpStatus.OK);
-    }
-
-    @GetMapping("/paging/{field}")
-    private ResponseEntity<List<UserData>> getUsersPagingTest(@PathVariable String field) {
-        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, field));
-
-        List<UserData> userDatas = users.stream().map(user -> new UserData(user)).collect(Collectors.toList());
-        return new ResponseEntity<List<UserData>>(userDatas, HttpStatus.OK);
-    }
-
-    @GetMapping("/num")
-    public ResponseEntity<Long> getNumberOfUsers(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromCookies(request);
-        if (jwt == null || !jwtUtils.getAdminFromToken(jwt)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<Long>(userRepository.count(), HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -197,5 +180,23 @@ public class UserController {
         response.addCookie(cookie);
 
         return new ResponseEntity<String>("Successfully logged out.", HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> makeAdmin(HttpServletRequest request, @RequestBody UserData userData) {
+            String jwtCookie = jwtUtils.getJwtFromCookies(request);
+            Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+            if(!admin)
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            
+            User user = userRepository.findById(userData.getId()).orElse(null);
+            if(user == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            user.setAdmin(userData.isAdmin());
+            userRepository.save(user);
+
+            userData.setAdmin(user.isAdmin());
+            return new ResponseEntity<UserData>(userData, HttpStatus.OK);
     }
 }
