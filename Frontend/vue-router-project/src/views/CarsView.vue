@@ -19,7 +19,7 @@
         <CarComponent class="mb-3" v-for="car in cars" :key="car.id" :carData="car" />
       </div>
     </div>
-    <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 10%;">
+    <div class="fadeIn" v-if="showBackToTop" style=" position: fixed; left: 85%; bottom: 15%; z-index: 15;">
       <button class="btn btn-primary text-white rounded-4" @click="backToTop">
         <fa class="me-2" icon="arrow-up"></fa>Back to top
       </button>
