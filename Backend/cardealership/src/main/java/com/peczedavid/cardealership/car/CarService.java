@@ -91,38 +91,23 @@ public class CarService {
 
     public List<Car> findByQuery(String query, String sort) {
         Stream<Car> cars = carRepository.findAll().stream();
-        
+
         if (query != null) {
             cars = cars.filter(car -> {
                 String carData = (car.getBrand() + car.getModel() +
-                        car.getRegion().getName() + car.getDescription() + 
+                        car.getRegion().getName() + car.getDescription() +
                         car.getStock().toString()).toLowerCase().replaceAll("\\s+", "");
 
                 String[] queryWords = query.toLowerCase().split("\\s+");
-                for(String queryWord : queryWords) {
-                    if(carData.contains(queryWord))
+                for (String queryWord : queryWords) {
+                    if (carData.contains(queryWord))
                         return true;
                 }
                 return false;
             });
         }
 
-        switch (sort) {
-            case "brand-a-z":
-                cars = cars.sorted((car1, car2) -> car1.getBrand().compareTo(car2.getBrand()));
-                break;
-            case "brand-z-a":
-                cars = cars.sorted((car1, car2) -> car2.getBrand().compareTo(car1.getBrand()));
-                break;
-            case "stock-asc":
-                cars = cars.sorted(Comparator.comparingInt(Car::getStock));
-                break;
-            case "stock-desc":
-                cars = cars.sorted(Comparator.comparingInt(Car::getStock).reversed());
-                break;
-            default:
-                break;
-        }
+        cars = this.sortCars(cars, sort);
 
         return cars.collect(Collectors.toList());
     }
@@ -142,12 +127,20 @@ public class CarService {
         if (description != null)
             cars = cars.filter(car -> car.getDescription().toUpperCase().contains(description.toUpperCase()));
 
+        cars = this.sortCars(cars, sort);
+
+        return cars.collect(Collectors.toList());
+    }
+
+    private Stream<Car> sortCars(Stream<Car> cars, String sort) {
         switch (sort) {
             case "brand-a-z":
-                cars = cars.sorted((car1, car2) -> car1.getBrand().compareTo(car2.getBrand()));
+                cars = cars
+                        .sorted((car1, car2) -> car1.getBrand().toLowerCase().compareTo(car2.getBrand().toLowerCase()));
                 break;
             case "brand-z-a":
-                cars = cars.sorted((car1, car2) -> car2.getBrand().compareTo(car1.getBrand()));
+                cars = cars
+                        .sorted((car1, car2) -> car2.getBrand().toLowerCase().compareTo(car1.getBrand().toLowerCase()));
                 break;
             case "stock-asc":
                 cars = cars.sorted(Comparator.comparingInt(Car::getStock));
@@ -159,6 +152,6 @@ public class CarService {
                 break;
         }
 
-        return cars.collect(Collectors.toList());
+        return cars;
     }
 }

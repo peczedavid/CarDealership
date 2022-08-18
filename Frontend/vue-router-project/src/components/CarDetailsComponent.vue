@@ -21,9 +21,11 @@
                     </div>
                     <div class="col-6 d-flex justify-content-end">
                         <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">
-                        <fa icon="pen-to-square"></fa> Edit</router-link>
-                        <button class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal"><fa icon="trash-can"></fa> Delete</button>
+                            <fa icon="pen-to-square"></fa> Edit
+                        </router-link>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                            <fa icon="trash-can"></fa> Delete
+                        </button>
                     </div>
                 </div>
             </ul>
@@ -64,7 +66,7 @@ export default {
                         params: {
                             action: "delete"
                         }
-                        });
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -92,11 +94,10 @@ export default {
         this.toast = useToast();
 
         const action = this.$route.params.action;
-        console.log(action);
-        if(action) {
-            if(action === "edit")
+        if (action) {
+            if (action === "edit")
                 this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
-            else if(action === "create")
+            else if (action === "create")
                 this.toast.success("Car created successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
         }
 
