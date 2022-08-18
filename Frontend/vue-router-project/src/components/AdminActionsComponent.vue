@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown dropend">
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        <button type="button" class="btn sidebar-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
             data-bs-auto-close="outside">
             <fa class="display-4" icon="user-shield"></fa>
         </button>
@@ -40,5 +40,14 @@ export default {
 
 .fadeIn {
     animation: fadeIn 0.3s;
+}
+
+.sidebar-button {
+    border: 0;
+}
+
+.sidebar-button:hover {
+    transition: all 0.175s ease-in-out;
+    transform: scale(1.25);
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown dropend">
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        <button type="button" class="btn sidebar-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
             data-bs-auto-close="outside">
             <fa class="display-4" icon="filter"></fa>
         </button>
@@ -119,5 +119,14 @@ export default {
 
 .form-dropdown {
     width: calc(300px)
+}
+
+.sidebar-button {
+    border: 0;
+}
+
+.sidebar-button:hover {
+    transition: all 0.175s ease-in-out;
+    transform: scale(1.25);
 }
 </style>
