@@ -5,7 +5,6 @@ DONE  - back to cars button floating
 DONE  - car::description
 DONE  - response popup when editing or creating or deleting o.o - animated toast ? ()
 DONE  - floating buttons on sidebar
-DONE  - background light all the way down
 
 DONE  - search bar
 
@@ -20,4 +19,4 @@ DONE  - rewrite toast to router params instead of store hack
 DONE  - backend sorting - ignore letter case
 DONE	- detailed navbar
 
-	- hamburger menu alul
+Footer lett helyette - hamburger menu alul

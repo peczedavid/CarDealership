@@ -1,9 +1,11 @@
 <template>
     <div class="col">
         <table class="table table-striped table-bordered">
-            <thead class="bg-secondary bg-opacity-50">
+            <thead>
+                <!-- <thead class="bg-secondary bg-opacity-50"> -->
                 <tr>
-                    <th v-for="(userProperty, index) in userProperties" :key="userProperty[0]">
+                    <th :class="calcHeadColor(index)" v-for="(userProperty, index) in userProperties"
+                        :key="userProperty[0]">
                         <button v-if="index > 0" class="bg-transparent border-0" @click="moveColumn(index, -1)"
                             :class="calcArrowColor(index)">
                             <fa class="user-nav-icon" icon="arrow-left"></fa>
@@ -75,11 +77,13 @@ export default {
         }
     },
     methods: {
+        calcHeadColor(index) {
+            return index == this.sortByIndex ?
+                "bg-secondary bg-opacity-50" : "bg-secondary bg-opacity-25";
+        },
         calcArrowColor(index) {
-            if (index == this.sortByIndex)
-                return "text-dark";
-            else
-                return "text-secondary";
+            return index == this.sortByIndex ?
+                "text-dark" : "text-secondary";
         },
         persistState() {
             localStorage.setItem("userProperties", JSON.stringify(this.userProperties));
