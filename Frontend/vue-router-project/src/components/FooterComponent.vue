@@ -2,7 +2,7 @@
   <div class="container-fluid bg-light footer">
     <div class="container text-center pt-2">
         <p class="mb-2">Copyright &copy; Dealership, Inc.</p>
-        <p class="mb-3"><a href="">Legal stuff</a> | <a href="">Privacy Policy</a> | <a href="">Security</a></p>
+        <p class="mb-3"><a href="#">Legal stuff</a> | <a href="#">Privacy Policy</a> | <a href="#">Security</a></p>
     </div>
   </div>
 </template>
