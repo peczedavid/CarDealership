@@ -23,8 +23,6 @@
                         </span>
                     </li>
                 </ul>
-                <!-- TODO: if clicked away from /cars clear the query -->
-
                 <!-- Always render the form so the Login and Register buttons are on the end of the
                     navbar, beacuse of the mx-auto on the form -->
                 <form class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
@@ -83,7 +81,6 @@ export default {
         $route(to, from) {
             const urlElements = to.path.split("/");
             urlElements.shift(); // Remove first empty element
-            console.log(urlElements);
 
             // Clear the nav elements
             this.navigationElements = [];
@@ -100,6 +97,9 @@ export default {
                          this.navigationElements.push("Details");
                     }
                 }
+            }
+            else {
+                this.searchQuery = "";
             }
         },
     },
