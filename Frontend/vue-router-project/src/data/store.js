@@ -4,6 +4,17 @@ import axios from "@/http-common";
 export const store = reactive({
   currentUser: null,
 
+  convertRegionToCountryCode(regionName) {
+    switch (regionName) {
+      case "America": return "en";
+      case "Hungary": return "hu";
+      case "United-Kingdom": return "en";
+      case "Japan": return "ja";
+      case "Germany": return "de";
+      default: return "en";
+    }
+  },
+
   apiKey() {
     return "AIzaSyDG34ob7QDGNzjmEM7Nfx-6Dlc7JVQgoAA";
   },

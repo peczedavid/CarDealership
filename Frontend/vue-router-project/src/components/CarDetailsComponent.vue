@@ -3,7 +3,9 @@
         <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
                 <div class="me-4 my-auto">
-                    <img :src="relatedVideo.snippet.thumbnails.medium.url" alt="Car image">
+                    <img v-if="relatedVideo.snippet.thumbnails.medium.url"
+                        :src="relatedVideo.snippet.thumbnails.medium.url" alt="Car image">
+                    <img v-else src="@/assets/images/cars/car-placeholder.png" alt="Car image">
                 </div>
                 <div class="col">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
@@ -84,7 +86,12 @@ export default {
                 this.carData.brand + " " +
                 this.carData.model + " " +
                 this.carData.region.name + " ");
+            // url = url.concat("q=" +
+            //     this.carData.brand + " " +
+            //     this.carData.model + "&");
             
+            // url = url.concat("relevanceLanguage=" + store.convertRegionToCountryCode(this.carData.region.name));
+            // console.log(url);
             axiosYT
                 .get(url, { withCredentials: false })
                 .then(result => {
