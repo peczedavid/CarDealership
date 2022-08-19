@@ -12,8 +12,8 @@
                     <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.region.name }}</p>
                     <p class="card-text">Stock: {{ carData.stock }}</p>
                     <p>{{ carData.description }}</p>
-                    <p class="mb-1">Related video on youtube:</p>
-                    <p><a target="_blank" :href="relatedVideoLink">{{ relatedVideo.snippet.title }}</a></p>
+                    <p v-if="relatedVideo.snippet.thumbnails.medium.url" class="mb-1">Related video on youtube:</p>
+                    <p v-if="relatedVideo.snippet.thumbnails.medium.url"><a target="_blank" :href="relatedVideoLink">{{ relatedVideo.snippet.title }}</a></p>
                 </div>
                 
             </div>
