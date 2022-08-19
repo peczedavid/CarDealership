@@ -4,6 +4,10 @@ import axios from "@/http-common";
 export const store = reactive({
   currentUser: null,
 
+  apiKey() {
+    return "AIzaSyDG34ob7QDGNzjmEM7Nfx-6Dlc7JVQgoAA";
+  },
+
   async loadCurrentUser() {
     try {
       const result = await axios.get("user");

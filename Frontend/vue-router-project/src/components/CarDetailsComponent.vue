@@ -2,15 +2,18 @@
     <div class="container">
         <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
-                <div class="me-4">
-                    <img class="" src="@/assets/images/cars/car-placeholder.png" alt="Car image">
+                <div class="me-4 my-auto">
+                    <img :src="relatedVideo.snippet.thumbnails.medium.url" alt="Car image">
                 </div>
-                <div class="">
+                <div class="col">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
                     <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.region.name }}</p>
                     <p class="card-text">Stock: {{ carData.stock }}</p>
                     <p>{{ carData.description }}</p>
+                    <p class="mb-1">Related video on youtube:</p>
+                    <p><a target="_blank" :href="relatedVideoLink">{{ relatedVideo.snippet.title }}</a></p>
                 </div>
+                
             </div>
             <ul class="list-group list-group-flush">
                 <div class="col-12 d-flex p-3 px-4">
@@ -53,7 +56,9 @@
 </template>
 
 <script>
+import { store } from '@/data/store';
 import axios from '@/http-common'
+import axiosYT from "axios"
 import { useToast, POSITION } from "vue-toastification";
 
 export default {
@@ -71,7 +76,25 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        },
+        lookUpYoutubeVideo() {
+            let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&";
+            url = url.concat("key=" + store.apiKey() + "&");
+            url = url.concat("q=" +
+                this.carData.brand + " " +
+                this.carData.model + " " +
+                this.carData.region.name + " ");
+            
+            axiosYT
+                .get(url, { withCredentials: false })
+                .then(result => {
+                    this.relatedVideo = result.data.items[0];
+                    this.relatedVideoLink = "https://youtube.com/watch?v=" + this.relatedVideo.id.videoId;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
     data() {
         return {
@@ -87,10 +110,18 @@ export default {
                 stock: 0,
                 description: ""
             },
+            relatedVideo: {
+                snippet: {
+                    thumbnails: {
+                        medium: {}
+                    }
+                },
+            },
+            relatedVideoLink: "",
             toast: null
         }
     },
-    mounted() {
+    created() {
         this.toast = useToast();
 
         const action = this.$route.params.action;
@@ -102,7 +133,10 @@ export default {
         }
 
         axios.get("/cars/" + this.$route.params.id)
-            .then((result) => { this.carData = result.data })
+            .then((result) => {
+                this.carData = result.data
+                this.lookUpYoutubeVideo();
+            })
             .catch((error) => {
                 if (error.response.status == 401 || error.response.status == 404)
                     this.$router.push("/unauthorized");
