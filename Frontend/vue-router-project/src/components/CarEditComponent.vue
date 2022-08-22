@@ -17,7 +17,7 @@
                 <label for="descriptionInput" class="form-label">Description:</label>
                 <input v-model="carData.description" type="text" required class="form-control" id="descriptionInput" />
             </div>
-            <div v-if="activeUser.admin" class="mb-3">
+            <div v-if="currentUser.admin" class="mb-3">
                 <label for="regionSelect" class="me-2">Region:</label>
                 <select required v-model="carData.region" class="form-select" id="regionSelect">
                     <option value="" disabled selected>Select the region</option>
@@ -60,8 +60,11 @@ export default {
                 this.regions = result.data;
             })
             .catch((error) => console.log(error));
-        await store.loadCurrentUser();
-        this.activeUser = store.currentUser;
+    },
+    computed: {
+        currentUser() {
+            return store.currentUser;
+        }
     },
     watch: {
         carEditData: function (newVal) {
@@ -93,8 +96,8 @@ export default {
             }
             // Creating new
             else {
-                if (!this.activeUser.admin)
-                    this.carData.region = this.activeUser.region.name;
+                if (!this.currentUser.admin)
+                    this.carData.region = this.currentUser.region.name;
                 axios
                     .post("/cars", this.carData)
                     .then((result) => {
@@ -121,7 +124,6 @@ export default {
                 description: "",
             },
             regions: [],
-            activeUser: {}
         }
     }
 }

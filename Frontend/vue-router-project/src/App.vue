@@ -11,12 +11,16 @@
 <script>
 import NavigationBarComponent from "./components/NavigationBarComponent.vue";
 import FooterComponent from "./components/FooterComponent.vue";
+import { store } from "@/data/store";
 
 export default {
   components: {
     NavigationBarComponent,
     FooterComponent
-}
+  },
+  created() {
+    store.loadCurrentUser();
+  }
 };
 </script>
 

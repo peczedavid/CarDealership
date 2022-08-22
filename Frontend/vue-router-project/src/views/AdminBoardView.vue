@@ -5,28 +5,30 @@
 </template>
 
 <script>
-import axios from "@/http-common";
 import AdminDashboardComponent from '@/components/AdminDashboardComponent.vue';
+import { store } from "@/data/store";
 
 export default {
     components: {
     AdminDashboardComponent
 },
     created() {
-        axios
-            .get("/user")
-            .then((result) => {
-                if(result.status == 204 || !result.data.admin)
-                    this.$router.push("/unauthorized");
-            })
-            .catch((error) => console.log(error));
+        if(!this.currentUser.admin)
+            this.$router.push("/unauthorized");
+        // axios
+        //     .get("/user")
+        //     .then((result) => {
+        //         if(result.status == 204 || !result.data.admin)
+        //             this.$router.push("/unauthorized");
+        //     })
+        //     .catch((error) => console.log(error));
         
     },
-    data() {
-        return {
-            activeUser: null
+    computed: {
+        currentUser() {
+            return store.currentUser;
         }
-    }
+    },
 }
 </script>
 
