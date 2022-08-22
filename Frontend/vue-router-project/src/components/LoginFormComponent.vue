@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { store } from "@/data/store";
 import axios from "@/http-common"
 
 export default {
@@ -53,7 +52,8 @@ export default {
       axios
         .post("/user/login", this.user)
         .then((result) => {
-          store.currentUser = result.data;
+          // Tell navbar that someone logged in (NavBar.activeUser=result.data)
+          this.emitter.emit("sign-in", result.data);
           this.$router.push("/");
         })
         .catch((error) => alert(error));

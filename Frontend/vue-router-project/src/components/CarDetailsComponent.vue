@@ -142,7 +142,7 @@ export default {
         axios.get("/cars/" + this.$route.params.id)
             .then((result) => {
                 this.carData = result.data
-                //this.lookUpYoutubeVideo();
+                this.lookUpYoutubeVideo();
             })
             .catch((error) => {
                 if (error.response.status == 401 || error.response.status == 404)
