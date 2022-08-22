@@ -1,5 +1,5 @@
 <template>
-  <RegisterFormComponent class="h-100" />
+  <RegisterFormComponent/>
 </template>
 
 <script>

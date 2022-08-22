@@ -1,7 +1,9 @@
 <template>
-  <div class="container bg-light bg-gradient">
-    <div class="mt-3 mx-auto col-lg-8">
-      <h1>Welcome</h1>
+  <div class="container">
+    <div class="row mt-5">
+      <h1 class="text-info display-4">Welcome</h1>
+    </div>
+    <div class="row">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut et beatae
         harum vero cum magnam ipsum saepe quae ducimus, quaerat eligendi vel
@@ -15,6 +17,11 @@
         doloribus explicabo cum, iste ad repellendus hic aliquam reiciendis
         repudiandae?
       </p>
+    </div>
+    <div class="row mt-3">
+      <h1 class="text-info display-5">About</h1>
+    </div>
+    <div class="row">
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur
         nisi dolorem adipisci aut autem soluta labore voluptate deleniti
@@ -35,8 +42,11 @@
 
 <script>
 import SideBarComponent from '@/components/SideBarComponent.vue';
+
 export default {
   name: "HomeView",
-  components: { SideBarComponent },
+  components: {
+    SideBarComponent
+  },
 };
 </script>

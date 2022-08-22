@@ -1,5 +1,5 @@
 <template>
-  <LoginFormComponent class="h-100" />
+  <LoginFormComponent/>
 </template>
 
 <script>

@@ -25,10 +25,9 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn text-white" style="background-color: #646FD4;">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
       </form>
     </div>
-
   </div>
 </template>
 

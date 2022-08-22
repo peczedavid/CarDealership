@@ -2,26 +2,37 @@
     <div class="container">
         <div class="card col-6 mx-auto mt-5">
             <div class="card-body d-inline-flex">
-                <div class="me-4">
-                    <img class="" src="../data/car-placeholder.png" alt="Car image">
+                <div class="me-4 my-auto">
+                    <img v-if="relatedVideo.snippet.thumbnails.medium.url"
+                        :src="relatedVideo.snippet.thumbnails.medium.url" alt="Car image">
+                    <img v-else src="@/assets/images/cars/car-placeholder.png" alt="Car image">
                 </div>
-                <div class="">
+                <div class="col">
                     <h2 class="card-title">{{ carData.brand + " " + carData.model }}</h2>
                     <p class="card-text " style="font-size: 1.5rem;">Available in: {{ carData.region.name }}</p>
                     <p class="card-text">Stock: {{ carData.stock }}</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusantium sit ullam optio.
-                        Repudiandae quis doloribus exercitationem nam explicabo, praesentium vel cumque labore nesciunt
-                        illum iste odio, laudantium recusandae molestiae omnis placeat molestias quia quam reprehenderit
-                        unde maiores?</p>
+                    <p>{{ carData.description }}</p>
+                    <p v-if="relatedVideo.snippet.thumbnails.medium.url" class="mb-1">Related video on youtube:</p>
+                    <p v-if="relatedVideo.snippet.thumbnails.medium.url"><a target="_blank" :href="relatedVideoLink">{{ relatedVideo.snippet.title }}</a></p>
                 </div>
+                
             </div>
-            <ul class="list-group list-group-flush align-items-end">
-                <li class="list-group-item p-3">
-                    <router-link v-bind:to="'edit/' + carData.id" class="btn text-white me-3"
-                        style="background-color: #646FD4;">Edit</router-link>
-                    <button class="btn text-white" style="background-color: #EB5353;" data-bs-toggle="modal"
-                        data-bs-target="#confirmDeleteModal">Delete</button>
-                </li>
+            <ul class="list-group list-group-flush">
+                <div class="col-12 d-flex p-3 px-4">
+                    <div class="col-6 d-flex justify-content-start">
+                        <router-link to="/cars" class="btn btn-secondary me-3">
+                            <fa icon="arrow-left"></fa> Back
+                        </router-link>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <router-link v-bind:to="'edit/' + carData.id" class="btn btn-primary me-3">
+                            <fa icon="pen-to-square"></fa> Edit
+                        </router-link>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                            <fa icon="trash-can"></fa> Delete
+                        </button>
+                    </div>
+                </div>
             </ul>
         </div>
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" area-labelledby="modal-title" aria-hidden="true">
@@ -47,19 +58,50 @@
 </template>
 
 <script>
+import { store } from '@/data/store';
 import axios from '@/http-common'
+import axiosYT from "axios"
+import { useToast, POSITION } from "vue-toastification";
 
 export default {
     methods: {
         deleteCar() {
             axios.delete("/cars/" + this.carData.id)
                 .then((result) => {
-                    this.$router.push("/cars");
+                    this.$router.push({
+                        name: "cars",
+                        params: {
+                            action: "delete"
+                        }
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        },
+        lookUpYoutubeVideo() {
+            let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&";
+            url = url.concat("key=" + store.apiKey() + "&");
+            url = url.concat("q=" +
+                this.carData.brand + " " +
+                this.carData.model + " " +
+                this.carData.region.name + " ");
+            // url = url.concat("q=" +
+            //     this.carData.brand + " " +
+            //     this.carData.model + "&");
+            
+            // url = url.concat("relevanceLanguage=" + store.convertRegionToCountryCode(this.carData.region.name));
+            // console.log(url);
+            axiosYT
+                .get(url, { withCredentials: false })
+                .then(result => {
+                    this.relatedVideo = result.data.items[0];
+                    this.relatedVideoLink = "https://youtube.com/watch?v=" + this.relatedVideo.id.videoId;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
     data() {
         return {
@@ -72,13 +114,36 @@ export default {
                     id: 0,
                     name: "",
                 },
-                stock: 0
-            }
+                stock: 0,
+                description: ""
+            },
+            relatedVideo: {
+                snippet: {
+                    thumbnails: {
+                        medium: {}
+                    }
+                },
+            },
+            relatedVideoLink: "",
+            toast: null
         }
     },
-    mounted() {
+    created() {
+        this.toast = useToast();
+
+        const action = this.$route.params.action;
+        if (action) {
+            if (action === "edit")
+                this.toast.success("Car edited successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+            else if (action === "create")
+                this.toast.success("Car created successfully!", { position: POSITION.BOTTOM_CENTER, timeout: 2500 });
+        }
+
         axios.get("/cars/" + this.$route.params.id)
-            .then((result) => { this.carData = result.data })
+            .then((result) => {
+                this.carData = result.data
+                this.lookUpYoutubeVideo();
+            })
             .catch((error) => {
                 if (error.response.status == 401 || error.response.status == 404)
                     this.$router.push("/unauthorized");

@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,9 +21,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peczedavid.cardealership.region.Region;
@@ -50,6 +57,38 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    private Direction convertDirection(String direction) {
+        if(direction == null)
+            return Direction.ASC;
+        if(direction.equals("desc"))
+            return Direction.DESC;
+        
+        return Direction.ASC;
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<?> getUsersCount(HttpServletRequest request) {
+        String jwtCookie = jwtUtils.getJwtFromCookies(request);
+        Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+        if(!admin)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        Long usersCount = userRepository.count();
+        return new ResponseEntity<Long>(usersCount, HttpStatus.OK);
+    }
+
+    @GetMapping("paging/{offset}/{pageSize}/{field}")
+    public ResponseEntity<Page<UserData>> getUserPagingAndSorting(@PathVariable int offset, @PathVariable int pageSize,
+            @PathVariable String field,
+            @RequestParam(name = "direction", required = false) String direction) {
+        Page<User> userPage = userRepository
+            .findAll(PageRequest.of(offset, pageSize)
+            .withSort(Sort.by(this.convertDirection(direction), field)));
+
+        Page<UserData> userDataPage = userPage.map(user -> new UserData(user));
+        return new ResponseEntity<Page<UserData>>(userDataPage, HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<UserData>> getAllUsers(HttpServletRequest request) {
         String jwt = jwtUtils.getJwtFromCookies(request);
@@ -62,7 +101,7 @@ public class UserController {
                 .stream()
                 .map(user -> new UserData(user))
                 .collect(Collectors.toList());
-        
+
         return new ResponseEntity<List<UserData>>(users, HttpStatus.OK);
     }
 
@@ -152,5 +191,23 @@ public class UserController {
         response.addCookie(cookie);
 
         return new ResponseEntity<String>("Successfully logged out.", HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> makeAdmin(HttpServletRequest request, @RequestBody UserData userData) {
+            String jwtCookie = jwtUtils.getJwtFromCookies(request);
+            Boolean admin = jwtUtils.getAdminFromToken(jwtCookie);
+            if(!admin)
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            
+            User user = userRepository.findById(userData.getId()).orElse(null);
+            if(user == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            user.setAdmin(userData.isAdmin());
+            userRepository.save(user);
+
+            userData.setAdmin(user.isAdmin());
+            return new ResponseEntity<UserData>(userData, HttpStatus.OK);
     }
 }

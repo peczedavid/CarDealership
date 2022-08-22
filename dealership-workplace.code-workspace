@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "Backend"
+		},
+		{
+			"path": "Frontend"
+		},
+		{
+			"path": "Files"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}

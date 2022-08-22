@@ -1,26 +1,24 @@
-CAR
-	Create authorization 			DONE
-		On frontend: Done
-		On backend: Done
+DONE  - Available typo fix
+DONE  - car detailed view back to cars buttons
+DONE  - navbar fixed (hacked: 2xbr + fixed-top)
+DONE  - back to cars button floating
+DONE  - car::description
+DONE  - response popup when editing or creating or deleting o.o - animated toast ? ()
+DONE  - floating buttons on sidebar
 
-	Get authorization 				DONE
-		On frontend
-			All: Done
-			Single(details): Done
-		On backend
-			All: Done
-			Single: Done
+DONE  - search bar
 
-	Delete authorization
-		On frontend
-		On backend
+DONE  - paging admin board
+DONE  - admin board sorting -> save to localstorage
+DONE  - mixing order of coloumns -> save to localstorage
 
-	Update authorization
-		On frontend
-		On backend
+DONE	- get numbers of users from backend
+DONE	- get user properties from backend /users/get
 
-RESET DATABASE BUTTON
+DONE  - rewrite toast to router params instead of store hack
+DONE  - backend sorting - ignore letter case
+DONE	- detailed navbar
 
-REFRESH TOKEN
+	- combine search and filters
 
-OAUTH 2.0?
+Footer lett helyette - hamburger menu alul

@@ -54,6 +54,7 @@ public class CarService {
         car.setBrand(carRequest.getBrand());
         car.setModel(carRequest.getModel());
         car.setStock(carRequest.getStock());
+        car.setDescription(carRequest.getDescription());
         car.setRegion(region);
         return carRepository.save(car);
     }
@@ -61,7 +62,8 @@ public class CarService {
     public List<Car> create(List<CarRequest> carRequests) {
         List<Car> cars = new ArrayList<Car>(carRequests.size());
         for (CarRequest request : carRequests) {
-            Car car = this.create(request.getBrand(), request.getModel(), request.getRegion(), request.getStock());
+            Car car = this.create(request.getBrand(), request.getModel(), request.getRegion(), request.getStock(),
+                    request.getDescription());
             if (car == null)
                 throw new RuntimeException("Error while creating car");
             cars.add(car);
@@ -69,15 +71,15 @@ public class CarService {
         return cars;
     }
 
-    public Car create(String brand, String model, String regionName, Integer stock) {
+    public Car create(String brand, String model, String regionName, Integer stock, String description) {
         Region region = regionRepository.findByName(regionName).orElse(null);
         if (region == null)
             throw new RuntimeException("Can't create car, region " + regionName + " not found!");
-        return this.create(brand, model, region, stock);
+        return this.create(brand, model, region, stock, description);
     }
 
-    private Car create(String brand, String model, Region region, Integer stock) {
-        Car car = new Car(brand, model, region, stock);
+    private Car create(String brand, String model, Region region, Integer stock, String description) {
+        Car car = new Car(brand, model, region, stock, description);
         try {
             car = carRepository.save(car);
             return car;
@@ -87,24 +89,58 @@ public class CarService {
         }
     }
 
-    public List<Car> find(String brand, String model, String region, Integer stock, String sort) {
+    public List<Car> findByQuery(String query, String sort) {
+        Stream<Car> cars = carRepository.findAll().stream();
+
+        if (query != null) {
+            cars = cars.filter(car -> {
+                String carData = (car.getBrand() + car.getModel() +
+                        car.getRegion().getName() + car.getDescription() +
+                        car.getStock().toString()).toLowerCase().replaceAll("\\s+", "");
+
+                String[] queryWords = query.toLowerCase().split("\\s+");
+                for (String queryWord : queryWords) {
+                    if (carData.contains(queryWord))
+                        return true;
+                }
+                return false;
+            });
+        }
+
+        cars = this.sortCars(cars, sort);
+
+        return cars.collect(Collectors.toList());
+    }
+
+    public List<Car> findByFilters(String brand, String model, String region, Integer stock, String description,
+            String sort) {
         Stream<Car> cars = carRepository.findAll().stream();
 
         if (brand != null)
-            cars = cars.filter(car -> car.getBrand().equals(brand));
+            cars = cars.filter(car -> car.getBrand().toUpperCase().contains(brand.toUpperCase()));
         if (model != null)
-            cars = cars.filter(car -> car.getModel().equals(model));
+            cars = cars.filter(car -> car.getModel().toUpperCase().contains(model.toUpperCase()));
         if (region != null)
-            cars = cars.filter(car -> car.getRegion().getName().equals(region));
+            cars = cars.filter(car -> car.getRegion().getName().toUpperCase().contains(region.toUpperCase()));
         if (stock != null)
             cars = cars.filter(car -> car.getStock().equals(stock));
+        if (description != null)
+            cars = cars.filter(car -> car.getDescription().toUpperCase().contains(description.toUpperCase()));
 
+        cars = this.sortCars(cars, sort);
+
+        return cars.collect(Collectors.toList());
+    }
+
+    private Stream<Car> sortCars(Stream<Car> cars, String sort) {
         switch (sort) {
             case "brand-a-z":
-                cars = cars.sorted((car1, car2) -> car1.getBrand().compareTo(car2.getBrand()));
+                cars = cars
+                        .sorted((car1, car2) -> car1.getBrand().toLowerCase().compareTo(car2.getBrand().toLowerCase()));
                 break;
             case "brand-z-a":
-                cars = cars.sorted((car1, car2) -> car2.getBrand().compareTo(car1.getBrand()));
+                cars = cars
+                        .sorted((car1, car2) -> car2.getBrand().toLowerCase().compareTo(car1.getBrand().toLowerCase()));
                 break;
             case "stock-asc":
                 cars = cars.sorted(Comparator.comparingInt(Car::getStock));
@@ -116,6 +152,6 @@ public class CarService {
                 break;
         }
 
-        return cars.collect(Collectors.toList());
+        return cars;
     }
 }
