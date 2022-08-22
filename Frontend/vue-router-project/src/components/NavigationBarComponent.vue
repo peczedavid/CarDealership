@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0 me-5">
                     <li class="nav-item">
-                        <router-link v-if="activeUser" to="/cars" aria-current="page" class="nav-link active">
+                        <router-link v-if="currentUser" to="/cars" aria-current="page" class="nav-link active">
                             Cars
                         </router-link>
                     </li>
@@ -26,36 +26,36 @@
                 <!-- Always render the form so the Login and Register buttons are on the end of the
                     navbar, beacuse of the mx-auto on the form -->
                 <form class="d-flex mx-auto" role="search" @submit.prevent="handleSearch">
-                    <input v-if="activeUser" v-model="searchQuery" class="form-control searchbar-input" type="search"
+                    <input v-if="currentUser" v-model="searchQuery" class="form-control searchbar-input" type="search"
                         placeholder="Search" aria-label="Search">
-                    <button v-if="activeUser" class="btn btn-outline-light searchbar-button" type="submit">
+                    <button v-if="currentUser" class="btn btn-outline-light searchbar-button" type="submit">
                         <fa icon="search"></fa>
                     </button>
                 </form>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li>
                         <!-- User logged in -->
-                        <router-link v-if="activeUser" to="/profile" tag="button" class="text-white me-1">
-                            <fa v-if="activeUser.admin" icon="user-shield"></fa>
+                        <router-link v-if="currentUser" to="/profile" tag="button" class="text-white me-1">
+                            <fa v-if="currentUser.admin" icon="user-shield"></fa>
                             <fa v-else icon="user"></fa>
                         </router-link>
-                        <router-link v-if="activeUser && activeUser.admin" to="/adminboard" tag="button"
+                        <router-link v-if="currentUser && currentUser.admin" to="/adminboard" tag="button"
                             class="btn btn-outline-light ms-2">
                             Users
                         </router-link>
-                        <router-link v-if="activeUser" to="/profile" tag="button" class="btn btn-outline-light ms-2">
+                        <router-link v-if="currentUser" to="/profile" tag="button" class="btn btn-outline-light ms-2">
                             Profile
                         </router-link>
-                        <router-link v-if="activeUser" to="/" @click="signOut" tag="button"
+                        <router-link v-if="currentUser" to="/" @click="signOut" tag="button"
                             class="btn btn-outline-light ms-2">
                             Log out
                         </router-link>
 
                         <!-- User logged out-->
-                        <router-link v-if="!activeUser" to="/login" class="btn btn-outline-light ms-2" tag="button">
+                        <router-link v-if="!currentUser" to="/login" class="btn btn-outline-light ms-2" tag="button">
                             Log in
                         </router-link>
-                        <router-link v-if="!activeUser" to="/register" class="btn btn-outline-light ms-2" tag="button">
+                        <router-link v-if="!currentUser" to="/register" class="btn btn-outline-light ms-2" tag="button">
                             Register
                         </router-link>
                     </li>
@@ -72,10 +72,9 @@ import { store } from '@/data/store';
 export default {
     data() {
         return {
-            activeUser: null,
             searchQuery: "",
 
-            // Only the extra
+            // Cars excluded
             navigationElements: []
         };
     },
@@ -105,23 +104,17 @@ export default {
             }
         },
     },
-    async created() {
-        await store.loadCurrentUser();
-        this.activeUser = store.currentUser;
-    },
-    mounted() {
-        this.emitter.on("sign-in", data => {
-            this.activeUser = data;
-        });
+    computed: {
+        currentUser() {
+            return store.currentUser;
+        }
     },
     methods: {
         signOut() {
             axios
                 .post("/user/logout")
                 .then(() => {
-                    this.activeUser = null;
                     store.currentUser = null;
-
                     // Refresh page so cookie dissappears
                     this.$router.go();
                 })

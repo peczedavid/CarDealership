@@ -13,14 +13,10 @@ import AdminActionsComponent from "./AdminActionsComponent.vue";
 import { store } from "@/data/store";
 
 export default {
-  data() {
-    return {
-      currentUser: {},
+  computed: {
+    currentUser() {
+      return store.currentUser;
     }
-  },
-  async created() {
-    await store.loadCurrentUser();
-    this.currentUser = store.currentUser;
   },
   components: {
     FiltersComponent,

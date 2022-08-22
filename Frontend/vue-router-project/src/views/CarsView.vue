@@ -47,7 +47,7 @@ export default {
       this.getFilteredCars();
     },
     getFilteredCars() {
-      if (!this.activeUser)
+      if (!this.currentUser)
         this.$router.push("/unauthorized");
 
       store.setCookie("sortingType", this.sortingType, 7);
@@ -55,7 +55,7 @@ export default {
       let url = "/cars/filtered?"
       if (this.filters.brand !== "") url = url.concat("brand=" + this.filters.brand + "&");
       if (this.filters.model !== "") url = url.concat("model=" + this.filters.model + "&");
-      if (!this.activeUser.admin) url = url.concat("region=" + this.activeUser.region.name + "&");
+      if (!this.currentUser.admin) url = url.concat("region=" + this.currentUser.region.name + "&");
       else {
         if (this.filters.region !== "")
           url = url.concat("region=" + this.filters.region + "&");
@@ -75,7 +75,7 @@ export default {
         });
     },
     getQueriedCars(query) {
-      if (!this.activeUser)
+      if (!this.currentUser)
         this.$router.push("/unauthorized");
 
       store.setCookie("sortingType", this.sortingType, 7);
@@ -98,11 +98,13 @@ export default {
         });
     },
   },
-  async beforeMount() {
-    // Authenticate user
-    await store.loadCurrentUser();
-    this.activeUser = store.currentUser;
-
+  computed: {
+    // TODO: if not logged in but types /cars in url, throws errors
+    currentUser() {
+      return store.currentUser;
+    }
+  },
+  beforeMount() {
     // Searched from other page
     const query = this.$route.params.query;
     if(query)
@@ -150,7 +152,6 @@ export default {
         stockTop: Infinity
       },
       showBackToTop: false,
-      activeUser: null,
       toast: null
     };
   },
