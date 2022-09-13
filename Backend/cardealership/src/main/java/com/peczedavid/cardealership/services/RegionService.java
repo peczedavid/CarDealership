@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.region;
+package com.peczedavid.cardealership.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.peczedavid.cardealership.region.payload.RegionRequest;
+import com.peczedavid.cardealership.models.Region;
+import com.peczedavid.cardealership.payloads.region.RegionRequest;
+import com.peczedavid.cardealership.repositories.RegionRepository;
 
 @Service
 public class RegionService {

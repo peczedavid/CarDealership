@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.car;
+package com.peczedavid.cardealership.services;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,9 +9,11 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.peczedavid.cardealership.car.payload.CarRequest;
-import com.peczedavid.cardealership.region.Region;
-import com.peczedavid.cardealership.region.RegionRepository;
+import com.peczedavid.cardealership.models.Car;
+import com.peczedavid.cardealership.models.Region;
+import com.peczedavid.cardealership.payloads.car.CarRequest;
+import com.peczedavid.cardealership.repositories.CarRepository;
+import com.peczedavid.cardealership.repositories.RegionRepository;
 
 @Service
 public class CarService {

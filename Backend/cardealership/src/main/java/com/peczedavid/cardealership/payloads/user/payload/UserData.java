@@ -1,7 +1,7 @@
-package com.peczedavid.cardealership.user.payload;
+package com.peczedavid.cardealership.payloads.user.payload;
 
-import com.peczedavid.cardealership.region.Region;
-import com.peczedavid.cardealership.user.User;
+import com.peczedavid.cardealership.models.Region;
+import com.peczedavid.cardealership.models.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

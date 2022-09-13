@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.car.payload;
+package com.peczedavid.cardealership.payloads.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

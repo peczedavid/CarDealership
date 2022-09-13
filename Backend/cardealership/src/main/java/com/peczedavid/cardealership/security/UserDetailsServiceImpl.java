@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.peczedavid.cardealership.user.User;
-import com.peczedavid.cardealership.user.UserRepository;
+import com.peczedavid.cardealership.models.User;
+import com.peczedavid.cardealership.repositories.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

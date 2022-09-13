@@ -245,7 +245,7 @@ export default {
 }
 
 .user-nav-icon:hover {
-    color: #d8d8d8;
+    color: #ffffff;
 }
 
 .admin-button {

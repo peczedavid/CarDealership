@@ -1,11 +1,11 @@
-package com.peczedavid.cardealership.user;
+package com.peczedavid.cardealership.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,13 +29,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.peczedavid.cardealership.region.Region;
-import com.peczedavid.cardealership.region.RegionRepository;
+import com.peczedavid.cardealership.models.Region;
+import com.peczedavid.cardealership.models.User;
+import com.peczedavid.cardealership.payloads.user.payload.LoginRequest;
+import com.peczedavid.cardealership.payloads.user.payload.RegisterRequest;
+import com.peczedavid.cardealership.payloads.user.payload.UserData;
+import com.peczedavid.cardealership.repositories.RegionRepository;
+import com.peczedavid.cardealership.repositories.UserRepository;
 import com.peczedavid.cardealership.security.JwtUtils;
 import com.peczedavid.cardealership.security.UserDetailsImpl;
-import com.peczedavid.cardealership.user.payload.LoginRequest;
-import com.peczedavid.cardealership.user.payload.UserData;
-import com.peczedavid.cardealership.user.payload.RegisterRequest;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController

@@ -1,12 +1,12 @@
-package com.peczedavid.cardealership.car;
+package com.peczedavid.cardealership.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.peczedavid.cardealership.car.payload.CarRequest;
+import com.peczedavid.cardealership.models.Car;
+import com.peczedavid.cardealership.payloads.car.CarRequest;
 import com.peczedavid.cardealership.security.JwtUtils;
+import com.peczedavid.cardealership.services.CarService;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController

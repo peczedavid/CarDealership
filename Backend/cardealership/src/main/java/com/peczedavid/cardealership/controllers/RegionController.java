@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.region;
+package com.peczedavid.cardealership.controllers;
 
 import java.util.List;
 
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.peczedavid.cardealership.region.payload.RegionRequest;
+import com.peczedavid.cardealership.models.Region;
+import com.peczedavid.cardealership.payloads.region.RegionRequest;
+import com.peczedavid.cardealership.services.RegionService;
 
 @CrossOrigin(origins = { "http://localhost:8081" }, maxAge = 3600, allowCredentials = "true")
 @RestController
@@ -29,8 +31,9 @@ public class RegionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> updateRegion(@PathVariable Integer id) {
         Region region = regionService.deleteById(id);
-        if(region == null) return ResponseEntity.badRequest().build();
-        return  new ResponseEntity<String>("Deleted region with id " + region.getId(), HttpStatus.OK);
+        if (region == null)
+            return ResponseEntity.badRequest().build();
+        return new ResponseEntity<String>("Deleted region with id " + region.getId(), HttpStatus.OK);
     }
 
     @GetMapping

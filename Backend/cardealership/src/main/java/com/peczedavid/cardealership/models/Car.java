@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.car;
+package com.peczedavid.cardealership.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.peczedavid.cardealership.region.Region;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

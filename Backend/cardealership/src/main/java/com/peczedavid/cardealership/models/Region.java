@@ -1,4 +1,4 @@
-package com.peczedavid.cardealership.region;
+package com.peczedavid.cardealership.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
