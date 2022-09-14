@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import FiltersComponent from "@/components/FiltersComponent.vue";
-import UserActionsComponent from "./UserActionsComponent.vue";
-import AdminActionsComponent from "./AdminActionsComponent.vue";
+import FiltersComponent from "@/components/car/FiltersComponent.vue";
+import UserActionsComponent from "../user/UserActionsComponent.vue";
+import AdminActionsComponent from "../user/AdminActionsComponent.vue";
 import { store } from "@/data/store";
 
 export default {

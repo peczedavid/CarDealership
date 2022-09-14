@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import RegisterView from "@/views/RegisterView.vue";
-import LoginView from "@/views/LoginView.vue";
-import CarsView from "@/views/CarsView.vue";
-import CarDetailsView from "@/views/CarDetailsView.vue";
-import CarNewView from "@/views/CarNewView.vue";
-import CarEditView from "@/views/CarEditView.vue";
-import ProfileView from "@/views/ProfileView.vue";
+import RegisterView from "@/views/user/RegisterView.vue";
+import LoginView from "@/views/user/LoginView.vue";
+import CarsView from "@/views/car/CarsView.vue";
+import CarDetailsView from "@/views/car/CarDetailsView.vue";
+import CarNewView from "@/views/car/CarNewView.vue";
+import CarEditView from "@/views/car/CarEditView.vue";
+import ProfileView from "@/views/user/ProfileView.vue";
 import UnauthorizedView from "@/views/UnauthorizedView.vue";
-import AdminBoardView from "@/views/AdminBoardView.vue";
+import AdminBoardView from "@/views/user/AdminBoardView.vue";
 
 const routes = [
   { path: "/", name: "home", component: HomeView },

@@ -41,12 +41,8 @@
 </template>
 
 <script>
-import SideBarComponent from '@/components/SideBarComponent.vue';
 
 export default {
   name: "HomeView",
-  components: {
-    SideBarComponent
-  },
 };
 </script>

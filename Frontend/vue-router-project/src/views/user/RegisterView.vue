@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import RegisterFormComponent from "@/components/RegisterFormComponent";
+import RegisterFormComponent from "@/components/user/RegisterFormComponent";
 
 export default {
   name: "RegisterView",

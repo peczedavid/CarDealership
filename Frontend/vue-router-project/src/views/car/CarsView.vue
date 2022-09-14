@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import CarComponent from "@/components/CarComponent.vue";
-import SideBarComponent from "@/components/SideBarComponent.vue";
+import CarComponent from "@/components/car/CarComponent.vue";
+import SideBarComponent from "@/components/car/SideBarComponent.vue";
 import axios from "@/http-common"
 import { store } from "@/data/store"
 import { useToast, POSITION } from "vue-toastification";

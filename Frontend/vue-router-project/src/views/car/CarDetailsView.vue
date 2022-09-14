@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CarDetailsComponent from '@/components/CarDetailsComponent.vue'
+import CarDetailsComponent from '@/components/car/CarDetailsComponent.vue'
 
 export default {
     components: { CarDetailsComponent }

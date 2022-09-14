@@ -51,7 +51,7 @@
 <script>
 import axios from '@/http-common';
 import MultiRangeSlider from "multi-range-slider-vue";
-import "../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css"
+import "../../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css"
 
 export default {
     props: {

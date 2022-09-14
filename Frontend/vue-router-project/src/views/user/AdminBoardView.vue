@@ -6,7 +6,7 @@
 
 <script>
 import axios from "@/http-common";
-import AdminDashboardComponent from '@/components/AdminDashboardComponent.vue';
+import AdminDashboardComponent from '@/components/user/AdminDashboardComponent.vue';
 
 export default {
     components: {

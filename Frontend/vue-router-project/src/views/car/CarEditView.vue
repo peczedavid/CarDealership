@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CarEditComponent from '@/components/CarEditComponent.vue'
+import CarEditComponent from '@/components/car/CarEditComponent.vue'
 import axios from "@/http-common"
 
 export default {
